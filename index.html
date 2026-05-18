@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Sales Dashboard — เตือนใจ พาณิชย์ กรุ๊ป</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js"></script>
+<style>
+:root{color-scheme:light;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13px;}
+.hdr{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.hdr-t{font-size:15px;font-weight:800;letter-spacing:.3px;}
+.hdr-s{font-size:10px;opacity:.75;margin-top:3px;}
+.hdr-b{background:rgba(255,255,255,.18);border-radius:20px;padding:4px 12px;font-size:11px;white-space:nowrap;}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e0e0e0;overflow-x:auto;position:sticky;top:56px;z-index:199;}
+.tab{padding:10px 16px;cursor:pointer;font-size:12px;font-weight:500;color:#777;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;transition:.2s;}
+.tab.on{color:#1a237e;border-color:#1a237e;font-weight:700;}
+.tab:hover:not(.on){background:#f5f5f5;color:#333;}
+.pg{padding:12px;}
+.panel{display:none;}.panel.on{display:block;}
+.kpi4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+@media(max-width:700px){.kpi4{grid-template-columns:repeat(2,1fr);}}
+.kpi{background:#fff;border-radius:10px;padding:13px 15px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:3px solid #ccc;}
+.kpi.b{border-color:#1a237e;}.kpi.g{border-color:#2e7d32;}.kpi.o{border-color:#e65100;}.kpi.p{border-color:#6a1b9a;}
+.kl{font-size:9px;color:#aaa;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px;}
+.kv{font-size:19px;font-weight:800;line-height:1.1;}
+.ks{font-size:10px;color:#aaa;margin-top:3px;}
+.tag{display:inline-block;border-radius:12px;padding:2px 8px;font-size:10px;font-weight:700;margin-top:4px;}
+.tg{background:#e8f5e9;color:#2e7d32;}.to{background:#fff3e0;color:#e65100;}.tr2{background:#ffebee;color:#c62828;}.tb{background:#e3f2fd;color:#1565c0;}.tgr{background:#f5f5f5;color:#666;}.tpurp{background:#f3e5f5;color:#6a1b9a;}
+.urg{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:12px;border-left:5px solid #1a237e;}
+.urg-hd{font-size:11px;font-weight:800;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:11px;}
+.ug4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+@media(max-width:700px){.ug4{grid-template-columns:repeat(2,1fr);}}
+.us{text-align:center;padding:8px 6px;background:#f8f9fa;border-radius:8px;}
+.us-n{font-size:17px;font-weight:800;}
+.us-l{font-size:9px;color:#888;margin-top:3px;line-height:1.3;}
+.lv{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:4px 13px;font-size:12px;font-weight:700;margin-top:10px;margin-right:8px;}
+.lvG{background:#e8f5e9;color:#2e7d32;}.lvY{background:#fffde7;color:#f57f17;border:1px solid #ffe082;}.lvO{background:#fff3e0;color:#e65100;border:1px solid #ffcc80;}.lvR{background:#ffebee;color:#c62828;border:1px solid #ef9a9a;}
+.urg-msg{font-size:11px;color:#555;margin-top:7px;line-height:1.5;}
+.pb-wrap{margin:10px 0;}
+.pb-bg{background:#e8eaf6;border-radius:10px;height:10px;overflow:hidden;}
+.pb-fill{height:100%;border-radius:10px;transition:width .8s ease;}
+.pb-lbl{display:flex;justify-content:space-between;font-size:9px;color:#bbb;margin-top:3px;}
+.card{background:#fff;border-radius:10px;padding:13px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:10px;overflow-x:auto;}
+.ct{font-size:11px;font-weight:700;color:#444;margin-bottom:9px;}
+.row2{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px;}
+.row2h{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+@media(max-width:700px){.row2,.row2h{grid-template-columns:1fr;}}
+.plf4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+@media(max-width:700px){.plf4{grid-template-columns:repeat(2,1fr);}}
+.pc{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:4px solid #ccc;}
+.pn{font-weight:800;font-size:12px;margin-bottom:2px;}
+.pcnt{font-size:9px;color:#aaa;margin-bottom:7px;}
+.pv{font-size:16px;font-weight:800;}
+.psub{font-size:9px;color:#888;margin-top:1px;}
+.sl3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+@media(max-width:700px){.sl3{grid-template-columns:1fr;}}
+.sc{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.sn{font-weight:800;color:#1a237e;font-size:13px;margin-bottom:2px;}
+.sm{font-size:9px;color:#aaa;margin-bottom:7px;line-height:1.4;}
+.ss{display:flex;gap:12px;}
+.ss-n{font-size:14px;font-weight:800;}.ss-l{font-size:9px;color:#999;margin-top:1px;}
+table{width:100%;border-collapse:collapse;font-size:11px;}
+th{background:#f5f7fa;color:#666;font-weight:700;padding:6px 8px;text-align:left;border-bottom:1px solid #e0e0e0;white-space:nowrap;font-size:10px;}
+td{padding:6px 8px;border-bottom:1px solid #f5f5f5;}
+tr:last-child td{border-bottom:none;}tr:hover td{background:#fafbff;}
+.tR{text-align:right;font-variant-numeric:tabular-nums;}.tC{text-align:center;}.bold{font-weight:700;}.dim{color:#ccc;}
+.sec{font-size:10px;font-weight:800;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin:12px 0 7px;}
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#777;}
+.spin{width:34px;height:34px;border:3px solid #e0e0e0;border-top-color:#1a237e;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:13px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.btn-tog{padding:5px 14px;border-radius:20px;border:1px solid #c5cae9;background:#fff;font-size:11px;cursor:pointer;margin-right:6px;color:#555;font-family:inherit;}
+.btn-tog.on{background:#1a237e;color:#fff;border-color:#1a237e;font-weight:700;}
+.day-dot{display:inline-block;width:22px;height:22px;border-radius:50%;font-size:9px;line-height:22px;text-align:center;font-weight:700;color:#fff;margin:2px;}
+.ap-item{background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.07);border-left:4px solid #ccc;display:flex;gap:12px;align-items:flex-start;}
+.ap-ico{font-size:18px;min-width:24px;}
+.ap-body{flex:1;}
+.ap-title{font-size:12px;font-weight:800;color:#1a1a2e;margin-bottom:3px;}
+.ap-desc{font-size:11px;color:#555;line-height:1.5;}
+.bm-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+.bm-cell{background:#f8f9fa;border-radius:8px;padding:10px;text-align:center;}
+.bm-val{font-size:14px;font-weight:800;}
+.bm-lbl{font-size:9px;color:#888;margin-top:2px;}
+.cat-hdr{cursor:pointer;user-select:none;}
+.cat-hdr:hover td{background:#f0f4ff!important;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-t">📊 Online Sales Dashboard — เตือนใจ พาณิชย์ กรุ๊ป</div>
+    <div class="hdr-s" id="hdr-meta">กำลังโหลด...</div>
+  </div>
+  <div class="hdr-b" id="hdr-badge">Online Division</div>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="sw(0)">🏠 ภาพรวม &amp; เป้าหมาย</div>
+  <div class="tab" onclick="sw(1)">🔍 เจาะลึกยอดขาย &amp; สินค้า</div>
+  <div class="tab" onclick="sw(2)">⚡ Platform &amp; ทีมขาย</div>
+  <div class="tab" onclick="sw(3)">📈 แนวโน้ม &amp; Action Plan</div>
+</div>
+
+<div class="pg">
+
+<!-- ═══ TAB 0 ═══ -->
+<div class="panel on" id="p0">
+  <div id="l0" class="loading"><div class="spin"></div><div>กำลังโหลด...</div></div>
+  <div id="c0" style="display:none">
+    <div class="kpi4" id="kpi-row"></div>
+    <div class="urg" id="urg-panel"></div>
+    <div class="row2h">
+      <div class="card" id="days-panel"></div>
+      <div class="card"><div class="ct">🥧 Platform Mix — สัดส่วนเป้าทั้งเดือน</div><canvas id="ch-donut" height="250"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="ct">🏆 ร้านค้าทั้งหมด — MTD Actual vs เป้าสะสม (เรียงจากสูง)</div>
+      <table><thead><tr><th>#</th><th>ร้าน</th><th>Platform</th><th>ผู้ดูแล</th><th class="tR">MTD Actual</th><th class="tR">GP (฿)</th><th class="tC">GP%</th><th class="tC">%เป้าสะสม</th><th class="tC">สถานะ</th></tr></thead><tbody id="tb-stores-main"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 1 ═══ -->
+<div class="panel" id="p1">
+  <div class="sec">📦 ยอดขายตามกลุ่มสินค้า — กลุ่มใหญ่ &amp; รายการขายดี</div>
+  <div class="card" id="cat-tree-card">
+    <table id="cat-tree-tbl">
+      <thead><tr><th>#</th><th>กลุ่มสินค้า</th><th class="tR">ยอดขาย</th><th class="tC">%รวม</th><th class="tR">GP รวม*</th><th class="tC">คลิกดูสินค้า</th></tr></thead>
+      <tbody id="cat-tree-body"></tbody>
+    </table>
+  </div>
+  <div class="sec" style="display:flex;align-items:center;gap:10px;">
+    <span>🏆 สินค้าขายดี Top 20</span>
+    <button class="btn-tog on" id="tog-val" onclick="togProd('val')">💰 เรียงตามยอดขาย</button>
+    <button class="btn-tog" id="tog-qty" onclick="togProd('qty')">📦 เรียงตามจำนวนชิ้น</button>
+  </div>
+  <div class="card" id="prod-val-card">
+    <table><thead><tr><th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th><th class="tR">ยอดขาย (฿)</th><th class="tR">GP%*</th><th class="tC">Stock</th></tr></thead><tbody id="tb-prod-val"></tbody></table>
+  </div>
+  <div class="card" id="prod-qty-card" style="display:none">
+    <table><thead><tr><th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th><th class="tR">จำนวน (ชิ้น)</th><th class="tR">ยอดขาย (฿)</th><th class="tC">Stock</th></tr></thead><tbody id="tb-prod-qty"></tbody></table>
+  </div>
+</div>
+
+<!-- ═══ TAB 2 ═══ -->
+<div class="panel" id="p2">
+  <div class="sec">🏅 Platform Ranking — เทียบ % เป้าสะสม (เรียงจากดีสุด)</div>
+  <div class="card"><canvas id="ch-plf-rank" height="160"></canvas></div>
+  <div class="sec" id="plf-sec">ประสิทธิภาพแต่ละ Platform</div>
+  <div class="plf4" id="plf-cards"></div>
+  <div class="sec">ประสิทธิภาพทีมขาย — Sales Manager</div>
+  <div class="sl3" id="sl-cards"></div>
+  <div class="sec">GP Efficiency Ranking — เรียงตาม GP%</div>
+  <div class="card"><table><thead><tr><th>#</th><th>ร้าน</th><th>Platform</th><th>ผู้ดูแล</th><th class="tR">MTD Actual</th><th class="tR">GP</th><th class="tC">GP%</th></tr></thead><tbody id="tb-gp"></tbody></table></div>
+</div>
+
+<!-- ═══ TAB 3 ═══ -->
+<div class="panel" id="p3">
+  <div class="sec">📅 เป้ารายวัน vs ค่าเฉลี่ย Actual — ทั้งเดือนพฤษภาคม</div>
+  <div class="card"><canvas id="ch-trend" height="200"></canvas></div>
+  <div class="sec">📊 ยอดสะสม vs เป้าสะสม + Projection</div>
+  <div class="card"><canvas id="ch-cum" height="180"></canvas></div>
+  <div class="sec">🌏 เปรียบเทียบกับอุตสาหกรรม Online Retail ไทย</div>
+  <div class="card" id="bm-card"></div>
+  <div class="sec">📋 Action Plan — สิ่งที่ต้องดำเนินการทันที</div>
+  <div id="ap-list"></div>
+</div>
+
+</div>
+
+<script>
+// ─── UTILS ────────────────────────────────────────────────────────────
+const B  = n => n!=null ? '฿'+(+n).toLocaleString('th-TH') : '-';
+const N  = n => n!=null ? (+n).toLocaleString('th-TH') : '-';
+const P  = p => p!=null ? (+p).toFixed(1)+'%' : '-';
+const tag = p => {
+  if(p==null) return '<span class="tag tgr">N/A</span>';
+  const c = p>=100?'tg':p>=80?'to':'tr2';
+  return `<span class="tag ${c}">${(+p).toFixed(1)}%</span>`;
+};
+const plfC = {'โรงเสื่อ':'#7c4dff','Lazada':'#ff6f00','Shopee':'#e53935','TikTok Live':'#222','TikTok':'#444'};
+const plfBrd = {'โรงเสื่อ':'#7c4dff','Lazada':'#ff6f00','Shopee':'#e53935','TikTok':'#444'};
+const _ch={};
+function mkch(id,cfg){if(_ch[id])_ch[id].destroy();_ch[id]=new Chart(document.getElementById(id),cfg);}
+let GD=null, RD={0:false,1:false,2:false,3:false};
+let _catOpen={};
+
+function sw(i){
+  document.querySelectorAll('.tab').forEach((t,x)=>t.classList.toggle('on',x===i));
+  document.querySelectorAll('.panel').forEach((p,x)=>p.classList.toggle('on',x===i));
+  if(GD&&!RD[i]){if(i===1)r1(GD);if(i===2)r2(GD);if(i===3)r3(GD);RD[i]=true;}
+}
+
+// Product view toggle
+function togProd(v){
+  document.getElementById('tog-val').classList.toggle('on',v==='val');
+  document.getElementById('tog-qty').classList.toggle('on',v==='qty');
+  document.getElementById('prod-val-card').style.display=v==='val'?'block':'none';
+  document.getElementById('prod-qty-card').style.display=v==='qty'?'block':'none';
+}
+
+// Category expand/collapse
+function togCat(i){
+  _catOpen[i]=!_catOpen[i];
+  document.querySelectorAll('.cat-r-'+i).forEach(r=>r.style.display=_catOpen[i]?'':'none');
+  document.getElementById('cat-arr-'+i).textContent=_catOpen[i]?'▲':'▼';
+}
+
+// ─── TAB 0 ────────────────────────────────────────────────────────────
+function r0(d){
+  const s=d.summary, mt=s.mtd_days, td=s.total_days||31;
+  const pctCum=s.cum_target>0?s.mtd_actual/s.cum_target*100:0;
+  const pctMon=s.monthly_target>0?s.mtd_actual/s.monthly_target*100:0;
+  const projGap=s.projection-s.monthly_target;
+
+  // KPI row
+  document.getElementById('kpi-row').innerHTML=`
+    <div class="kpi b"><div class="kl">MTD Actual (${mt} วัน)</div><div class="kv">${B(s.mtd_actual)}</div><div class="ks">เป้าสะสม ${mt} วัน = ${B(s.cum_target)}</div>${tag(pctCum)}<span class="tag tgr">vs เป้าสะสม</span></div>
+    <div class="kpi g"><div class="kl">GP รวม</div><div class="kv" style="color:#2e7d32">${B(s.gp_amount)}</div><div class="ks">กำไรขั้นต้น ${mt} วัน</div><span class="tag tb">GP% = ${P(s.gp_pct)}</span></div>
+    <div class="kpi o"><div class="kl">เป้าทั้งเดือน</div><div class="kv">${B(s.monthly_target)}</div><div class="ks">ผ่านไป ${mt}/${td} วัน</div><span class="tag tb">${pctMon.toFixed(1)}% ทำแล้ว</span></div>
+    <div class="kpi p"><div class="kl">Projection เต็มเดือน</div><div class="kv" style="color:${projGap>=0?'#2e7d32':'#c62828'}">${B(s.projection)}</div><div class="ks">avg ${B(Math.round(s.avg_daily))}/วัน × ${td} วัน</div><span class="tag ${projGap>=0?'tg':'tr2'}">${projGap>=0?'✅ ถึงเป้า +'+N(Math.round(projGap)):'⚠️ ขาด '+N(Math.abs(Math.round(projGap)))}</span></div>
+  `;
+
+  // Urgency
+  const urg=s.urg_ratio;
+  let lvCls,lvTxt,lvBrd,msg;
+  if(urg<0.93){lvCls='lvG';lvTxt='🟢 LOW — เกินเป้าแล้ว!';lvBrd='#2e7d32';msg='ยอดดีมาก! รักษาโมเมนตัม + ผลักร้านที่ยังขาดเป้า';}
+  else if(urg<1.08){lvCls='lvY';lvTxt='🟡 MEDIUM — ใกล้เป้า';lvBrd='#f9a825';msg=`ต้องเพิ่มอีก ${((urg-1)*100).toFixed(0)}% — focus ร้านที่ใกล้ 100% เพิ่ม Live session สุดสัปดาห์`;}
+  else if(urg<1.25){lvCls='lvO';lvTxt='🟠 HIGH — ต้องเร่ง';lvBrd='#e65100';msg=`ต้องเพิ่ม ${((urg-1)*100).toFixed(0)}% จาก avg ปัจจุบัน — ประชุมทีม 2×/สัปดาห์, TikTok Live เพิ่ม, Push ร้านต่ำกว่า 60%`;}
+  else{lvCls='lvR';lvTxt='🔴 CRITICAL';lvBrd='#c62828';msg='Max Push — Daily standup, Flash sale, โปรพิเศษ, ตรวจ pipeline สต็อก';}
+  const barW=Math.min(pctCum,130), barC=pctCum>=100?'#2e7d32':pctCum>=80?'#e65100':'#c62828';
+  document.getElementById('urg-panel').style.borderLeftColor=lvBrd;
+  document.getElementById('urg-panel').innerHTML=`
+    <div class="urg-hd">📣 Sales Manager Urgency — ต้อง Push ทีมมากแค่ไหน?</div>
+    <div class="ug4">
+      <div class="us"><div class="us-n" style="color:#c62828">${B(Math.round(s.remaining))}</div><div class="us-l">ยอดที่ยังต้องทำ<br>(จาก Day ${mt})</div></div>
+      <div class="us"><div class="us-n" style="color:#1a237e">${B(Math.round(s.req_daily))}</div><div class="us-l">ต้องทำ/วัน<br>(${s.days_left} วันที่เหลือ)</div></div>
+      <div class="us"><div class="us-n" style="color:#555">${B(Math.round(s.avg_daily))}</div><div class="us-l">เฉลี่ย/วัน<br>ที่ทำได้จริง</div></div>
+      <div class="us"><div class="us-n" style="color:${urg>1.1?'#c62828':urg>1.0?'#e65100':'#2e7d32'}">${(urg*100).toFixed(0)}%</div><div class="us-l">ต้องเร่งกว่าเดิม<br>กี่ % (vs avg)</div></div>
+    </div>
+    <div class="pb-wrap">
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:#aaa;margin-bottom:3px;"><span>MTD vs เป้าสะสม</span><span style="font-weight:700;color:${barC}">${pctCum.toFixed(1)}%</span></div>
+      <div class="pb-bg"><div class="pb-fill" style="width:${barW}%;background:${barC}"></div></div>
+      <div class="pb-lbl"><span>0%</span><span>50%</span><span>100%</span><span>130%</span></div>
+    </div>
+    <div style="margin-top:9px;display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;"><span class="lv ${lvCls}">${lvTxt}</span><span class="urg-msg">${msg}</span></div>
+  `;
+
+  // Days hit/miss panel
+  const avgD=s.avg_daily;
+  const dtMtd=d.daily_targets.slice(0,mt);
+  const dHit=dtMtd.filter(x=>avgD>=x.total).length;
+  const dMiss=mt-dHit;
+  const dots=dtMtd.map((x,i)=>{
+    const hit=avgD>=x.total;
+    return `<span class="day-dot" style="background:${hit?'#2e7d32':'#e53935'}" title="วัน ${x.day}: เป้า ${B(x.total)}">${x.day}</span>`;
+  }).join('');
+  document.getElementById('days-panel').innerHTML=`
+    <div class="ct">📅 วันที่ผ่านเป้า vs ไม่ผ่านเป้า (${mt} วัน MTD)</div>
+    <div style="display:flex;gap:12px;margin-bottom:12px;">
+      <div style="flex:1;background:#e8f5e9;border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:30px;font-weight:800;color:#2e7d32">${dHit}</div>
+        <div style="font-size:11px;font-weight:700;color:#2e7d32">วันที่ผ่านเป้า ✅</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">${(dHit/mt*100).toFixed(0)}% ของ ${mt} วัน</div>
+      </div>
+      <div style="flex:1;background:#ffebee;border-radius:8px;padding:10px;text-align:center;">
+        <div style="font-size:30px;font-weight:800;color:#c62828">${dMiss}</div>
+        <div style="font-size:11px;font-weight:700;color:#c62828">วันที่ต่ำกว่าเป้า ⚠️</div>
+        <div style="font-size:9px;color:#888;margin-top:2px">${(dMiss/mt*100).toFixed(0)}% ของ ${mt} วัน</div>
+      </div>
+    </div>
+    <div style="line-height:1.8">${dots}</div>
+    <div style="font-size:9px;color:#aaa;margin-top:8px;">🟢 ผ่านเป้า  🔴 ต่ำกว่าเป้า &nbsp;|&nbsp; ประมาณการจาก avg ${B(Math.round(avgD))}/วัน เทียบกับเป้ารายวัน</div>
+  `;
+
+  // Donut
+  const plfs=d.platforms;
+  mkch('ch-donut',{type:'doughnut',
+    data:{labels:plfs.map(p=>p.name),datasets:[{data:plfs.map(p=>p.monthly_target),backgroundColor:['#7c4dff','#ff6f00','#e53935','#333'],hoverOffset:8,borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}},tooltip:{callbacks:{label:ctx=>' ฿'+N(ctx.raw)+' ('+((ctx.raw/14000000)*100).toFixed(0)+'%)'}}}}
+  });
+
+  // Stores table
+  const cumR=mt/(td);
+  document.getElementById('tb-stores-main').innerHTML=d.stores.map((st,i)=>{
+    const cumT=st.monthly_target?st.monthly_target*cumR:null;
+    const pCum=cumT?st.actual/cumT*100:null;
+    const ic=pCum!=null?(pCum>=100?'✅':pCum>=80?'⚠️':'🔴'):'—';
+    return `<tr><td class="bold">${i+1}</td><td class="bold" style="font-size:11px">${st.name}</td><td style="color:${plfC[st.platform]||'#555'};font-weight:700">${st.platform}</td><td>${st.manager!=='-'?st.manager:'<span class="dim">—</span>'}</td><td class="tR bold">${B(st.actual)}</td><td class="tR">${B(st.gp)}</td><td class="tC"><span class="tag tb">${P(st.gp_pct)}</span></td><td class="tC">${tag(pCum)}</td><td class="tC">${ic}</td></tr>`;
+  }).join('');
+
+  document.getElementById('l0').style.display='none';
+  document.getElementById('c0').style.display='block';
+  RD[0]=true;
+}
+
+// ─── TAB 1 ────────────────────────────────────────────────────────────
+function r1(d){
+  // Build category → products map
+  const catMap={};
+  d.categories.forEach(c=>{catMap[c.name]={...c,prods:[]};});
+  d.products.forEach(p=>{if(catMap[p.cat])catMap[p.cat].prods.push(p);});
+  const totalSale=d.summary.mtd_actual;
+
+  // Category tree table
+  let treeHtml='';
+  d.categories.forEach((cat,i)=>{
+    const prods=(catMap[cat.name]?.prods||[]).sort((a,b)=>b.sales-a.sales);
+    const topProd=prods[0];
+    treeHtml+=`<tr class="cat-hdr" onclick="togCat(${i})">
+      <td class="bold">${i+1}</td>
+      <td class="bold" style="font-size:12px">📦 ${cat.name} <span style="font-weight:400;color:#aaa;font-size:10px">(${prods.length} รายการ)</span></td>
+      <td class="tR bold">${B(cat.sales)}</td>
+      <td class="tC"><div style="background:#e3f2fd;border-radius:4px;padding:2px 8px;font-weight:700;color:#1565c0;font-size:11px;display:inline-block">${cat.pct.toFixed(1)}%</div></td>
+      <td class="tR" style="font-size:10px;color:#aaa">—</td>
+      <td class="tC"><span id="cat-arr-${i}" style="font-size:10px;color:#1a237e">▼</span></td>
+    </tr>`;
+    prods.slice(0,8).forEach((p,j)=>{
+      const oh=p.onhand;
+      const stk=oh==null?'—':oh===0?'<span style="color:#c62828;font-weight:700">⚠️หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
+      treeHtml+=`<tr class="cat-r-${i}" style="display:none;background:${j%2?'#fafbff':'#fff'}">
+        <td style="padding-left:20px;color:#ccc;font-size:11px">${j+1}</td>
+        <td style="font-size:10px;padding-left:8px;">└ ${p.name}</td>
+        <td class="tR">${B(p.sales)}</td>
+        <td class="tC"><span style="font-size:9px;color:#888">${(p.sales/cat.sales*100).toFixed(1)}% ของกลุ่ม</span></td>
+        <td class="tR" style="font-size:10px;color:#1a237e">${N(p.qty)} ชิ้น</td>
+        <td class="tC">${stk}</td>
+      </tr>`;
+    });
+    if(prods.length>8){treeHtml+=`<tr class="cat-r-${i}" style="display:none"><td colspan="6" style="text-align:center;font-size:10px;color:#aaa;padding:4px">...และอีก ${prods.length-8} รายการ</td></tr>`;}
+  });
+  document.getElementById('cat-tree-body').innerHTML=treeHtml;
+
+  // Product by VALUE
+  document.getElementById('tb-prod-val').innerHTML=d.products.slice(0,20).map((p,i)=>{
+    const oh=p.onhand;
+    const stk=oh==null?'<span class="dim">—</span>':oh===0?'<span style="color:#c62828;font-weight:700">⚠️ หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️ ${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
+    const pct=(p.sales/totalSale*100).toFixed(1);
+    return `<tr><td class="bold">${i+1}</td><td style="font-size:10px">${p.name}</td><td style="font-size:9px;color:#888">${p.cat}</td><td class="tR bold">${B(p.sales)}</td><td class="tC"><span class="tag tgr">${pct}%</span></td><td class="tC">${stk}</td></tr>`;
+  }).join('');
+
+  // Product by QTY
+  const byQty=[...d.products].sort((a,b)=>b.qty-a.qty);
+  document.getElementById('tb-prod-qty').innerHTML=byQty.slice(0,20).map((p,i)=>{
+    const oh=p.onhand;
+    const stk=oh==null?'<span class="dim">—</span>':oh===0?'<span style="color:#c62828;font-weight:700">⚠️ หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️ ${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
+    const avgPrice=p.qty>0?Math.round(p.sales/p.qty):0;
+    return `<tr><td class="bold">${i+1}</td><td style="font-size:10px">${p.name}</td><td style="font-size:9px;color:#888">${p.cat}</td><td class="tR bold">${N(p.qty)} ชิ้น</td><td class="tR">${B(p.sales)}</td><td class="tC">${stk}</td></tr>`;
+  }).join('');
+}
+
+// ─── TAB 2 ────────────────────────────────────────────────────────────
+function r2(d){
+  const s=d.summary, cumR=s.mtd_days/(s.total_days||31);
+
+  // Platform ranking chart (horizontal bar, sorted by %)
+  const plfRanked=[...d.platforms].map(p=>({
+    ...p,
+    pct:p.monthly_target>0?p.actual/(p.monthly_target*cumR)*100:0
+  })).sort((a,b)=>b.pct-a.pct);
+
+  mkch('ch-plf-rank',{type:'bar',
+    data:{
+      labels:plfRanked.map(p=>`${p.name}  (${B(p.actual)})`),
+      datasets:[{
+        label:'% vs เป้าสะสม',
+        data:plfRanked.map(p=>+p.pct.toFixed(1)),
+        backgroundColor:plfRanked.map(p=>p.pct>=100?'rgba(46,125,50,.85)':p.pct>=80?'rgba(230,81,0,.85)':'rgba(198,40,40,.85)'),
+        borderRadius:6,
+      },{
+        label:'เป้า 100%',
+        data:plfRanked.map(()=>100),
+        type:'line',borderColor:'rgba(26,35,126,.4)',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false
+      }]
+    },
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{font:{size:9},boxWidth:10}},
+        tooltip:{callbacks:{label:ctx=>ctx.datasetIndex===0?` ${ctx.raw}% vs เป้าสะสม`:undefined}}},
+      scales:{
+        x:{min:0,max:160,ticks:{callback:v=>v+'%',font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},
+        y:{ticks:{font:{size:11,weight:'bold'}}}
+      }}
+  });
+
+  // Platform section label
+  document.getElementById('plf-sec').textContent=`ประสิทธิภาพแต่ละ Platform (MTD ${s.mtd_days} วัน)`;
+
+  // Platform cards
+  document.getElementById('plf-cards').innerHTML=d.platforms.map(p=>{
+    const cumT=p.monthly_target*cumR;
+    const pct=cumT>0?p.actual/cumT*100:null;
+    const gpPct=p.actual>0?(p.gp/p.actual*100).toFixed(1):'0.0';
+    const col=plfBrd[p.name]||'#888';
+    return `<div class="pc" style="border-top-color:${col}">
+      <div class="pn" style="color:${col}">${p.name}</div>
+      <div class="pcnt">${p.count} ร้าน | เป้า ${B(p.monthly_target)}/เดือน</div>
+      <div class="pv">${B(p.actual)}</div>
+      <div class="psub">MTD Actual (${s.mtd_days} วัน)</div>
+      <div style="margin-top:5px">${tag(pct)}</div>
+      <div style="font-size:10px;margin-top:4px;color:#555">GP: ${B(Math.round(p.gp))} <strong style="color:#2e7d32">(${gpPct}%)</strong></div>
+    </div>`;
+  }).join('');
+
+  // Seller cards
+  const sellers={};
+  d.stores.forEach(st=>{
+    const m=(st.manager&&st.manager!=='-')?st.manager:'Live/ไม่ระบุ';
+    if(!sellers[m])sellers[m]={actual:0,gp:0,target:0,stores:[]};
+    sellers[m].actual+=st.actual;sellers[m].gp+=st.gp;sellers[m].target+=(st.monthly_target||0);sellers[m].stores.push(st.name);
+  });
+  document.getElementById('sl-cards').innerHTML=Object.entries(sellers).sort((a,b)=>b[1].actual-a[1].actual).map(([nm,v])=>{
+    const gpP=v.actual>0?(v.gp/v.actual*100).toFixed(1):'0';
+    const cumT=v.target*cumR;const pct=cumT>0?v.actual/cumT*100:null;
+    const stList=v.stores.slice(0,3).join(', ')+(v.stores.length>3?` +${v.stores.length-3}`:'');
+    return `<div class="sc"><div class="sn">👤 ${nm}</div><div class="sm">${v.stores.length} ร้าน: ${stList}</div><div class="ss"><div><div class="ss-n" style="color:#1a237e">${B(v.actual)}</div><div class="ss-l">MTD Actual</div></div><div><div class="ss-n" style="color:#2e7d32">${gpP}%</div><div class="ss-l">GP%</div></div>${pct!=null?`<div><div class="ss-n" style="color:${pct>=100?'#2e7d32':pct>=80?'#e65100':'#c62828'}">${pct.toFixed(0)}%</div><div class="ss-l">vs เป้าสะสม</div></div>`:''}</div></div>`;
+  }).join('');
+
+  // GP ranking
+  document.getElementById('tb-gp').innerHTML=[...d.stores].filter(s=>s.gp_pct!=null).sort((a,b)=>b.gp_pct-a.gp_pct).map((st,i)=>`
+    <tr><td class="bold">${i+1}</td><td class="bold" style="font-size:10px">${st.name}</td><td style="color:${plfC[st.platform]||'#555'};font-weight:700;font-size:10px">${st.platform}</td><td style="font-size:10px">${st.manager!=='-'?st.manager:'—'}</td><td class="tR">${B(st.actual)}</td><td class="tR">${B(st.gp)}</td><td class="tC"><span class="tag ${st.gp_pct>=40?'tg':st.gp_pct>=30?'tb':'to'}">${P(st.gp_pct)}</span></td></tr>`).join('');
+}
+
+// ─── TAB 3 ────────────────────────────────────────────────────────────
+function r3(d){
+  const s=d.summary, dt=d.daily_targets, mt=s.mtd_days, avgA=s.avg_daily;
+
+  // Trend chart
+  mkch('ch-trend',{type:'bar',
+    data:{labels:dt.map(x=>''+x.day),datasets:[
+      {label:'เป้ารายวัน',data:dt.map(x=>x.total),backgroundColor:dt.map((_,i)=>i<mt?'rgba(26,35,126,.45)':'rgba(26,35,126,.12)'),borderRadius:3,order:2},
+      {label:'ค่าเฉลี่ย Actual/วัน',data:dt.map(()=>avgA),type:'line',borderColor:'#e53935',backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,order:1},
+      {label:'Projection',data:dt.map((_,i)=>i>=mt?avgA:null),type:'line',borderColor:'#00bcd4',backgroundColor:'rgba(0,188,212,.08)',fill:true,borderWidth:1.5,pointRadius:0,borderDash:[3,3],order:0}
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
+      scales:{y:{ticks:{callback:v=>'฿'+(v/1000).toFixed(0)+'K',font:{size:9}}},x:{ticks:{font:{size:9}}}}}
+  });
+
+  // Cumulative chart
+  let cT=0;
+  const cumT=dt.map(x=>{cT+=x.total;return cT;});
+  const projL=dt.map((_,i)=>{if(i<mt-1)return null;let a=0;for(let j=mt;j<=i;j++)a+=avgA;return s.mtd_actual+a;});
+  mkch('ch-cum',{type:'line',
+    data:{labels:dt.map(x=>''+x.day),datasets:[
+      {label:'เป้าสะสม',data:cumT,borderColor:'#e53935',backgroundColor:'transparent',borderDash:[6,4],pointRadius:0,borderWidth:2},
+      {label:`Actual (Day ${mt}: ${B(s.mtd_actual)})`,data:dt.map((_,i)=>i===mt-1?s.mtd_actual:null),borderColor:'#2e7d32',fill:false,pointRadius:dt.map((_,i)=>i===mt-1?7:0),pointBackgroundColor:'#2e7d32',borderWidth:0},
+      {label:'Projection',data:projL,borderColor:'#00bcd4',backgroundColor:'rgba(0,188,212,.08)',fill:true,borderDash:[4,4],pointRadius:0,borderWidth:1.5}
+    ]},
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
+      scales:{y:{ticks:{callback:v=>'฿'+(v/1000000).toFixed(1)+'M',font:{size:9}}},x:{ticks:{font:{size:9},maxTicksLimit:12}}}}
+  });
+
+  // ─── Industry Benchmark ───────────────────────────────────────────
+  const cumR=mt/(s.total_days||31);
+  const ourGP=s.gp_pct;
+  const ttPct=d.platforms.find(p=>p.name==='TikTok')?.actual/((3200000)*cumR)*100||0;
+  const shPct=d.platforms.find(p=>p.name==='Shopee')?.actual/((3000000)*cumR)*100||0;
+  const lzPct=d.platforms.find(p=>p.name==='Lazada')?.actual/((2900000)*cumR)*100||0;
+
+  const bmRows=[
+    {metric:'GP% (Gross Margin)',ours:ourGP.toFixed(1)+'%',ind:'25–33%',top:'35–45%',status:ourGP>=35?'🟢 ดีมาก':ourGP>=28?'🟡 OK':'🔴 ต่ำ',note:'ธุรกิจเครื่องครัว/ของใช้ในบ้านออนไลน์ไทย'},
+    {metric:'TikTok %vs เป้าสะสม',ours:ttPct.toFixed(0)+'%',ind:'80–100%',top:'>110%',status:ttPct>=110?'🟢 Star':'🟡 Good',note:'TikTok Shop ไทยโตเฉลี่ย 40-60% YoY'},
+    {metric:'Shopee %vs เป้าสะสม',ours:shPct.toFixed(0)+'%',ind:'85–100%',top:'>105%',status:shPct>=85?'🟡 OK':'🔴 ต้องแก้',note:'Shopee ยังเป็น Market Leader ไทย'},
+    {metric:'Lazada %vs เป้าสะสม',ours:lzPct.toFixed(0)+'%',ind:'80–100%',top:'>105%',status:lzPct>=85?'🟡 OK':'🔴 ต้องแก้',note:'Lazada ตลาดยังดี แต่ต้องการ Promotion'},
+    {metric:'Platform Diversification',ours:'4 Platforms',ind:'2–3 platforms',top:'4+ platforms',status:'🟢 ดีมาก',note:'การกระจายความเสี่ยง — ดีกว่าค่าเฉลี่ยอุตสาหกรรม'},
+    {metric:'หมวดสินค้า Concentration',ours:'เครื่องครัว 55%',ind:'<50% top cat',top:'<35% top cat',status:'🟠 เสี่ยง',note:'พึ่งพาหมวดเดียวมากเกินไป — ควรกระจาย'},
+  ];
+
+  document.getElementById('bm-card').innerHTML=`
+    <div class="ct">เปรียบเทียบกับมาตรฐาน Online Retail ไทย (ธุรกิจเครื่องครัว/ของใช้ในบ้าน)</div>
+    <table>
+      <thead><tr><th>Metric</th><th class="tC">เตือนใจ (ปัจจุบัน)</th><th class="tC">Industry Avg</th><th class="tC">Best-in-Class</th><th class="tC">สถานะ</th><th>หมายเหตุ</th></tr></thead>
+      <tbody>${bmRows.map(r=>`<tr><td class="bold" style="font-size:11px">${r.metric}</td><td class="tC bold" style="color:#1a237e">${r.ours}</td><td class="tC" style="color:#888">${r.ind}</td><td class="tC" style="color:#2e7d32">${r.top}</td><td class="tC">${r.status}</td><td style="font-size:10px;color:#777">${r.note}</td></tr>`).join('')}</tbody>
+    </table>
+  `;
+
+  // ─── Action Plan ─────────────────────────────────────────────────
+  const cumR2=s.mtd_days/(s.total_days||31);
+  const ttAct=d.platforms.find(p=>p.name==='TikTok')?.actual||0;
+  const ttTgt=3200000*cumR2;
+  const apItems=[
+    {
+      ico:'⭐',color:'#2e7d32',priority:'QUICK WIN',
+      title:'TikTok เป็น Star — ขยาย Live Hours ทันที',
+      desc:`TikTok ทำได้ ${ttPct.toFixed(0)}% ของเป้าสะสม (${B(Math.round(ttAct))} vs เป้า ${B(Math.round(ttTgt))}) — เกินเป้าแล้ว! เพิ่ม Live session 1-2 ชั่วโมง/วัน, เพิ่ม TikTok Affiliate creators, Focus สินค้า margin สูง (เครื่องครัว, D-Sine กล่อง)`
+    },
+    {
+      ico:'🔴',color:'#c62828',priority:'URGENT',
+      title:'Shopee & Lazada ต่ำกว่าเป้า — Review Pricing + Flash Deal',
+      desc:`Shopee ${shPct.toFixed(0)}% / Lazada ${lzPct.toFixed(0)}% ของเป้าสะสม — ต่ำกว่า industry avg. แนะนำ: (1) ตั้ง Flash sale สุดสัปดาห์ละ 1 ครั้ง (2) Review ราคาเทียบคู่แข่ง (3) เพิ่ม Voucher/Free shipping ในร้านที่ต่ำสุด เช่น ร้านเมกา, PP289_shop, บะหมี่ ชอป`
+    },
+    {
+      ico:'📦',color:'#e65100',priority:'HIGH',
+      title:'Top Seller สต็อกต่ำ — Reorder ด่วน',
+      desc:`เสื่อน้ำมันม้วนใหญ่ (ยอด ฿1.37M) ไม่มีข้อมูล onhand — ต้องตรวจสต็อกทันที. หม้อก๋วยเตี๋ยว36cm (onhand=20), หม้อนึ่ง44cm (onhand=25) — ถ้า stockout จะกระทบยอดขาย TikTok Live โดยตรง. ต้องมี Safety Stock buffer อย่างน้อย 2 สัปดาห์`
+    },
+    {
+      ico:'🎯',color:'#1a237e',priority:'STRATEGIC',
+      title:'V-premium ยอดสูงสุด แต่ไม่มีเป้า — ตั้ง Target ทันที',
+      desc:`V-premium ทำ ${B(2047160)} (อันดับ 1 ทุกร้าน, GP 44.8%) แต่ไม่มีเป้าหมายรายเดือน ทำให้ไม่สามารถ track performance ได้. แนะนำตั้งเป้า: ฿3.5-4M/เดือน ตาม run-rate ปัจจุบัน พร้อมแบ่ง target D-SIGN HOME แยกต่างหาก`
+    },
+    {
+      ico:'🌈',color:'#6a1b9a',priority:'MEDIUM TERM',
+      title:'กระจาย Product Category — ลด Concentration Risk',
+      desc:`เครื่องครัว 55% ของรายได้ทั้งหมด — เสี่ยงเกินไป. Best practice <35%. แนะนำ: เพิ่ม SKU ใน พลาสติก (16.6% → 20%+), เครื่องนอน (18.8% แต่ผูกกับเสื่อน้ำมัน), minimart (5.7% → 10%). เปิด TikTok Live channel ใหม่สำหรับสินค้า non-kitchenware`
+    },
+    {
+      ico:'📊',color:'#555',priority:'PROCESS',
+      title:'เพิ่ม Daily Sales Tracking — บันทึก Actual ต่อวัน',
+      desc:`ปัจจุบันไม่มีข้อมูล Actual sales รายวัน ทำให้ไม่สามารถวิเคราะห์ว่าวันไหนผ่านเป้าจริงๆ ได้. แนะนำ: กรอก Actual ลงใน Target Excel ทุกวัน (Column Actual บาท) เพื่อให้ Dashboard สมบูรณ์และ Action Plan แม่นยำยิ่งขึ้น`
+    },
+  ];
+
+  document.getElementById('ap-list').innerHTML=apItems.map((item,i)=>`
+    <div class="ap-item" style="border-left-color:${item.color}">
+      <div class="ap-ico">${item.ico}</div>
+      <div class="ap-body">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span style="background:${item.color};color:#fff;border-radius:12px;padding:1px 10px;font-size:9px;font-weight:800">${item.priority}</span>
+          <div class="ap-title">${item.title}</div>
+        </div>
+        <div class="ap-desc">${item.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── STATIC DATA ─────────────────────────────────────────────────────
+const STATIC_DATA = {"meta":{"file":"sale-1-17-05-2026.xlsx","mtd_days":17,"total_days":31},"summary":{"monthly_target":14000000,"mtd_actual":7345057,"cum_target":7450000,"gp_amount":2673531,"gp_pct":36.4,"avg_daily":432062,"remaining":6654943,"days_left":14,"req_daily":475353,"urg_ratio":1.1,"projection":13393927,"mtd_days":17,"total_days":31},"stores":[{"name":"V-premium","platform":"โรงเสื่อ","manager":"-","monthly_target":0,"actual":2047160,"gp":917063,"gp_pct":44.8},{"name":"D-Sine 2024","platform":"TikTok Live","manager":"D-Sine","monthly_target":670000,"actual":942142,"gp":346514,"gp_pct":36.8},{"name":"ครบดี ถูกดี","platform":"TikTok Live","manager":"ครบดี","monthly_target":970000,"actual":678892,"gp":221218,"gp_pct":32.6},{"name":"เตือนใจเครื่องครัว","platform":"TikTok Live","manager":"เตือนใจ","monthly_target":720000,"actual":561665,"gp":200848,"gp_pct":35.8},{"name":"ร้านเอ็มบีเค","platform":"Shopee","manager":"พี่แอน","monthly_target":1000000,"actual":476812,"gp":141904,"gp_pct":29.8},{"name":"ร้านเมียงดง","platform":"Shopee","manager":"พี่แอน","monthly_target":500000,"actual":368315,"gp":105917,"gp_pct":28.8},{"name":"D-SIGN HOME","platform":"โรงเสื่อ","manager":"-","monthly_target":0,"actual":260889,"gp":137305,"gp_pct":52.6},{"name":"พารากอน","platform":"Lazada","manager":"พี่มาย","monthly_target":700000,"actual":244628,"gp":71085,"gp_pct":29.1},{"name":"ร้านกิมหยง","platform":"Lazada","manager":"พี่มาย","monthly_target":400000,"actual":220846,"gp":65642,"gp_pct":29.7},{"name":"มิสเตอร์ทีเจ","platform":"TikTok","manager":"-","monthly_target":0,"actual":155191,"gp":49419,"gp_pct":31.8},{"name":"ชิบูย่า","platform":"Lazada","manager":"พี่แอน","monthly_target":350000,"actual":144046,"gp":40307,"gp_pct":28.0},{"name":"ร้านTJ_2021B","platform":"Lazada","manager":"พี่มาย","monthly_target":250000,"actual":134242,"gp":39593,"gp_pct":29.5},{"name":"ร้านไนติงเกล","platform":"Lazada","manager":"พี่แอน","monthly_target":350000,"actual":132051,"gp":34814,"gp_pct":26.4},{"name":"Ratchada2024","platform":"Shopee","manager":"พี่แอน","monthly_target":250000,"actual":131683,"gp":40782,"gp_pct":31.0},{"name":"ร้านก้องแก้ว","platform":"Lazada","manager":"พี่มาย","monthly_target":350000,"actual":129374,"gp":39491,"gp_pct":30.5},{"name":"ร้านจังซิลอน","platform":"Shopee","manager":"พี่มาย","monthly_target":90000,"actual":117039,"gp":36197,"gp_pct":30.9},{"name":"BAITONG 50 SHOP (ใบตอง)","platform":"Shopee","manager":"จูน","monthly_target":350000,"actual":88768,"gp":26410,"gp_pct":29.8},{"name":"NP SHOP","platform":"Shopee","manager":"จูน","monthly_target":300000,"actual":77880,"gp":25679,"gp_pct":33.0},{"name":"ร้านประตูน้ำ","platform":"Lazada","manager":"พี่แอน","monthly_target":60000,"actual":70523,"gp":22608,"gp_pct":32.1},{"name":"แบรนด์ 333","platform":"Lazada","manager":"พี่มาย","monthly_target":50000,"actual":59939,"gp":18816,"gp_pct":31.4},{"name":"OK_TJ 2024","platform":"Shopee","manager":"พี่แอน","monthly_target":400000,"actual":54336,"gp":15634,"gp_pct":28.8},{"name":"wiwi online","platform":"Lazada","manager":"พี่แอน","monthly_target":100000,"actual":49654,"gp":15683,"gp_pct":31.6},{"name":"DD_Onl","platform":"Lazada","manager":"พี่มาย","monthly_target":80000,"actual":41151,"gp":11842,"gp_pct":28.8},{"name":"KK Shop2024","platform":"Lazada","manager":"จูน","monthly_target":80000,"actual":36110,"gp":10569,"gp_pct":29.3},{"name":"HONEY 789","platform":"Lazada","manager":"จูน","monthly_target":50000,"actual":25571,"gp":8481,"gp_pct":33.2},{"name":"เครื่องครัวบัวทอง","platform":"TikTok","manager":"-","monthly_target":0,"actual":20570,"gp":6958,"gp_pct":33.8},{"name":"ร้านแพลตินัม","platform":"Shopee","manager":"พี่แอน","monthly_target":50000,"actual":18652,"gp":5152,"gp_pct":27.6},{"name":"อุ่นใจของในบ้าน","platform":"TikTok","manager":"-","monthly_target":0,"actual":16335,"gp":5043,"gp_pct":30.9},{"name":"ร้านเมกา","platform":"Lazada","manager":"จูน","monthly_target":30000,"actual":11723,"gp":3695,"gp_pct":31.5},{"name":"TJ_2021shop","platform":"Shopee","manager":"พี่มาย","monthly_target":10000,"actual":9185,"gp":2722,"gp_pct":29.6},{"name":"Smild_shop","platform":"Shopee","manager":"พี่แอน","monthly_target":50000,"actual":8902,"gp":2837,"gp_pct":31.9},{"name":"บะหมี่ ชอป","platform":"Lazada","manager":"พี่มาย","monthly_target":20000,"actual":7962,"gp":2514,"gp_pct":31.6},{"name":"PP289_shop","platform":"Lazada","manager":"จูน","monthly_target":30000,"actual":2821,"gp":789,"gp_pct":28.0}],"products":[{"name":"เสื่อน้ำมันม้วนใหญ่27m.","cat":"เครื่องนอน","sales":1369697,"qty":27953,"onhand":null},{"name":"กล่องฝาล็อค60l.สีดำD-sine","cat":"พลาสติก","sales":574557,"qty":6318,"onhand":960},{"name":"หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":189299,"qty":62,"onhand":null},{"name":"หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":161557,"qty":113,"onhand":null},{"name":"หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":152704,"qty":39,"onhand":null},{"name":"หม้อสตูว์22*20 พระอาทิตย์","cat":"เครื่องครัว","sales":145604,"qty":733,"onhand":154},{"name":"หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":142216,"qty":53,"onhand":119},{"name":"สบู่เบนเนทVitamin C&E 130g.","cat":"minimart","sales":126798,"qty":2418,"onhand":null},{"name":"ชุดหม้อหุงต้ม18,20cm.+ทัพพีแขก+ทัพพีเล็ก+ช้อนส้อม(หัวม้าลาย)","cat":"เครื่องครัว","sales":109426,"qty":126,"onhand":null},{"name":"เข่งNo.5สีดำ(ตราปลามังกร)","cat":"พลาสติก","sales":98058,"qty":2688,"onhand":828},{"name":"ปิ่นโตสแตนเลส12*3(พระอาทิตย์)","cat":"เครื่องครัว","sales":83913,"qty":416,"onhand":null},{"name":"ชุดหม้อ6ชิ้นNo.ET6-035(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":77042,"qty":66,"onhand":113},{"name":"สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น","cat":"minimart","sales":73884,"qty":1836,"onhand":null},{"name":"หม้อนึ่ง40cm.(จระเข้)","cat":"เครื่องครัว","sales":69574,"qty":59,"onhand":null},{"name":"สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น","cat":"minimart","sales":66978,"qty":1602,"onhand":null},{"name":"ขูดมะม่วงNo.218(KIWI)","cat":"เครื่องครัว","sales":66920,"qty":604,"onhand":null},{"name":"หม้อหุงต้มHomey36cm.No.2610360(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":64920,"qty":61,"onhand":null},{"name":"หม้อก๋วยเตี๋ยว36cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)","cat":"เครื่องครัว","sales":63412,"qty":29,"onhand":20},{"name":"หม้อหุงต้ม28cm.(Carryม้าลาย)","cat":"เครื่องครัว","sales":60447,"qty":57,"onhand":99},{"name":"หม้อนึ่ง44cm.(จระเข้)","cat":"เครื่องครัว","sales":58043,"qty":37,"onhand":25}],"categories":[{"name":"เครื่องครัว","sales":4047862,"pct":55.08},{"name":"เครื่องนอน","sales":1384245,"pct":18.84},{"name":"พลาสติก","sales":1218892,"pct":16.59},{"name":"minimart","sales":419128,"pct":5.70},{"name":"เครื่องเรือน","sales":149126,"pct":2.03},{"name":"อุปกรณ์การเกษตร","sales":67990,"pct":0.93},{"name":"แปรง/เส้นใยทำความสะอาด","sales":23119,"pct":0.31},{"name":"ของเล่น","sales":10882,"pct":0.15},{"name":"ของใช้สัตว์เลี้ยง","sales":9838,"pct":0.13},{"name":"เครื่องนุ่งห่ม","sales":6904,"pct":0.09},{"name":"เครื่องใช้ไฟฟ้า","sales":5581,"pct":0.08},{"name":"ชุดสังฆภัณฑ์","sales":2135,"pct":0.03}],"platforms":[{"name":"โรงเสื่อ","monthly_target":4900000,"actual":2308049,"gp":1054368,"count":2},{"name":"Lazada","monthly_target":2900000,"actual":1310641,"gp":385929,"count":15},{"name":"Shopee","monthly_target":3000000,"actual":1351572,"gp":403233,"count":10},{"name":"TikTok","monthly_target":3200000,"actual":2374795,"gp":830001,"count":6}],"daily_targets":[{"day":1,"total":440000,"rso":130000,"lz":80000,"sh":85000,"tt":100000},{"day":2,"total":440000,"rso":130000,"lz":80000,"sh":85000,"tt":100000},{"day":3,"total":440000,"rso":130000,"lz":80000,"sh":85000,"tt":100000},{"day":4,"total":410000,"rso":160000,"lz":80000,"sh":80000,"tt":130000},{"day":5,"total":550000,"rso":200000,"lz":100000,"sh":120000,"tt":200000},{"day":6,"total":440000,"rso":190000,"lz":95000,"sh":110000,"tt":100000},{"day":7,"total":430000,"rso":180000,"lz":95000,"sh":95000,"tt":100000},{"day":8,"total":430000,"rso":180000,"lz":90000,"sh":95000,"tt":100000},{"day":9,"total":430000,"rso":160000,"lz":90000,"sh":95000,"tt":100000},{"day":10,"total":430000,"rso":140000,"lz":90000,"sh":95000,"tt":100000},{"day":11,"total":430000,"rso":150000,"lz":90000,"sh":95000,"tt":100000},{"day":12,"total":430000,"rso":150000,"lz":90000,"sh":95000,"tt":100000},{"day":13,"total":430000,"rso":150000,"lz":90000,"sh":95000,"tt":100000},{"day":14,"total":430000,"rso":150000,"lz":90000,"sh":95000,"tt":100000},{"day":15,"total":430000,"rso":150000,"lz":95000,"sh":95000,"tt":90000},{"day":16,"total":420000,"rso":150000,"lz":95000,"sh":95000,"tt":80000},{"day":17,"total":440000,"rso":150000,"lz":95000,"sh":95000,"tt":80000},{"day":18,"total":440000,"rso":150000,"lz":95000,"sh":95000,"tt":80000},{"day":19,"total":440000,"rso":150000,"lz":90000,"sh":90000,"tt":80000},{"day":20,"total":440000,"rso":150000,"lz":90000,"sh":90000,"tt":85000},{"day":21,"total":440000,"rso":150000,"lz":90000,"sh":90000,"tt":85000},{"day":22,"total":440000,"rso":150000,"lz":90000,"sh":90000,"tt":85000},{"day":23,"total":440000,"rso":150000,"lz":90000,"sh":90000,"tt":85000},{"day":24,"total":440000,"rso":150000,"lz":90000,"sh":90000,"tt":100000},{"day":25,"total":450000,"rso":160000,"lz":95000,"sh":95000,"tt":100000},{"day":26,"total":460000,"rso":160000,"lz":95000,"sh":95000,"tt":100000},{"day":27,"total":510000,"rso":160000,"lz":90000,"sh":95000,"tt":100000},{"day":28,"total":510000,"rso":180000,"lz":110000,"sh":110000,"tt":130000},{"day":29,"total":510000,"rso":180000,"lz":110000,"sh":120000,"tt":130000},{"day":30,"total":510000,"rso":180000,"lz":120000,"sh":120000,"tt":130000},{"day":31,"total":520000,"rso":180000,"lz":120000,"sh":120000,"tt":130000}]};
+
+// ─── LOAD ─────────────────────────────────────────────────────────────
+function load(){
+  const d=STATIC_DATA;
+  GD=d;
+  document.getElementById('hdr-meta').textContent=`ไฟล์: ${d.meta.file} | ข้อมูล ${d.meta.mtd_days} วัน (1–${d.meta.mtd_days} พ.ค. 2569) | อัปเดตโดย Claude`;
+  document.getElementById('hdr-badge').textContent=`พ.ค. ${d.meta.mtd_days}/${d.meta.total_days} วัน`;
+  r0(d);
+  setTimeout(()=>{r1(d);RD[1]=true;r2(d);RD[2]=true;r3(d);RD[3]=true;},300);
+}
+load();
+</script>
+</body>
+</html>
