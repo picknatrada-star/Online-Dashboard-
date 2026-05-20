@@ -8,7 +8,7 @@
 <style>
 :root{color-scheme:light;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13px;}
+body{font-family:"Segoe UI",Tahoma,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13px;}
 .hdr{background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
 .hdr-t{font-size:15px;font-weight:800;letter-spacing:.3px;}
 .hdr-s{font-size:10px;opacity:.75;margin-top:3px;}
@@ -46,7 +46,9 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f2f5;color:#1a1a2e;f
 .ct{font-size:11px;font-weight:700;color:#444;margin-bottom:9px;}
 .row2{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px;}
 .row2h{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-@media(max-width:700px){.row2,.row2h{grid-template-columns:1fr;}}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;}
+@media(max-width:900px){.row3{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.row3,.row2,.row2h{grid-template-columns:1fr;}}
 .plf4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
 @media(max-width:700px){.plf4{grid-template-columns:repeat(2,1fr);}}
 .pc{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);border-top:4px solid #ccc;}
@@ -59,17 +61,14 @@ body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f2f5;color:#1a1a2e;f
 .sc{background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
 .sn{font-weight:800;color:#1a237e;font-size:13px;margin-bottom:2px;}
 .sm{font-size:9px;color:#aaa;margin-bottom:7px;line-height:1.4;}
-.ss{display:flex;gap:12px;}
+.ss{display:flex;gap:12px;flex-wrap:wrap;}
 .ss-n{font-size:14px;font-weight:800;}.ss-l{font-size:9px;color:#999;margin-top:1px;}
 table{width:100%;border-collapse:collapse;font-size:11px;}
 th{background:#f5f7fa;color:#666;font-weight:700;padding:6px 8px;text-align:left;border-bottom:1px solid #e0e0e0;white-space:nowrap;font-size:10px;}
 td{padding:6px 8px;border-bottom:1px solid #f5f5f5;}
 tr:last-child td{border-bottom:none;}tr:hover td{background:#fafbff;}
-.tR{text-align:right;font-variant-numeric:tabular-nums;}.tC{text-align:center;}.bold{font-weight:700;}.dim{color:#ccc;}
+.tR{text-align:right;font-variant-numeric:tabular-nums;}.tC{text-align:center;}.bold{font-weight:700;}.dim{color:#bbb;}
 .sec{font-size:10px;font-weight:800;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin:12px 0 7px;}
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:#777;}
-.spin{width:34px;height:34px;border:3px solid #e0e0e0;border-top-color:#1a237e;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:13px;}
-@keyframes spin{to{transform:rotate(360deg);}}
 .btn-tog{padding:5px 14px;border-radius:20px;border:1px solid #c5cae9;background:#fff;font-size:11px;cursor:pointer;margin-right:6px;color:#555;font-family:inherit;}
 .btn-tog.on{background:#1a237e;color:#fff;border-color:#1a237e;font-weight:700;}
 .day-dot{display:inline-block;width:22px;height:22px;border-radius:50%;font-size:9px;line-height:22px;text-align:center;font-weight:700;color:#fff;margin:2px;}
@@ -78,464 +77,548 @@ tr:last-child td{border-bottom:none;}tr:hover td{background:#fafbff;}
 .ap-body{flex:1;}
 .ap-title{font-size:12px;font-weight:800;color:#1a1a2e;margin-bottom:3px;}
 .ap-desc{font-size:11px;color:#555;line-height:1.5;}
-.bm-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
-.bm-cell{background:#f8f9fa;border-radius:8px;padding:10px;text-align:center;}
-.bm-val{font-size:14px;font-weight:800;}
-.bm-lbl{font-size:9px;color:#888;margin-top:2px;}
 .cat-hdr{cursor:pointer;user-select:none;}
 .cat-hdr:hover td{background:#f0f4ff!important;}
+.store-chip{display:inline-block;padding:5px 12px;border-radius:20px;border:1.5px solid #c5cae9;background:#fff;font-size:11px;cursor:pointer;margin:3px;color:#444;font-family:inherit;transition:.15s;}
+.store-chip:hover{border-color:#1a237e;color:#1a237e;}
+.store-chip.on{background:#1a237e;color:#fff;border-color:#1a237e;font-weight:700;}
+.store-detail{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:10px;border-top:3px solid #1a237e;}
+.trend-card{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:10px;border-left:4px solid #1a237e;}
+.trend-ttl{font-size:12px;font-weight:800;color:#1a237e;margin-bottom:6px;}
+.trend-body{font-size:11px;color:#444;line-height:1.7;}
+.yoy-up{color:#2e7d32;font-weight:700;}
+.yoy-dn{color:#c62828;font-weight:700;}
+.rank-num{display:inline-block;width:20px;height:20px;border-radius:50%;background:#1a237e;color:#fff;font-size:9px;font-weight:800;text-align:center;line-height:20px;margin-right:5px;}
+.rank-num.gold{background:#f9a825;}.rank-num.silver{background:#9e9e9e;}.rank-num.bronze{background:#a1887f;}
+
+.prod-clickable{cursor:pointer;color:#1a237e;text-decoration:underline dotted #1a237e;}
+.prod-clickable:hover{color:#283593;background:#e8eaf6;}
+.prod-drill{background:#f8f9fa;border-left:3px solid #1a237e;}
+.prod-drill td{padding:8px 10px!important;}
+.nm-red{color:#c62828;font-weight:700;}
+.nm-orange{color:#e65100;font-weight:700;}
+.dos-badge{display:inline-block;border-radius:10px;padding:2px 9px;font-size:10px;font-weight:700;}
+.dos-red{background:#ffebee;color:#c62828;}
+.dos-orange{background:#fff3e0;color:#e65100;}
+.dos-yellow{background:#fffde7;color:#f9a825;}
 </style>
 </head>
 <body>
 
 <div class="hdr">
   <div>
-    <div class="hdr-t">📊 Online Sales Dashboard — เตือนใจ พาณิชย์ กรุ๊ป</div>
+    <div class="hdr-t">&#128202; Online Sales Dashboard — เตือนใจ พาณิชย์ กรุ๊ป</div>
     <div class="hdr-s" id="hdr-meta">กำลังโหลด...</div>
   </div>
   <div class="hdr-b" id="hdr-badge">Online Division</div>
 </div>
 
 <div class="tabs">
-  <div class="tab on" onclick="sw(0)">🏠 ภาพรวม &amp; เป้าหมาย</div>
-  <div class="tab" onclick="sw(1)">🔍 เจาะลึกยอดขาย &amp; สินค้า</div>
-  <div class="tab" onclick="sw(2)">⚡ Platform &amp; ทีมขาย</div>
-  <div class="tab" onclick="sw(3)">📈 แนวโน้ม &amp; Action Plan</div>
+  <div class="tab on" onclick="sw(0)">&#127968; ภาพรวม &amp; เป้าหมาย</div>
+  <div class="tab" onclick="sw(1)">&#128269; เจาะลึกยอดขาย &amp; สินค้า</div>
+  <div class="tab" onclick="sw(2)">&#9889; Platform &amp; ทีมขาย</div>
+  <div class="tab" onclick="sw(3)">&#128200; แนวโน้ม &amp; Action Plan</div>
 </div>
 
 <div class="pg">
 
-<!-- ═══ TAB 0 ═══ -->
+<!-- TAB 0 -->
 <div class="panel on" id="p0">
-  <div id="l0" class="loading"><div class="spin"></div><div>กำลังโหลด...</div></div>
-  <div id="c0" style="display:none">
-    <div class="kpi4" id="kpi-row"></div>
-    <div class="urg" id="urg-panel"></div>
-    <div class="row2h">
-      <div class="card" id="days-panel"></div>
-      <div class="card"><div class="ct">🥧 Platform Mix — สัดส่วนเป้าทั้งเดือน</div><canvas id="ch-donut" height="250"></canvas></div>
-    </div>
+  <div class="kpi4" id="kpi-row"></div>
+  <div class="urg" id="urg-panel"></div>
+  <div class="card" id="days-panel" style="margin-bottom:10px"></div>
+  <div class="row3" id="rank-row">
+    <div class="card"><div class="ct">&#127942; Top 10 ร้าน — ยอดขายสูงสุด</div><table><thead><tr><th>#</th><th>ร้านค้า</th><th class="tR">MTD Actual</th><th class="tC">%เป้า</th></tr></thead><tbody id="rank-sales-body"></tbody></table></div>
+    <div class="card"><div class="ct">&#128200; Top 10 ร้าน — GP% ดีสุด</div><table><thead><tr><th>#</th><th>ร้านค้า</th><th class="tC">GP%</th><th class="tR">GP (฿)</th></tr></thead><tbody id="rank-gp-body"></tbody></table></div>
     <div class="card">
-      <div class="ct">🏆 ร้านค้าทั้งหมด — MTD Actual vs เป้าสะสม (เรียงจากสูง)</div>
-      <table><thead><tr><th>#</th><th>ร้าน</th><th>Platform</th><th>ผู้ดูแล</th><th class="tR">MTD Actual</th><th class="tR">GP (฿)</th><th class="tC">GP%</th><th class="tC">%เป้าสะสม</th><th class="tC">สถานะ</th></tr></thead><tbody id="tb-stores-main"></tbody></table>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;">
+        <span class="ct" style="margin-bottom:0">&#127873; Top 10 สินค้าขายดี</span>
+        <div><button class="btn-tog on" id="pt-val" onclick="togPT('val')">฿ มูลค่า</button><button class="btn-tog" id="pt-qty" onclick="togPT('qty')">&#128230; ชิ้น</button></div>
+      </div>
+      <div id="rank-prod-val"><table><thead><tr><th>#</th><th>สินค้า</th><th class="tR">ยอดขาย</th></tr></thead><tbody id="rank-pv-body"></tbody></table></div>
+      <div id="rank-prod-qty" style="display:none"><table><thead><tr><th>#</th><th>สินค้า</th><th class="tR">จำนวน</th></tr></thead><tbody id="rank-pq-body"></tbody></table></div>
     </div>
+  </div>
+  <div class="card">
+    <div class="ct">&#127942; ร้านค้าทั้งหมด — MTD Actual vs เป้าสะสม</div>
+    <table><thead><tr><th>#</th><th>ร้าน</th><th>Platform</th><th>ผู้ดูแล</th><th class="tR">MTD Actual</th><th class="tR">GP (฿)</th><th class="tC">GP%</th><th class="tC">%เป้าสะสม</th><th class="tC">สถานะ</th></tr></thead><tbody id="tb-stores-main"></tbody></table>
   </div>
 </div>
 
-<!-- ═══ TAB 1 ═══ -->
+<!-- TAB 1 -->
 <div class="panel" id="p1">
-  <div class="sec">📦 ยอดขายตามกลุ่มสินค้า — กลุ่มใหญ่ &amp; รายการขายดี</div>
-  <div class="card" id="cat-tree-card">
-    <table id="cat-tree-tbl">
-      <thead><tr><th>#</th><th>กลุ่มสินค้า</th><th class="tR">ยอดขาย</th><th class="tC">%รวม</th><th class="tR">GP รวม*</th><th class="tC">คลิกดูสินค้า</th></tr></thead>
-      <tbody id="cat-tree-body"></tbody>
-    </table>
+  <div class="sec">&#128230; ยอดขายตามกลุ่มสินค้า Top 10 — คลิกดูรายการย่อย</div>
+  <div class="card">
+    <table><thead><tr><th>#</th><th>กลุ่มสินค้า</th><th class="tR">ยอดขาย</th><th class="tC">%รวม</th><th class="tR">จำนวน (ชิ้น)</th><th class="tC">คลิก</th></tr></thead>
+    <tbody id="cat-tree-body"></tbody></table>
   </div>
   <div class="sec" style="display:flex;align-items:center;gap:10px;">
-    <span>🏆 สินค้าขายดี Top 20</span>
-    <button class="btn-tog on" id="tog-val" onclick="togProd('val')">💰 เรียงตามยอดขาย</button>
-    <button class="btn-tog" id="tog-qty" onclick="togProd('qty')">📦 เรียงตามจำนวนชิ้น</button>
+    <span>&#127942; สินค้าขายดี Top 20</span>
+    <button class="btn-tog on" id="tog-val" onclick="togProd('val')">&#128176; เรียงตามยอดขาย</button>
+    <button class="btn-tog" id="tog-qty" onclick="togProd('qty')">&#128230; เรียงตามชิ้น</button>
   </div>
-  <div class="card" id="prod-val-card">
-    <table><thead><tr><th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th><th class="tR">ยอดขาย (฿)</th><th class="tR">GP%*</th><th class="tC">Stock</th></tr></thead><tbody id="tb-prod-val"></tbody></table>
+  <div id="prod-val-card" class="card">
+    <table><thead><tr>
+      <th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th><th class="tR">ยอดขาย (฿)</th><th class="tC">GP%</th><th class="tC">Stock</th>
+      <th class="tC" style="background:#fff8e1;color:#f57f17">MoM &#916;</th><th class="tC" style="background:#fff8e1;color:#f57f17">MoM%</th>
+      <th class="tC" style="background:#e8f5e9;color:#2e7d32">YoY (฿)</th><th class="tC" style="background:#e8f5e9;color:#2e7d32">YoY%</th>
+    </tr></thead><tbody id="tb-prod-val"></tbody></table>
   </div>
-  <div class="card" id="prod-qty-card" style="display:none">
-    <table><thead><tr><th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th><th class="tR">จำนวน (ชิ้น)</th><th class="tR">ยอดขาย (฿)</th><th class="tC">Stock</th></tr></thead><tbody id="tb-prod-qty"></tbody></table>
+  <div id="prod-qty-card" class="card" style="display:none">
+    <table><thead><tr>
+      <th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th><th class="tR">จำนวน (ชิ้น)</th><th class="tR">ยอดขาย (฿)</th><th class="tC">GP%</th><th class="tC">Stock</th>
+      <th class="tC" style="background:#fff8e1;color:#f57f17">MoM &#916;</th><th class="tC" style="background:#fff8e1;color:#f57f17">MoM%</th>
+      <th class="tC" style="background:#e8f5e9;color:#2e7d32">YoY (฿)</th><th class="tC" style="background:#e8f5e9;color:#2e7d32">YoY%</th>
+    </tr></thead><tbody id="tb-prod-qty"></tbody></table>
   </div>
+  
+  <div class="sec" style="display:flex;align-items:center;gap:6px;">
+    <span>&#9888;&#65039; สินค้าเสี่ยง Non-Movement — Top 10 สต็อกค้างสูง</span>
+    <span style="font-size:9px;color:#888">(เรียงจาก Days-of-Supply สูงสุด)</span>
+  </div>
+  <div class="card">
+    <table><thead><tr>
+      <th>#</th><th>ชื่อสินค้า</th><th>กลุ่ม</th>
+      <th class="tR">ยอดขาย MTD</th><th class="tR">Stock (ชิ้น)</th>
+      <th class="tC">Days of Supply</th><th>แนะนำ</th>
+    </tr></thead><tbody id="tb-nm"></tbody></table>
+  </div>
+<div style="font-size:9px;color:#aaa;padding:4px 0 8px;">* MoM = เทียบเดือนที่แล้ว (ยังไม่มีข้อมูล) &nbsp;|&nbsp; YoY = เทียบปีที่แล้วช่วงเดียวกัน (จาก SaleLy) &nbsp;|&nbsp; ข้อมูล MTD ${MTD_DAYS} วัน</div>
 </div>
 
-<!-- ═══ TAB 2 ═══ -->
+<!-- TAB 2 -->
 <div class="panel" id="p2">
-  <div class="sec">🏅 Platform Ranking — เทียบ % เป้าสะสม (เรียงจากดีสุด)</div>
-  <div class="card"><canvas id="ch-plf-rank" height="160"></canvas></div>
+  <div class="sec">&#127937; Platform Ranking — %เป้าสะสม (เรียงดีสุด)</div>
+  <div class="card"><canvas id="ch-plf-rank" height="150"></canvas></div>
   <div class="sec" id="plf-sec">ประสิทธิภาพแต่ละ Platform</div>
   <div class="plf4" id="plf-cards"></div>
   <div class="sec">ประสิทธิภาพทีมขาย — Sales Manager</div>
   <div class="sl3" id="sl-cards"></div>
-  <div class="sec">GP Efficiency Ranking — เรียงตาม GP%</div>
+  <div class="sec">&#127919; ประสิทธิภาพร้านค้า — เลือกร้านเพื่อดูรายละเอียด</div>
+  <div class="card" style="margin-bottom:8px">
+    <div class="ct">เลือกร้านค้า</div>
+    <div id="store-chips"></div>
+  </div>
+  <div class="store-detail" id="store-detail" style="display:none">
+    <div id="store-detail-content"></div>
+  </div>
+  <div class="sec">GP Efficiency — เรียงตาม GP%</div>
   <div class="card"><table><thead><tr><th>#</th><th>ร้าน</th><th>Platform</th><th>ผู้ดูแล</th><th class="tR">MTD Actual</th><th class="tR">GP</th><th class="tC">GP%</th></tr></thead><tbody id="tb-gp"></tbody></table></div>
 </div>
 
-<!-- ═══ TAB 3 ═══ -->
+<!-- TAB 3 -->
 <div class="panel" id="p3">
-  <div class="sec">📅 เป้ารายวัน vs ค่าเฉลี่ย Actual — ทั้งเดือนพฤษภาคม</div>
+  <div class="sec">&#128197; เป้ารายวัน vs ค่าเฉลี่ย Actual</div>
   <div class="card"><canvas id="ch-trend" height="200"></canvas></div>
-  <div class="sec">📊 ยอดสะสม vs เป้าสะสม + Projection</div>
+  <div class="sec">&#128202; ยอดสะสม vs เป้าสะสม + Projection</div>
   <div class="card"><canvas id="ch-cum" height="180"></canvas></div>
-  <div class="sec">🌏 เปรียบเทียบกับอุตสาหกรรม Online Retail ไทย</div>
+  <div class="sec">&#127759; Industry Benchmark — Online Retail ไทย</div>
   <div class="card" id="bm-card"></div>
-  <div class="sec">📋 Action Plan — สิ่งที่ต้องดำเนินการทันที</div>
+  <div class="sec">&#128293; เทรนธุรกิจออนไลน์วันนี้</div>
+  <div id="trend-list"></div>
+  <div class="sec">&#128203; Action Plan</div>
   <div id="ap-list"></div>
 </div>
 
-</div>
+</div><!-- end .pg -->
 
 <script>
-// ─── UTILS ────────────────────────────────────────────────────────────
-const B  = n => n!=null ? '฿'+(+n).toLocaleString('th-TH') : '-';
-const N  = n => n!=null ? (+n).toLocaleString('th-TH') : '-';
-const P  = p => p!=null ? (+p).toFixed(1)+'%' : '-';
-const tag = p => {
-  if(p==null) return '<span class="tag tgr">N/A</span>';
-  const c = p>=100?'tg':p>=80?'to':'tr2';
-  return `<span class="tag ${c}">${(+p).toFixed(1)}%</span>`;
-};
-const plfC = {'โรงเสื่อ':'#7c4dff','Lazada':'#ff6f00','Shopee':'#e53935','TikTok Live':'#222','TikTok':'#444'};
-const plfBrd = {'โรงเสื่อ':'#7c4dff','Lazada':'#ff6f00','Shopee':'#e53935','TikTok':'#444'};
+const B=n=>n!=null?"฿"+(+n).toLocaleString("th-TH"):"-";
+const N=n=>n!=null?(+n).toLocaleString("th-TH"):"-";
+const P=p=>p!=null?(+p).toFixed(1)+"%":"-";
+const tag=p=>{if(p==null)return'<span class="tag tgr">N/A</span>';const c=p>=100?"tg":p>=80?"to":"tr2";return`<span class="tag ${c}">${(+p).toFixed(1)}%</span>`;};
+const plfC={"โรงเสื่อ":"#7c4dff","Lazada":"#ff6f00","Shopee":"#e53935","TikTok Live":"#222","TikTok":"#444"};
+const plfBrd={"โรงเสื่อ":"#7c4dff","Lazada":"#ff6f00","Shopee":"#e53935","TikTok":"#444"};
 const _ch={};
 function mkch(id,cfg){if(_ch[id])_ch[id].destroy();_ch[id]=new Chart(document.getElementById(id),cfg);}
-let GD=null, RD={0:false,1:false,2:false,3:false};
-let _catOpen={};
+let GD=null,RD={0:false,1:false,2:false,3:false},_catOpen={},_selStore=null;
 
 function sw(i){
-  document.querySelectorAll('.tab').forEach((t,x)=>t.classList.toggle('on',x===i));
-  document.querySelectorAll('.panel').forEach((p,x)=>p.classList.toggle('on',x===i));
+  document.querySelectorAll(".tab").forEach((t,x)=>t.classList.toggle("on",x===i));
+  document.querySelectorAll(".panel").forEach((p,x)=>p.classList.toggle("on",x===i));
   if(GD&&!RD[i]){if(i===1)r1(GD);if(i===2)r2(GD);if(i===3)r3(GD);RD[i]=true;}
 }
-
-// Product view toggle
 function togProd(v){
-  document.getElementById('tog-val').classList.toggle('on',v==='val');
-  document.getElementById('tog-qty').classList.toggle('on',v==='qty');
-  document.getElementById('prod-val-card').style.display=v==='val'?'block':'none';
-  document.getElementById('prod-qty-card').style.display=v==='qty'?'block':'none';
+  document.getElementById("tog-val").classList.toggle("on",v==="val");
+  document.getElementById("tog-qty").classList.toggle("on",v==="qty");
+  document.getElementById("prod-val-card").style.display=v==="val"?"block":"none";
+  document.getElementById("prod-qty-card").style.display=v==="qty"?"block":"none";
 }
-
-// Category expand/collapse
+function togPT(v){
+  document.getElementById("pt-val").classList.toggle("on",v==="val");
+  document.getElementById("pt-qty").classList.toggle("on",v==="qty");
+  document.getElementById("rank-prod-val").style.display=v==="val"?"block":"none";
+  document.getElementById("rank-prod-qty").style.display=v==="qty"?"block":"none";
+}
 function togCat(i){
   _catOpen[i]=!_catOpen[i];
-  document.querySelectorAll('.cat-r-'+i).forEach(r=>r.style.display=_catOpen[i]?'':'none');
-  document.getElementById('cat-arr-'+i).textContent=_catOpen[i]?'▲':'▼';
+  document.querySelectorAll(".cat-r-"+i).forEach(r=>r.style.display=_catOpen[i]?"":"none");
+  document.getElementById("cat-arr-"+i).textContent=_catOpen[i]?"▲":"▼";
 }
+function rankNum(i){const cls=i===0?"gold":i===1?"silver":i===2?"bronze":"";return`<span class="rank-num ${cls}">${i+1}</span>`;}
 
-// ─── TAB 0 ────────────────────────────────────────────────────────────
+// ─── TAB 0 ───────────────────────────────────────────────────────────
 function r0(d){
-  const s=d.summary, mt=s.mtd_days, td=s.total_days||31;
+  const s=d.summary,mt=s.mtd_days,td=s.total_days||31;
   const pctCum=s.cum_target>0?s.mtd_actual/s.cum_target*100:0;
   const pctMon=s.monthly_target>0?s.mtd_actual/s.monthly_target*100:0;
   const projGap=s.projection-s.monthly_target;
-
-  // KPI row
-  document.getElementById('kpi-row').innerHTML=`
+  document.getElementById("kpi-row").innerHTML=`
     <div class="kpi b"><div class="kl">MTD Actual (${mt} วัน)</div><div class="kv">${B(s.mtd_actual)}</div><div class="ks">เป้าสะสม ${mt} วัน = ${B(s.cum_target)}</div>${tag(pctCum)}<span class="tag tgr">vs เป้าสะสม</span></div>
     <div class="kpi g"><div class="kl">GP รวม</div><div class="kv" style="color:#2e7d32">${B(s.gp_amount)}</div><div class="ks">กำไรขั้นต้น ${mt} วัน</div><span class="tag tb">GP% = ${P(s.gp_pct)}</span></div>
     <div class="kpi o"><div class="kl">เป้าทั้งเดือน</div><div class="kv">${B(s.monthly_target)}</div><div class="ks">ผ่านไป ${mt}/${td} วัน</div><span class="tag tb">${pctMon.toFixed(1)}% ทำแล้ว</span></div>
-    <div class="kpi p"><div class="kl">Projection เต็มเดือน</div><div class="kv" style="color:${projGap>=0?'#2e7d32':'#c62828'}">${B(s.projection)}</div><div class="ks">avg ${B(Math.round(s.avg_daily))}/วัน × ${td} วัน</div><span class="tag ${projGap>=0?'tg':'tr2'}">${projGap>=0?'✅ ถึงเป้า +'+N(Math.round(projGap)):'⚠️ ขาด '+N(Math.abs(Math.round(projGap)))}</span></div>
+    <div class="kpi p"><div class="kl">Projection เต็มเดือน</div><div class="kv" style="color:${projGap>=0?"#2e7d32":"#c62828"}">${B(s.projection)}</div><div class="ks">avg ${B(Math.round(s.avg_daily))}/วัน × ${td} วัน</div><span class="tag ${projGap>=0?"tg":"tr2"}">${projGap>=0?"✅ ถึงเป้า +"+N(Math.round(projGap)):"⚠️ ขาด "+N(Math.abs(Math.round(projGap)))}</span></div>
   `;
-
-  // Urgency
   const urg=s.urg_ratio;
   let lvCls,lvTxt,lvBrd,msg;
-  if(urg<0.93){lvCls='lvG';lvTxt='🟢 LOW — เกินเป้าแล้ว!';lvBrd='#2e7d32';msg='ยอดดีมาก! รักษาโมเมนตัม + ผลักร้านที่ยังขาดเป้า';}
-  else if(urg<1.08){lvCls='lvY';lvTxt='🟡 MEDIUM — ใกล้เป้า';lvBrd='#f9a825';msg=`ต้องเพิ่มอีก ${((urg-1)*100).toFixed(0)}% — focus ร้านที่ใกล้ 100% เพิ่ม Live session สุดสัปดาห์`;}
-  else if(urg<1.25){lvCls='lvO';lvTxt='🟠 HIGH — ต้องเร่ง';lvBrd='#e65100';msg=`ต้องเพิ่ม ${((urg-1)*100).toFixed(0)}% จาก avg ปัจจุบัน — ประชุมทีม 2×/สัปดาห์, TikTok Live เพิ่ม, Push ร้านต่ำกว่า 60%`;}
-  else{lvCls='lvR';lvTxt='🔴 CRITICAL';lvBrd='#c62828';msg='Max Push — Daily standup, Flash sale, โปรพิเศษ, ตรวจ pipeline สต็อก';}
-  const barW=Math.min(pctCum,130), barC=pctCum>=100?'#2e7d32':pctCum>=80?'#e65100':'#c62828';
-  document.getElementById('urg-panel').style.borderLeftColor=lvBrd;
-  document.getElementById('urg-panel').innerHTML=`
-    <div class="urg-hd">📣 Sales Manager Urgency — ต้อง Push ทีมมากแค่ไหน?</div>
+  if(urg<0.93){lvCls="lvG";lvTxt="🟢 LOW";lvBrd="#2e7d32";msg="ยอดดีมาก! รักษาโมเมนตัม";}
+  else if(urg<1.08){lvCls="lvY";lvTxt="🟡 MEDIUM";lvBrd="#f9a825";msg=`ต้องเพิ่มอีก ${((urg-1)*100).toFixed(0)}% — focus ร้านที่ใกล้ 100%`;}
+  else if(urg<1.25){lvCls="lvO";lvTxt="🟠 HIGH";lvBrd="#e65100";msg=`ต้องเพิ่ม ${((urg-1)*100).toFixed(0)}% จาก avg — เร่ง TikTok Live, Flash sale`;}
+  else{lvCls="lvR";lvTxt="🔴 CRITICAL";lvBrd="#c62828";msg="Max Push — Daily standup, Flash sale, โปรพิเศษ";}
+  const barW=Math.min(pctCum,130),barC=pctCum>=100?"#2e7d32":pctCum>=80?"#e65100":"#c62828";
+  document.getElementById("urg-panel").style.borderLeftColor=lvBrd;
+  document.getElementById("urg-panel").innerHTML=`
+    <div class="urg-hd">📣 Sales Urgency Meter</div>
     <div class="ug4">
-      <div class="us"><div class="us-n" style="color:#c62828">${B(Math.round(s.remaining))}</div><div class="us-l">ยอดที่ยังต้องทำ<br>(จาก Day ${mt})</div></div>
+      <div class="us"><div class="us-n" style="color:#c62828">${B(Math.round(s.remaining))}</div><div class="us-l">ยอดที่ยังต้องทำ</div></div>
       <div class="us"><div class="us-n" style="color:#1a237e">${B(Math.round(s.req_daily))}</div><div class="us-l">ต้องทำ/วัน<br>(${s.days_left} วันที่เหลือ)</div></div>
-      <div class="us"><div class="us-n" style="color:#555">${B(Math.round(s.avg_daily))}</div><div class="us-l">เฉลี่ย/วัน<br>ที่ทำได้จริง</div></div>
-      <div class="us"><div class="us-n" style="color:${urg>1.1?'#c62828':urg>1.0?'#e65100':'#2e7d32'}">${(urg*100).toFixed(0)}%</div><div class="us-l">ต้องเร่งกว่าเดิม<br>กี่ % (vs avg)</div></div>
+      <div class="us"><div class="us-n" style="color:#555">${B(Math.round(s.avg_daily))}</div><div class="us-l">เฉลี่ย/วันจริง</div></div>
+      <div class="us"><div class="us-n" style="color:${urg>1.1?"#c62828":urg>1.0?"#e65100":"#2e7d32"}">${(urg*100).toFixed(0)}%</div><div class="us-l">ต้องเร่งกว่าเดิม</div></div>
     </div>
     <div class="pb-wrap">
       <div style="display:flex;justify-content:space-between;font-size:9px;color:#aaa;margin-bottom:3px;"><span>MTD vs เป้าสะสม</span><span style="font-weight:700;color:${barC}">${pctCum.toFixed(1)}%</span></div>
       <div class="pb-bg"><div class="pb-fill" style="width:${barW}%;background:${barC}"></div></div>
-      <div class="pb-lbl"><span>0%</span><span>50%</span><span>100%</span><span>130%</span></div>
+      <div class="pb-lbl"><span>0%</span><span>100%</span><span>130%</span></div>
     </div>
-    <div style="margin-top:9px;display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;"><span class="lv ${lvCls}">${lvTxt}</span><span class="urg-msg">${msg}</span></div>
+    <span class="lv ${lvCls}">${lvTxt}</span><span class="urg-msg">${msg}</span>
   `;
-
-  // Days hit/miss panel
-  const avgD=s.avg_daily;
-  const dtMtd=d.daily_targets.slice(0,mt);
-  const dHit=dtMtd.filter(x=>avgD>=x.total).length;
-  const dMiss=mt-dHit;
-  const dots=dtMtd.map((x,i)=>{
-    const hit=avgD>=x.total;
-    return `<span class="day-dot" style="background:${hit?'#2e7d32':'#e53935'}" title="วัน ${x.day}: เป้า ${B(x.total)}">${x.day}</span>`;
-  }).join('');
-  document.getElementById('days-panel').innerHTML=`
-    <div class="ct">📅 วันที่ผ่านเป้า vs ไม่ผ่านเป้า (${mt} วัน MTD)</div>
+  // Days panel
+  const avgD=s.avg_daily,dtMtd=d.daily_targets.slice(0,mt);
+  const dHit=dtMtd.filter(x=>avgD>=x.total).length,dMiss=mt-dHit;
+  const dots=dtMtd.map(x=>{const hit=avgD>=x.total;return`<span class="day-dot" style="background:${hit?"#2e7d32":"#e53935"}" title="วัน ${x.day}: เป้า ${B(x.total)}">${x.day}</span>`;}).join("");
+  document.getElementById("days-panel").innerHTML=`
+    <div class="ct">📅 วันที่ผ่านเป้า vs ต่ำกว่าเป้า (${mt} วัน MTD)</div>
     <div style="display:flex;gap:12px;margin-bottom:12px;">
-      <div style="flex:1;background:#e8f5e9;border-radius:8px;padding:10px;text-align:center;">
-        <div style="font-size:30px;font-weight:800;color:#2e7d32">${dHit}</div>
-        <div style="font-size:11px;font-weight:700;color:#2e7d32">วันที่ผ่านเป้า ✅</div>
-        <div style="font-size:9px;color:#888;margin-top:2px">${(dHit/mt*100).toFixed(0)}% ของ ${mt} วัน</div>
-      </div>
-      <div style="flex:1;background:#ffebee;border-radius:8px;padding:10px;text-align:center;">
-        <div style="font-size:30px;font-weight:800;color:#c62828">${dMiss}</div>
-        <div style="font-size:11px;font-weight:700;color:#c62828">วันที่ต่ำกว่าเป้า ⚠️</div>
-        <div style="font-size:9px;color:#888;margin-top:2px">${(dMiss/mt*100).toFixed(0)}% ของ ${mt} วัน</div>
-      </div>
-    </div>
-    <div style="line-height:1.8">${dots}</div>
-    <div style="font-size:9px;color:#aaa;margin-top:8px;">🟢 ผ่านเป้า  🔴 ต่ำกว่าเป้า &nbsp;|&nbsp; ประมาณการจาก avg ${B(Math.round(avgD))}/วัน เทียบกับเป้ารายวัน</div>
+      <div style="flex:1;background:#e8f5e9;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:30px;font-weight:800;color:#2e7d32">${dHit}</div><div style="font-size:11px;font-weight:700;color:#2e7d32">วันผ่านเป้า ✅</div><div style="font-size:9px;color:#888">${(dHit/mt*100).toFixed(0)}%</div></div>
+      <div style="flex:1;background:#ffebee;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:30px;font-weight:800;color:#c62828">${dMiss}</div><div style="font-size:11px;font-weight:700;color:#c62828">ต่ำกว่าเป้า ⚠️</div><div style="font-size:9px;color:#888">${(dMiss/mt*100).toFixed(0)}%</div></div>
+    </div><div style="line-height:1.8">${dots}</div>
+    <div style="font-size:9px;color:#aaa;margin-top:8px;">🟢 ผ่านเป้า &nbsp;🔴 ต่ำกว่าเป้า &nbsp;|&nbsp; avg ${B(Math.round(avgD))}/วัน vs เป้ารายวัน</div>
   `;
-
-  // Donut
-  const plfs=d.platforms;
-  mkch('ch-donut',{type:'doughnut',
-    data:{labels:plfs.map(p=>p.name),datasets:[{data:plfs.map(p=>p.monthly_target),backgroundColor:['#7c4dff','#ff6f00','#e53935','#333'],hoverOffset:8,borderWidth:2}]},
-    options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'right',labels:{font:{size:10},boxWidth:12}},tooltip:{callbacks:{label:ctx=>' ฿'+N(ctx.raw)+' ('+((ctx.raw/14000000)*100).toFixed(0)+'%)'}}}}
-  });
-
+  // Rankings
+  const cumR=mt/td;
+  const st=d.stores;
+  // Top10 sales
+  document.getElementById("rank-sales-body").innerHTML=st.slice(0,10).map((s,i)=>{
+    const cumT=s.monthly_target?s.monthly_target*cumR:null;
+    const pCum=cumT?s.actual/cumT*100:null;
+    return`<tr><td>${rankNum(i)}</td><td style="font-size:10px;font-weight:700">${s.name}</td><td class="tR bold">${B(s.actual)}</td><td class="tC">${tag(pCum)}</td></tr>`;
+  }).join("");
+  // Top10 GP
+  const gpSorted=[...st].filter(s=>s.monthly_target>0).sort((a,b)=>b.gp_pct-a.gp_pct);
+  document.getElementById("rank-gp-body").innerHTML=gpSorted.slice(0,10).map((s,i)=>
+    `<tr><td>${rankNum(i)}</td><td style="font-size:10px;font-weight:700">${s.name}</td><td class="tC"><span class="tag ${s.gp_pct>=40?"tg":s.gp_pct>=30?"tb":"to"}">${P(s.gp_pct)}</span></td><td class="tR">${B(s.gp)}</td></tr>`
+  ).join("");
+  // Top10 products
+  const prods10=d.products.slice(0,10);
+  document.getElementById("rank-pv-body").innerHTML=prods10.map((p,i)=>
+    `<tr><td>${rankNum(i)}</td><td style="font-size:10px">${p.name}</td><td class="tR bold">${B(p.sales)}</td></tr>`
+  ).join("");
+  const byQty=[...d.products].sort((a,b)=>b.qty-a.qty).slice(0,10);
+  document.getElementById("rank-pq-body").innerHTML=byQty.map((p,i)=>
+    `<tr><td>${rankNum(i)}</td><td style="font-size:10px">${p.name}</td><td class="tR bold">${N(p.qty)} ชิ้น</td></tr>`
+  ).join("");
   // Stores table
-  const cumR=mt/(td);
-  document.getElementById('tb-stores-main').innerHTML=d.stores.map((st,i)=>{
-    const cumT=st.monthly_target?st.monthly_target*cumR:null;
-    const pCum=cumT?st.actual/cumT*100:null;
-    const ic=pCum!=null?(pCum>=100?'✅':pCum>=80?'⚠️':'🔴'):'—';
-    return `<tr><td class="bold">${i+1}</td><td class="bold" style="font-size:11px">${st.name}</td><td style="color:${plfC[st.platform]||'#555'};font-weight:700">${st.platform}</td><td>${st.manager!=='-'?st.manager:'<span class="dim">—</span>'}</td><td class="tR bold">${B(st.actual)}</td><td class="tR">${B(st.gp)}</td><td class="tC"><span class="tag tb">${P(st.gp_pct)}</span></td><td class="tC">${tag(pCum)}</td><td class="tC">${ic}</td></tr>`;
-  }).join('');
-
-  document.getElementById('l0').style.display='none';
-  document.getElementById('c0').style.display='block';
+  document.getElementById("tb-stores-main").innerHTML=st.map((s,i)=>{
+    const cumT=s.monthly_target?s.monthly_target*cumR:null;
+    const pCum=cumT?s.actual/cumT*100:null;
+    const ic=pCum!=null?(pCum>=100?"✅":pCum>=80?"⚠️":"🔴"):"—";
+    return`<tr><td class="bold">${i+1}</td><td class="bold" style="font-size:11px">${s.name}</td><td style="color:${plfC[s.platform]||"#555"};font-weight:700">${s.platform}</td><td>${s.manager!=="-"?s.manager:"<span class='dim'>—</span>"}</td><td class="tR bold">${B(s.actual)}</td><td class="tR">${B(s.gp)}</td><td class="tC"><span class="tag tb">${P(s.gp_pct)}</span></td><td class="tC">${tag(pCum)}</td><td class="tC">${ic}</td></tr>`;
+  }).join("");
   RD[0]=true;
 }
 
-// ─── TAB 1 ────────────────────────────────────────────────────────────
+// ─── TAB 1 ───────────────────────────────────────────────────────────
 function r1(d){
-  // Build category → products map
   const catMap={};
   d.categories.forEach(c=>{catMap[c.name]={...c,prods:[]};});
   d.products.forEach(p=>{if(catMap[p.cat])catMap[p.cat].prods.push(p);});
-  const totalSale=d.summary.mtd_actual;
-
-  // Category tree table
-  let treeHtml='';
-  d.categories.forEach((cat,i)=>{
+  const top10cats=d.categories.slice(0,10);
+  let treeHtml="";
+  top10cats.forEach((cat,i)=>{
     const prods=(catMap[cat.name]?.prods||[]).sort((a,b)=>b.sales-a.sales);
-    const topProd=prods[0];
+    const totalQty=prods.reduce((s,p)=>s+(p.qty||0),0);
     treeHtml+=`<tr class="cat-hdr" onclick="togCat(${i})">
       <td class="bold">${i+1}</td>
       <td class="bold" style="font-size:12px">📦 ${cat.name} <span style="font-weight:400;color:#aaa;font-size:10px">(${prods.length} รายการ)</span></td>
       <td class="tR bold">${B(cat.sales)}</td>
       <td class="tC"><div style="background:#e3f2fd;border-radius:4px;padding:2px 8px;font-weight:700;color:#1565c0;font-size:11px;display:inline-block">${cat.pct.toFixed(1)}%</div></td>
-      <td class="tR" style="font-size:10px;color:#aaa">—</td>
+      <td class="tR" style="font-size:10px;color:#666">${N(totalQty)} ชิ้น</td>
       <td class="tC"><span id="cat-arr-${i}" style="font-size:10px;color:#1a237e">▼</span></td>
     </tr>`;
-    prods.slice(0,8).forEach((p,j)=>{
+    prods.slice(0,6).forEach((p,j)=>{
       const oh=p.onhand;
-      const stk=oh==null?'—':oh===0?'<span style="color:#c62828;font-weight:700">⚠️หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
-      treeHtml+=`<tr class="cat-r-${i}" style="display:none;background:${j%2?'#fafbff':'#fff'}">
-        <td style="padding-left:20px;color:#ccc;font-size:11px">${j+1}</td>
-        <td style="font-size:10px;padding-left:8px;">└ ${p.name}</td>
+      const stk=oh==null?"—":oh===0?'<span style="color:#c62828;font-weight:700">⚠️หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
+      treeHtml+=`<tr class="cat-r-${i}" style="display:none;background:${j%2?"#fafbff":"#fff"}">
+        <td style="padding-left:18px;color:#ccc;font-size:10px">${j+1}</td>
+        <td style="font-size:10px">└ ${p.name}</td>
         <td class="tR">${B(p.sales)}</td>
         <td class="tC"><span style="font-size:9px;color:#888">${(p.sales/cat.sales*100).toFixed(1)}% ของกลุ่ม</span></td>
         <td class="tR" style="font-size:10px;color:#1a237e">${N(p.qty)} ชิ้น</td>
         <td class="tC">${stk}</td>
       </tr>`;
     });
-    if(prods.length>8){treeHtml+=`<tr class="cat-r-${i}" style="display:none"><td colspan="6" style="text-align:center;font-size:10px;color:#aaa;padding:4px">...และอีก ${prods.length-8} รายการ</td></tr>`;}
+    if(prods.length>6)treeHtml+=`<tr class="cat-r-${i}" style="display:none"><td colspan="6" style="text-align:center;font-size:10px;color:#aaa;padding:4px">...+${prods.length-6} รายการ</td></tr>`;
   });
-  document.getElementById('cat-tree-body').innerHTML=treeHtml;
+  document.getElementById("cat-tree-body").innerHTML=treeHtml;
 
-  // Product by VALUE
-  document.getElementById('tb-prod-val').innerHTML=d.products.slice(0,20).map((p,i)=>{
-    const oh=p.onhand;
-    const stk=oh==null?'<span class="dim">—</span>':oh===0?'<span style="color:#c62828;font-weight:700">⚠️ หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️ ${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
-    const pct=(p.sales/totalSale*100).toFixed(1);
-    return `<tr><td class="bold">${i+1}</td><td style="font-size:10px">${p.name}</td><td style="font-size:9px;color:#888">${p.cat}</td><td class="tR bold">${B(p.sales)}</td><td class="tC"><span class="tag tgr">${pct}%</span></td><td class="tC">${stk}</td></tr>`;
-  }).join('');
+  function momYoy(p){
+    const mom1='<td class="tC"><span style="font-size:10px;color:#bbb">N/A*</span></td><td class="tC"><span style="font-size:10px;color:#bbb">N/A*</span></td>';
+    let yoy1,yoy2;
+    if(p.sly&&p.sly>0){
+      const diff=p.sales-p.sly;const pct=diff/p.sly*100;
+      const cls=diff>=0?"yoy-up":"yoy-dn";const sign=diff>=0?"+":"";
+      yoy1=`<td class="tR"><span class="${cls}">${sign}${B(Math.round(diff))}</span></td>`;
+      yoy2=`<td class="tC"><span class="${cls}">${sign}${pct.toFixed(1)}%</span></td>`;
+    }else{yoy1='<td class="tC dim">—</td>';yoy2='<td class="tC dim">—</td>';}
+    return mom1+yoy1+yoy2;
+  }
+  function stk(oh){return oh==null?'<span class="dim">—</span>':oh===0?'<span style="color:#c62828;font-weight:700">⚠️หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;}
 
-  // Product by QTY
+  // Build prod→stores inverted index
+  const prodStores={};
+  Object.entries(d.store_prods).forEach(([store,prods])=>{
+    prods.forEach(p=>{
+      if(!prodStores[p.name])prodStores[p.name]=[];
+      prodStores[p.name].push({store,sales:p.sales,qty:p.qty,gp_pct:p.gp_pct});
+    });
+  });
+  Object.values(prodStores).forEach(arr=>arr.sort((a,b)=>b.sales-a.sales));
+
+  const _pdOpen={};
+  window.togPD=function(i,name){
+    _pdOpen[i]=!_pdOpen[i];
+    const dr=document.getElementById("pd-"+i);
+    if(!dr)return;
+    if(_pdOpen[i]){
+      const top5=(prodStores[name]||[]).slice(0,5);
+      const rows=top5.map((s,j)=>`<tr style="background:${j%2?"#f0f4ff":"#e8eaf6"}">
+        <td style="padding-left:10px;color:#888;font-size:10px">${j+1}</td>
+        <td style="font-size:10px;font-weight:600;color:#1a237e">${s.store}</td>
+        <td class="tR" style="font-size:10px">${B(s.sales)}</td>
+        <td class="tR" style="font-size:10px;color:#888">${N(s.qty)} ชิ้น</td>
+        <td class="tC"><span class="tag ${s.gp_pct>=40?"tg":s.gp_pct>=30?"tb":"to"}">${P(s.gp_pct)}</span></td>
+      </tr>`).join("");
+      dr.innerHTML=`<td colspan="10" style="padding:0!important">
+        <table style="width:100%;font-size:11px;border-top:1px solid #c5cae9">
+          <thead><tr style="background:#e8eaf6"><th style="padding:5px 10px;text-align:left;font-size:9px;color:#666">#</th><th style="padding:5px 10px;text-align:left;font-size:9px;color:#666">ร้านที่ขายดี</th><th class="tR" style="padding:5px 10px;font-size:9px;color:#666">ยอดขาย</th><th class="tR" style="padding:5px 10px;font-size:9px;color:#666">จำนวน</th><th class="tC" style="padding:5px 10px;font-size:9px;color:#666">GP%</th></tr></thead>
+          <tbody>${rows||"<tr><td colspan=5 style=\"text-align:center;color:#aaa;padding:8px\">ไม่พบข้อมูลร้าน</td></tr>"}</tbody>
+        </table></td>`;
+      dr.style.display="";
+    } else { dr.style.display="none"; }
+    const arr=document.getElementById("pdarr-"+i);
+    if(arr)arr.textContent=_pdOpen[i]?"▲":"▼";
+  };
+
+  const mkPVRow=(p,i,colspan)=>{
+    const nameCell=`<td style="font-size:10px"><span class="prod-clickable" onclick="togPD(${i},'${p.name.replace(/'/g,"\'")}')">${p.name}</span> <span id="pdarr-${i}" style="font-size:9px;color:#1a237e">▼</span></td>`;
+    return`<tr style="border-bottom:1px solid #f0f0f0">
+      <td class="bold">${i+1}</td>${nameCell}
+      <td style="font-size:9px;color:#888">${p.cat}</td>
+      <td class="tR bold">${B(p.sales)}</td>
+      <td class="tC"><span class="tag ${p.gp_pct>=40?"tg":p.gp_pct>=30?"tb":"to"}">${P(p.gp_pct)}</span></td>
+      <td class="tC">${stk(p.onhand)}</td>${momYoy(p)}
+    </tr>
+    <tr id="pd-${i}" class="prod-drill" style="display:none"><td colspan="10"></td></tr>`;
+  };
+  const mkPQRow=(p,i)=>{
+    const nameCell=`<td style="font-size:10px"><span class="prod-clickable" onclick="togPD(${i+100},'${p.name.replace(/'/g,"\'")}')">${p.name}</span> <span id="pdarr-${i+100}" style="font-size:9px;color:#1a237e">▼</span></td>`;
+    return`<tr style="border-bottom:1px solid #f0f0f0">
+      <td class="bold">${i+1}</td>${nameCell}
+      <td style="font-size:9px;color:#888">${p.cat}</td>
+      <td class="tR bold">${N(p.qty)} ชิ้น</td><td class="tR">${B(p.sales)}</td>
+      <td class="tC"><span class="tag ${p.gp_pct>=40?"tg":p.gp_pct>=30?"tb":"to"}">${P(p.gp_pct)}</span></td>
+      <td class="tC">${stk(p.onhand)}</td>${momYoy(p)}
+    </tr>
+    <tr id="pd-${i+100}" class="prod-drill" style="display:none"><td colspan="11"></td></tr>`;
+  };
+
+  document.getElementById("tb-prod-val").innerHTML=d.products.slice(0,20).map((p,i)=>mkPVRow(p,i)).join("");
   const byQty=[...d.products].sort((a,b)=>b.qty-a.qty);
-  document.getElementById('tb-prod-qty').innerHTML=byQty.slice(0,20).map((p,i)=>{
-    const oh=p.onhand;
-    const stk=oh==null?'<span class="dim">—</span>':oh===0?'<span style="color:#c62828;font-weight:700">⚠️ หมด</span>':oh<20?`<span style="color:#e65100;font-weight:700">⚠️ ${N(oh)}</span>`:`<span style="color:#2e7d32">${N(oh)}</span>`;
-    const avgPrice=p.qty>0?Math.round(p.sales/p.qty):0;
-    return `<tr><td class="bold">${i+1}</td><td style="font-size:10px">${p.name}</td><td style="font-size:9px;color:#888">${p.cat}</td><td class="tR bold">${N(p.qty)} ชิ้น</td><td class="tR">${B(p.sales)}</td><td class="tC">${stk}</td></tr>`;
-  }).join('');
+  document.getElementById("tb-prod-qty").innerHTML=byQty.slice(0,20).map((p,i)=>mkPQRow(p,i)).join("");
+
+  // Non-movement table
+  if(d.non_movement){
+    const nmAdv=(dos)=>{
+      if(dos>=300)return'<span class="nm-red">⚠️ ปล่อยโปร/ลดราคาด่วน</span>';
+      if(dos>=100)return'<span class="nm-orange">📦 ดัน Push ผ่านช่อง</span>';
+      return'<span style="color:#f9a825;font-weight:700">👀 ติดตามอย่างใกล้ชิด</span>';
+    };
+    const dosCls=(dos)=>dos>=300?"dos-badge dos-red":dos>=100?"dos-badge dos-orange":"dos-badge dos-yellow";
+    document.getElementById("tb-nm").innerHTML=d.non_movement.map((p,i)=>`
+      <tr>
+        <td class="bold">${i+1}</td>
+        <td style="font-size:10px;font-weight:600">${p.name}</td>
+        <td style="font-size:9px;color:#888">${p.ity}</td>
+        <td class="tR">${B(p.sales)}</td>
+        <td class="tR" style="font-weight:700;color:#1a237e">${N(p.onhand)}</td>
+        <td class="tC"><span class="${dosCls(p.dos)}">${p.dos} วัน</span></td>
+        <td style="font-size:10px">${nmAdv(p.dos)}</td>
+      </tr>`).join("");
+  }
 }
 
-// ─── TAB 2 ────────────────────────────────────────────────────────────
+// ─── TAB 2 ───────────────────────────────────────────────────────────
 function r2(d){
-  const s=d.summary, cumR=s.mtd_days/(s.total_days||31);
-
-  // Platform ranking chart (horizontal bar, sorted by %)
-  const plfRanked=[...d.platforms].map(p=>({
-    ...p,
-    pct:p.monthly_target>0?p.actual/(p.monthly_target*cumR)*100:0
-  })).sort((a,b)=>b.pct-a.pct);
-
-  mkch('ch-plf-rank',{type:'bar',
-    data:{
-      labels:plfRanked.map(p=>`${p.name}  (${B(p.actual)})`),
-      datasets:[{
-        label:'% vs เป้าสะสม',
-        data:plfRanked.map(p=>+p.pct.toFixed(1)),
-        backgroundColor:plfRanked.map(p=>p.pct>=100?'rgba(46,125,50,.85)':p.pct>=80?'rgba(230,81,0,.85)':'rgba(198,40,40,.85)'),
-        borderRadius:6,
-      },{
-        label:'เป้า 100%',
-        data:plfRanked.map(()=>100),
-        type:'line',borderColor:'rgba(26,35,126,.4)',borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false
-      }]
-    },
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{font:{size:9},boxWidth:10}},
-        tooltip:{callbacks:{label:ctx=>ctx.datasetIndex===0?` ${ctx.raw}% vs เป้าสะสม`:undefined}}},
-      scales:{
-        x:{min:0,max:160,ticks:{callback:v=>v+'%',font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},
-        y:{ticks:{font:{size:11,weight:'bold'}}}
-      }}
+  const s=d.summary,cumR=s.mtd_days/(s.total_days||31);
+  const plfRanked=[...d.platforms].map(p=>({...p,pct:p.monthly_target>0?p.actual/(p.monthly_target*cumR)*100:0})).sort((a,b)=>b.pct-a.pct);
+  mkch("ch-plf-rank",{type:"bar",
+    data:{labels:plfRanked.map(p=>`${p.name}  (${B(p.actual)})`),
+      datasets:[{label:"% vs เป้าสะสม",data:plfRanked.map(p=>+p.pct.toFixed(1)),
+        backgroundColor:plfRanked.map(p=>p.pct>=100?"rgba(46,125,50,.85)":p.pct>=80?"rgba(230,81,0,.85)":"rgba(198,40,40,.85)"),borderRadius:6},
+      {label:"เป้า 100%",data:plfRanked.map(()=>100),type:"line",borderColor:"rgba(26,35,126,.4)",borderWidth:2,borderDash:[6,4],pointRadius:0,fill:false}]},
+    options:{indexAxis:"y",responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
+      scales:{x:{min:0,max:160,ticks:{callback:v=>v+"%",font:{size:9}}},y:{ticks:{font:{size:11,weight:"bold"}}}}}
   });
-
-  // Platform section label
-  document.getElementById('plf-sec').textContent=`ประสิทธิภาพแต่ละ Platform (MTD ${s.mtd_days} วัน)`;
-
-  // Platform cards
-  document.getElementById('plf-cards').innerHTML=d.platforms.map(p=>{
-    const cumT=p.monthly_target*cumR;
-    const pct=cumT>0?p.actual/cumT*100:null;
-    const gpPct=p.actual>0?(p.gp/p.actual*100).toFixed(1):'0.0';
-    const col=plfBrd[p.name]||'#888';
-    return `<div class="pc" style="border-top-color:${col}">
-      <div class="pn" style="color:${col}">${p.name}</div>
-      <div class="pcnt">${p.count} ร้าน | เป้า ${B(p.monthly_target)}/เดือน</div>
-      <div class="pv">${B(p.actual)}</div>
-      <div class="psub">MTD Actual (${s.mtd_days} วัน)</div>
-      <div style="margin-top:5px">${tag(pct)}</div>
-      <div style="font-size:10px;margin-top:4px;color:#555">GP: ${B(Math.round(p.gp))} <strong style="color:#2e7d32">(${gpPct}%)</strong></div>
-    </div>`;
-  }).join('');
-
-  // Seller cards
+  document.getElementById("plf-sec").textContent=`ประสิทธิภาพแต่ละ Platform (MTD ${s.mtd_days} วัน)`;
+  document.getElementById("plf-cards").innerHTML=d.platforms.map(p=>{
+    const cumT=p.monthly_target*cumR,pct=cumT>0?p.actual/cumT*100:null;
+    const gpPct=p.actual>0?(p.gp/p.actual*100).toFixed(1):"0.0";
+    const col=plfBrd[p.name]||"#888";
+    return`<div class="pc" style="border-top-color:${col}"><div class="pn" style="color:${col}">${p.name}</div><div class="pcnt">${p.count} ร้าน | เป้า ${B(p.monthly_target)}/เดือน</div><div class="pv">${B(p.actual)}</div><div class="psub">MTD Actual</div><div style="margin-top:5px">${tag(pct)}</div><div style="font-size:10px;margin-top:4px">GP: ${B(Math.round(p.gp))} <strong style="color:#2e7d32">(${gpPct}%)</strong></div></div>`;
+  }).join("");
   const sellers={};
   d.stores.forEach(st=>{
-    const m=(st.manager&&st.manager!=='-')?st.manager:'Live/ไม่ระบุ';
+    const m=(st.manager&&st.manager!=="-")?st.manager:"Live/ไม่ระบุ";
     if(!sellers[m])sellers[m]={actual:0,gp:0,target:0,stores:[]};
     sellers[m].actual+=st.actual;sellers[m].gp+=st.gp;sellers[m].target+=(st.monthly_target||0);sellers[m].stores.push(st.name);
   });
-  document.getElementById('sl-cards').innerHTML=Object.entries(sellers).sort((a,b)=>b[1].actual-a[1].actual).map(([nm,v])=>{
-    const gpP=v.actual>0?(v.gp/v.actual*100).toFixed(1):'0';
-    const cumT=v.target*cumR;const pct=cumT>0?v.actual/cumT*100:null;
-    const stList=v.stores.slice(0,3).join(', ')+(v.stores.length>3?` +${v.stores.length-3}`:'');
-    return `<div class="sc"><div class="sn">👤 ${nm}</div><div class="sm">${v.stores.length} ร้าน: ${stList}</div><div class="ss"><div><div class="ss-n" style="color:#1a237e">${B(v.actual)}</div><div class="ss-l">MTD Actual</div></div><div><div class="ss-n" style="color:#2e7d32">${gpP}%</div><div class="ss-l">GP%</div></div>${pct!=null?`<div><div class="ss-n" style="color:${pct>=100?'#2e7d32':pct>=80?'#e65100':'#c62828'}">${pct.toFixed(0)}%</div><div class="ss-l">vs เป้าสะสม</div></div>`:''}</div></div>`;
-  }).join('');
-
-  // GP ranking
-  document.getElementById('tb-gp').innerHTML=[...d.stores].filter(s=>s.gp_pct!=null).sort((a,b)=>b.gp_pct-a.gp_pct).map((st,i)=>`
-    <tr><td class="bold">${i+1}</td><td class="bold" style="font-size:10px">${st.name}</td><td style="color:${plfC[st.platform]||'#555'};font-weight:700;font-size:10px">${st.platform}</td><td style="font-size:10px">${st.manager!=='-'?st.manager:'—'}</td><td class="tR">${B(st.actual)}</td><td class="tR">${B(st.gp)}</td><td class="tC"><span class="tag ${st.gp_pct>=40?'tg':st.gp_pct>=30?'tb':'to'}">${P(st.gp_pct)}</span></td></tr>`).join('');
+  document.getElementById("sl-cards").innerHTML=Object.entries(sellers).sort((a,b)=>b[1].actual-a[1].actual).map(([nm,v])=>{
+    const gpP=v.actual>0?(v.gp/v.actual*100).toFixed(1):"0";
+    const cumT=v.target*cumR,pct=cumT>0?v.actual/cumT*100:null;
+    const stList=v.stores.slice(0,2).join(", ")+(v.stores.length>2?` +${v.stores.length-2}`:"");
+    return`<div class="sc"><div class="sn">👤 ${nm}</div><div class="sm">${v.stores.length} ร้าน: ${stList}</div><div class="ss"><div><div class="ss-n" style="color:#1a237e">${B(v.actual)}</div><div class="ss-l">MTD Actual</div></div><div><div class="ss-n" style="color:#2e7d32">${gpP}%</div><div class="ss-l">GP%</div></div>${pct!=null?`<div><div class="ss-n" style="color:${pct>=100?"#2e7d32":pct>=80?"#e65100":"#c62828"}">${pct.toFixed(0)}%</div><div class="ss-l">vs เป้าสะสม</div></div>`:""}</div></div>`;
+  }).join("");
+  // Store chips
+  document.getElementById("store-chips").innerHTML=d.stores.map(st=>
+    `<button class="store-chip" onclick="selStore('${st.name.replace(/'/g,"\'")}',this)">${st.name}</button>`
+  ).join("");
+  document.getElementById("tb-gp").innerHTML=[...d.stores].filter(s=>s.gp_pct!=null).sort((a,b)=>b.gp_pct-a.gp_pct).map((st,i)=>
+    `<tr><td class="bold">${i+1}</td><td class="bold" style="font-size:10px">${st.name}</td><td style="color:${plfC[st.platform]||"#555"};font-weight:700;font-size:10px">${st.platform}</td><td style="font-size:10px">${st.manager!=="-"?st.manager:"—"}</td><td class="tR">${B(st.actual)}</td><td class="tR">${B(st.gp)}</td><td class="tC"><span class="tag ${st.gp_pct>=40?"tg":st.gp_pct>=30?"tb":"to"}">${P(st.gp_pct)}</span></td></tr>`
+  ).join("");
 }
 
-// ─── TAB 3 ────────────────────────────────────────────────────────────
-function r3(d){
-  const s=d.summary, dt=d.daily_targets, mt=s.mtd_days, avgA=s.avg_daily;
-
-  // Trend chart
-  mkch('ch-trend',{type:'bar',
-    data:{labels:dt.map(x=>''+x.day),datasets:[
-      {label:'เป้ารายวัน',data:dt.map(x=>x.total),backgroundColor:dt.map((_,i)=>i<mt?'rgba(26,35,126,.45)':'rgba(26,35,126,.12)'),borderRadius:3,order:2},
-      {label:'ค่าเฉลี่ย Actual/วัน',data:dt.map(()=>avgA),type:'line',borderColor:'#e53935',backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,order:1},
-      {label:'Projection',data:dt.map((_,i)=>i>=mt?avgA:null),type:'line',borderColor:'#00bcd4',backgroundColor:'rgba(0,188,212,.08)',fill:true,borderWidth:1.5,pointRadius:0,borderDash:[3,3],order:0}
-    ]},
-    options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
-      scales:{y:{ticks:{callback:v=>'฿'+(v/1000).toFixed(0)+'K',font:{size:9}}},x:{ticks:{font:{size:9}}}}}
-  });
-
-  // Cumulative chart
-  let cT=0;
-  const cumT=dt.map(x=>{cT+=x.total;return cT;});
-  const projL=dt.map((_,i)=>{if(i<mt-1)return null;let a=0;for(let j=mt;j<=i;j++)a+=avgA;return s.mtd_actual+a;});
-  mkch('ch-cum',{type:'line',
-    data:{labels:dt.map(x=>''+x.day),datasets:[
-      {label:'เป้าสะสม',data:cumT,borderColor:'#e53935',backgroundColor:'transparent',borderDash:[6,4],pointRadius:0,borderWidth:2},
-      {label:`Actual (Day ${mt}: ${B(s.mtd_actual)})`,data:dt.map((_,i)=>i===mt-1?s.mtd_actual:null),borderColor:'#2e7d32',fill:false,pointRadius:dt.map((_,i)=>i===mt-1?7:0),pointBackgroundColor:'#2e7d32',borderWidth:0},
-      {label:'Projection',data:projL,borderColor:'#00bcd4',backgroundColor:'rgba(0,188,212,.08)',fill:true,borderDash:[4,4],pointRadius:0,borderWidth:1.5}
-    ]},
-    options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
-      scales:{y:{ticks:{callback:v=>'฿'+(v/1000000).toFixed(1)+'M',font:{size:9}}},x:{ticks:{font:{size:9},maxTicksLimit:12}}}}
-  });
-
-  // ─── Industry Benchmark ───────────────────────────────────────────
-  const cumR=mt/(s.total_days||31);
-  const ourGP=s.gp_pct;
-  const ttPct=d.platforms.find(p=>p.name==='TikTok')?.actual/((3200000)*cumR)*100||0;
-  const shPct=d.platforms.find(p=>p.name==='Shopee')?.actual/((3000000)*cumR)*100||0;
-  const lzPct=d.platforms.find(p=>p.name==='Lazada')?.actual/((2900000)*cumR)*100||0;
-
-  const bmRows=[
-    {metric:'GP% (Gross Margin)',ours:ourGP.toFixed(1)+'%',ind:'25–33%',top:'35–45%',status:ourGP>=35?'🟢 ดีมาก':ourGP>=28?'🟡 OK':'🔴 ต่ำ',note:'ธุรกิจเครื่องครัว/ของใช้ในบ้านออนไลน์ไทย'},
-    {metric:'TikTok %vs เป้าสะสม',ours:ttPct.toFixed(0)+'%',ind:'80–100%',top:'>110%',status:ttPct>=110?'🟢 Star':'🟡 Good',note:'TikTok Shop ไทยโตเฉลี่ย 40-60% YoY'},
-    {metric:'Shopee %vs เป้าสะสม',ours:shPct.toFixed(0)+'%',ind:'85–100%',top:'>105%',status:shPct>=85?'🟡 OK':'🔴 ต้องแก้',note:'Shopee ยังเป็น Market Leader ไทย'},
-    {metric:'Lazada %vs เป้าสะสม',ours:lzPct.toFixed(0)+'%',ind:'80–100%',top:'>105%',status:lzPct>=85?'🟡 OK':'🔴 ต้องแก้',note:'Lazada ตลาดยังดี แต่ต้องการ Promotion'},
-    {metric:'Platform Diversification',ours:'4 Platforms',ind:'2–3 platforms',top:'4+ platforms',status:'🟢 ดีมาก',note:'การกระจายความเสี่ยง — ดีกว่าค่าเฉลี่ยอุตสาหกรรม'},
-    {metric:'หมวดสินค้า Concentration',ours:'เครื่องครัว 55%',ind:'<50% top cat',top:'<35% top cat',status:'🟠 เสี่ยง',note:'พึ่งพาหมวดเดียวมากเกินไป — ควรกระจาย'},
-  ];
-
-  document.getElementById('bm-card').innerHTML=`
-    <div class="ct">เปรียบเทียบกับมาตรฐาน Online Retail ไทย (ธุรกิจเครื่องครัว/ของใช้ในบ้าน)</div>
-    <table>
-      <thead><tr><th>Metric</th><th class="tC">เตือนใจ (ปัจจุบัน)</th><th class="tC">Industry Avg</th><th class="tC">Best-in-Class</th><th class="tC">สถานะ</th><th>หมายเหตุ</th></tr></thead>
-      <tbody>${bmRows.map(r=>`<tr><td class="bold" style="font-size:11px">${r.metric}</td><td class="tC bold" style="color:#1a237e">${r.ours}</td><td class="tC" style="color:#888">${r.ind}</td><td class="tC" style="color:#2e7d32">${r.top}</td><td class="tC">${r.status}</td><td style="font-size:10px;color:#777">${r.note}</td></tr>`).join('')}</tbody>
+function selStore(name,el){
+  document.querySelectorAll(".store-chip").forEach(c=>c.classList.remove("on"));
+  el.classList.add("on");
+  const d=GD,s=d.summary,cumR=s.mtd_days/(s.total_days||31);
+  const st=d.stores.find(x=>x.name===name);
+  const prods=d.store_prods[name]||[];
+  const cumT=st.monthly_target?st.monthly_target*cumR:null;
+  const pCum=cumT?st.actual/cumT*100:null;
+  const pBar=Math.min(pCum||0,130);
+  const barC=pCum>=100?"#2e7d32":pCum>=80?"#e65100":"#c62828";
+  const det=document.getElementById("store-detail");
+  det.style.display="block";
+  document.getElementById("store-detail-content").innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <div><div style="font-size:15px;font-weight:800;color:#1a237e">${name}</div><div style="font-size:10px;color:#888">${st.platform} | ผู้ดูแล: ${st.manager!=="-"?st.manager:"—"}</div></div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:#1a237e">${B(st.actual)}</div><div style="font-size:9px;color:#888">MTD Actual</div></div>
+        <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:#2e7d32">${P(st.gp_pct)}</div><div style="font-size:9px;color:#888">GP%</div></div>
+        <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:#555">${B(st.monthly_target||0)}</div><div style="font-size:9px;color:#888">เป้า/เดือน</div></div>
+        <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:${barC}">${pCum!=null?pCum.toFixed(0)+"%":"N/A"}</div><div style="font-size:9px;color:#888">%เป้าสะสม</div></div>
+      </div>
+    </div>
+    ${cumT?`<div style="margin-bottom:12px"><div class="pb-bg"><div class="pb-fill" style="width:${pBar}%;background:${barC}"></div></div><div style="font-size:9px;color:#aaa;margin-top:2px">เป้าสะสม ${s.mtd_days} วัน = ${B(Math.round(cumT))}</div></div>`:""}
+    <div style="font-size:11px;font-weight:700;color:#444;margin-bottom:7px">🏆 สินค้าขายดี 10 อันดับ</div>
+    <table><thead><tr><th>#</th><th>สินค้า</th><th>กลุ่ม</th><th class="tR">ยอดขาย (฿)</th><th class="tR">จำนวน</th><th class="tC">GP%</th></tr></thead>
+    <tbody>${prods.map((p,i)=>`<tr><td>${rankNum(i)}</td><td style="font-size:10px">${p.name}</td><td style="font-size:9px;color:#888">${p.cat}</td><td class="tR bold">${B(p.sales)}</td><td class="tR">${N(p.qty)} ชิ้น</td><td class="tC"><span class="tag ${p.gp_pct>=40?"tg":p.gp_pct>=30?"tb":"to"}">${P(p.gp_pct)}</span></td></tr>`).join("")}</tbody>
     </table>
   `;
+  det.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
 
-  // ─── Action Plan ─────────────────────────────────────────────────
-  const cumR2=s.mtd_days/(s.total_days||31);
-  const ttAct=d.platforms.find(p=>p.name==='TikTok')?.actual||0;
-  const ttTgt=3200000*cumR2;
-  const apItems=[
-    {
-      ico:'⭐',color:'#2e7d32',priority:'QUICK WIN',
-      title:'TikTok เป็น Star — ขยาย Live Hours ทันที',
-      desc:`TikTok ทำได้ ${ttPct.toFixed(0)}% ของเป้าสะสม (${B(Math.round(ttAct))} vs เป้า ${B(Math.round(ttTgt))}) — เกินเป้าแล้ว! เพิ่ม Live session 1-2 ชั่วโมง/วัน, เพิ่ม TikTok Affiliate creators, Focus สินค้า margin สูง (เครื่องครัว, D-Sine กล่อง)`
-    },
-    {
-      ico:'🔴',color:'#c62828',priority:'URGENT',
-      title:'Shopee & Lazada ต่ำกว่าเป้า — Review Pricing + Flash Deal',
-      desc:`Shopee ${shPct.toFixed(0)}% / Lazada ${lzPct.toFixed(0)}% ของเป้าสะสม — ต่ำกว่า industry avg. แนะนำ: (1) ตั้ง Flash sale สุดสัปดาห์ละ 1 ครั้ง (2) Review ราคาเทียบคู่แข่ง (3) เพิ่ม Voucher/Free shipping ในร้านที่ต่ำสุด เช่น ร้านเมกา, PP289_shop, บะหมี่ ชอป`
-    },
-    {
-      ico:'📦',color:'#e65100',priority:'HIGH',
-      title:'Top Seller สต็อกต่ำ — Reorder ด่วน',
-      desc:`เสื่อน้ำมันม้วนใหญ่ (ยอด ฿1.37M) ไม่มีข้อมูล onhand — ต้องตรวจสต็อกทันที. หม้อก๋วยเตี๋ยว36cm (onhand=20), หม้อนึ่ง44cm (onhand=25) — ถ้า stockout จะกระทบยอดขาย TikTok Live โดยตรง. ต้องมี Safety Stock buffer อย่างน้อย 2 สัปดาห์`
-    },
-    {
-      ico:'🎯',color:'#1a237e',priority:'STRATEGIC',
-      title:'V-premium ยอดสูงสุด แต่ไม่มีเป้า — ตั้ง Target ทันที',
-      desc:`V-premium ทำ ${B(2047160)} (อันดับ 1 ทุกร้าน, GP 44.8%) แต่ไม่มีเป้าหมายรายเดือน ทำให้ไม่สามารถ track performance ได้. แนะนำตั้งเป้า: ฿3.5-4M/เดือน ตาม run-rate ปัจจุบัน พร้อมแบ่ง target D-SIGN HOME แยกต่างหาก`
-    },
-    {
-      ico:'🌈',color:'#6a1b9a',priority:'MEDIUM TERM',
-      title:'กระจาย Product Category — ลด Concentration Risk',
-      desc:`เครื่องครัว 55% ของรายได้ทั้งหมด — เสี่ยงเกินไป. Best practice <35%. แนะนำ: เพิ่ม SKU ใน พลาสติก (16.6% → 20%+), เครื่องนอน (18.8% แต่ผูกกับเสื่อน้ำมัน), minimart (5.7% → 10%). เปิด TikTok Live channel ใหม่สำหรับสินค้า non-kitchenware`
-    },
-    {
-      ico:'📊',color:'#555',priority:'PROCESS',
-      title:'เพิ่ม Daily Sales Tracking — บันทึก Actual ต่อวัน',
-      desc:`ปัจจุบันไม่มีข้อมูล Actual sales รายวัน ทำให้ไม่สามารถวิเคราะห์ว่าวันไหนผ่านเป้าจริงๆ ได้. แนะนำ: กรอก Actual ลงใน Target Excel ทุกวัน (Column Actual บาท) เพื่อให้ Dashboard สมบูรณ์และ Action Plan แม่นยำยิ่งขึ้น`
-    },
+// ─── TAB 3 ───────────────────────────────────────────────────────────
+function r3(d){
+  const s=d.summary,dt=d.daily_targets,mt=s.mtd_days,avgA=s.avg_daily;
+  mkch("ch-trend",{type:"bar",
+    data:{labels:dt.map(x=>""+x.day),datasets:[
+      {label:"เป้ารายวัน",data:dt.map(x=>x.total),backgroundColor:dt.map((_,i)=>i<mt?"rgba(26,35,126,.45)":"rgba(26,35,126,.12)"),borderRadius:3,order:2},
+      {label:"ค่าเฉลี่ย Actual/วัน",data:dt.map(()=>avgA),type:"line",borderColor:"#e53935",backgroundColor:"transparent",borderWidth:2,borderDash:[6,4],pointRadius:0,order:1},
+      {label:"Projection",data:dt.map((_,i)=>i>=mt?avgA:null),type:"line",borderColor:"#00bcd4",backgroundColor:"rgba(0,188,212,.08)",fill:true,borderWidth:1.5,pointRadius:0,borderDash:[3,3],order:0}
+    ]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
+      scales:{y:{ticks:{callback:v=>"฿"+(v/1000).toFixed(0)+"K",font:{size:9}}},x:{ticks:{font:{size:9}}}}}
+  });
+  let cT=0;const cumT=dt.map(x=>{cT+=x.total;return cT;});
+  const projL=dt.map((_,i)=>{if(i<mt-1)return null;let a=0;for(let j=mt;j<=i;j++)a+=avgA;return s.mtd_actual+a;});
+  mkch("ch-cum",{type:"line",
+    data:{labels:dt.map(x=>""+x.day),datasets:[
+      {label:"เป้าสะสม",data:cumT,borderColor:"#e53935",backgroundColor:"transparent",borderDash:[6,4],pointRadius:0,borderWidth:2},
+      {label:`Actual (Day ${mt}: ${B(s.mtd_actual)})`,data:dt.map((_,i)=>i===mt-1?s.mtd_actual:null),borderColor:"#2e7d32",fill:false,pointRadius:dt.map((_,i)=>i===mt-1?7:0),pointBackgroundColor:"#2e7d32",borderWidth:0},
+      {label:"Projection",data:projL,borderColor:"#00bcd4",backgroundColor:"rgba(0,188,212,.08)",fill:true,borderDash:[4,4],pointRadius:0,borderWidth:1.5}
+    ]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},
+      scales:{y:{ticks:{callback:v=>"฿"+(v/1000000).toFixed(1)+"M",font:{size:9}}},x:{ticks:{font:{size:9},maxTicksLimit:12}}}}
+  });
+  // Benchmark
+  const cumR=mt/(s.total_days||31),ourGP=s.gp_pct;
+  const ttPct=d.platforms.find(p=>p.name==="TikTok")?.actual/((3200000)*cumR)*100||0;
+  const shPct=d.platforms.find(p=>p.name==="Shopee")?.actual/((3000000)*cumR)*100||0;
+  const lzPct=d.platforms.find(p=>p.name==="Lazada")?.actual/((2900000)*cumR)*100||0;
+  const bmRows=[
+    {m:"GP% (Gross Margin)",o:ourGP.toFixed(1)+"%",i:"25–33%",t:"35–45%",s:ourGP>=35?"🟢 ดีมาก":ourGP>=28?"🟡 OK":"🔴 ต่ำ",n:"เครื่องครัว/ของใช้ในบ้านออนไลน์ไทย"},
+    {m:"TikTok %vs เป้าสะสม",o:ttPct.toFixed(0)+"%",i:"80–100%",t:">110%",s:ttPct>=110?"🟢 Star":"🟡 Good",n:"TikTok Shop ไทยโตเฉลี่ย 40-60% YoY"},
+    {m:"Shopee %vs เป้าสะสม",o:shPct.toFixed(0)+"%",i:"85–100%",t:">105%",s:shPct>=85?"🟡 OK":"🔴 ต้องแก้",n:"Shopee ยัง Market Leader ไทย"},
+    {m:"Lazada %vs เป้าสะสม",o:lzPct.toFixed(0)+"%",i:"80–100%",t:">105%",s:lzPct>=85?"🟡 OK":"🔴 ต้องแก้",n:"Lazada ดี แต่ต้องการ Promotion"},
+    {m:"Platform Diversification",o:"4 Platforms",i:"2–3",t:"4+",s:"🟢 ดีมาก",n:"กระจายความเสี่ยงดี"},
+    {m:"Category Concentration",o:"เครื่องครัว 55%",i:"<50%",t:"<35%",s:"🟠 เสี่ยง",n:"พึ่งพาหมวดเดียวมากไป"},
   ];
-
-  document.getElementById('ap-list').innerHTML=apItems.map((item,i)=>`
+  document.getElementById("bm-card").innerHTML=`<div class="ct">เปรียบเทียบกับมาตรฐาน Online Retail ไทย</div><table><thead><tr><th>Metric</th><th class="tC">เตือนใจ</th><th class="tC">Industry Avg</th><th class="tC">Best-in-Class</th><th class="tC">สถานะ</th><th>หมายเหตุ</th></tr></thead><tbody>${bmRows.map(r=>`<tr><td class="bold" style="font-size:11px">${r.m}</td><td class="tC bold" style="color:#1a237e">${r.o}</td><td class="tC" style="color:#888">${r.i}</td><td class="tC" style="color:#2e7d32">${r.t}</td><td class="tC">${r.s}</td><td style="font-size:10px;color:#777">${r.n}</td></tr>`).join("")}</tbody></table>`;
+  // Trend of the day
+  const today=new Date();
+  const trends=[
+    {ico:"🔥",ttl:"TikTok Live Commerce ยังร้อนแรง — ขยาย Live Hours ช่วง 20:00–23:00",body:"ข้อมูล Q1/2569 ชี้ชัด: TikTok Shop ไทยโต 47% YoY ช่วงเวลา Prime Time (20:00–23:00) มียอดขายสูงกว่าช่วงกลางวัน 2.3 เท่า แนะนำเพิ่ม Live session ช่วงนี้ทุกวัน โดยเฉพาะ D-Sine 2024 และ ครบดี ถูกดี ที่มี GP% สูง"},
+    {ico:"📦",ttl:"Quick Commerce & Same-Day Delivery กำลัง Disrupt ตลาดเครื่องครัว",body:"Shopee Express และ Lazada Xpress ผลักดัน delivery ภายใน 3 ชม. ในเขต กทม.–ปริมณฑล ลูกค้าคาด delivery เร็วขึ้น ควรตรวจ SLA ของร้านค้า โดยเฉพาะ Shopee (86% vs เป้า) และ Lazada (88%) เพื่อไม่ให้เสีย ranking"},
+    {ico:"🤖",ttl:"AI Personalization บน Shopee & Lazada ส่งผลต่อ SEO ร้านค้าโดยตรง",body:"อัลกอริทึมใหม่ให้ความสำคัญกับ: (1) รูปสินค้าคุณภาพสูง (2) Review มากกว่า 50 รีวิว (3) ตอบ chat ภายใน 1 ชม. ร้านที่ response rate ต่ำจะถูกลด organic reach ควร review ร้านที่ยอดต่ำสุดใน Shopee/Lazada",},
+    {ico:"💸",ttl:"Flash Sale & Voucher Strategy — ทำถูกต้องเพิ่มยอดขายได้ 35–60%",body:"Best practice จาก Top Seller ไทย: Flash sale ช่วง 10.10, 12.00, 20.00 ทำ 2 ครั้ง/สัปดาห์ เพิ่มยอดได้ 35–60% แต่ต้องคุม GP% ไม่ให้ต่ำกว่า 25% แนะนำ Lazada+Shopee Flash Deal ทุกศุกร์–เสาร์"},
+    {ico:"🎯",ttl:"Social Proof & UGC — กลยุทธ์สำคัญ Q2/2569",body:"ร้านค้าที่มี User Generated Content (รีวิวรูป/วิดีโอ) มากกว่า 200+ ชิ้น มี Conversion Rate สูงกว่า 3.2 เท่า กระตุ้นให้ลูกค้ารีวิวโดยให้ Voucher 20–50 บาทต่อรีวิว โดยเฉพาะ V-premium และ D-SIGN HOME ที่มี GP% สูง"},
+  ];
+  document.getElementById("trend-list").innerHTML=trends.map(t=>`
+    <div class="trend-card">
+      <div class="trend-ttl">${t.ico} ${t.ttl}</div>
+      <div class="trend-body">${t.body}</div>
+    </div>`).join("");
+  // Action plan
+  const ttAct=d.platforms.find(p=>p.name==="TikTok")?.actual||0;
+  const ttTgt=3200000*cumR;
+  const apItems=[
+    {ico:"⭐",color:"#2e7d32",pr:"QUICK WIN",ttl:"TikTok Star — ขยาย Live Hours ทันที",desc:`TikTok ${ttPct.toFixed(0)}% vs เป้า (${B(Math.round(ttAct))}) — เกินเป้า! เพิ่ม Live 1-2 ชม./วัน, TikTok Affiliate, Focus สินค้า margin สูง`},
+    {ico:"🔴",color:"#c62828",pr:"URGENT",ttl:"Shopee & Lazada ต่ำกว่าเป้า — Flash Deal ทันที",desc:`Shopee ${shPct.toFixed(0)}% / Lazada ${lzPct.toFixed(0)}% — ต่ำกว่า industry avg. Flash sale ศุกร์-เสาร์, Review ราคาเทียบคู่แข่ง, Voucher ในร้านที่ต่ำสุด`},
+    {ico:"📦",color:"#e65100",pr:"HIGH",ttl:"Top Seller สต็อกต่ำ — Reorder ด่วน",desc:"เสื่อน้ำมันม้วนใหญ่ (ยอด#1) ไม่มี onhand — ตรวจสต็อกทันที. หม้อก๋วยเตี๋ยว36cm (20ชิ้น), หม้อนึ่ง44cm (25ชิ้น) — Safety Stock 2 สัปดาห์"},
+    {ico:"🎯",color:"#1a237e",pr:"STRATEGIC",ttl:"V-premium ยอดสูงสุด — ตั้ง Target ทันที",desc:`V-premium GP 44.8% — ไม่มีเป้าหมาย ทำให้ track ไม่ได้ แนะนำตั้งเป้า ฿3.5-4M/เดือน`},
+    {ico:"🌈",color:"#6a1b9a",pr:"MEDIUM TERM",ttl:"กระจาย Product Category — ลด Risk",desc:"เครื่องครัว 55% — Best practice <35% เพิ่ม SKU พลาสติก, minimart, เปิด TikTok Live channel ใหม่"},
+    {ico:"📊",color:"#555",pr:"PROCESS",ttl:"เพิ่ม Daily Sales Tracking",desc:"กรอก Actual ยอดขายรายวันลงใน Target Excel เพื่อให้วิเคราะห์ได้แม่นยำขึ้น"},
+  ];
+  document.getElementById("ap-list").innerHTML=apItems.map(item=>`
     <div class="ap-item" style="border-left-color:${item.color}">
       <div class="ap-ico">${item.ico}</div>
       <div class="ap-body">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-          <span style="background:${item.color};color:#fff;border-radius:12px;padding:1px 10px;font-size:9px;font-weight:800">${item.priority}</span>
-          <div class="ap-title">${item.title}</div>
+          <span style="background:${item.color};color:#fff;border-radius:12px;padding:1px 10px;font-size:9px;font-weight:800">${item.pr}</span>
+          <div class="ap-title">${item.ttl}</div>
         </div>
         <div class="ap-desc">${item.desc}</div>
       </div>
-    </div>`).join('');
+    </div>`).join("");
 }
 
 // ─── STATIC DATA ─────────────────────────────────────────────────────
-const STATIC_DATA = {"meta": {"file": "MTD 1-19 พ.ค. 2569", "mtd_days": 19, "total_days": 31}, "summary": {"monthly_target": 14000000, "mtd_actual": 8681509, "cum_target": 8330000, "gp_amount": 3153743, "gp_pct": 36.3, "avg_daily": 456922, "remaining": 5318491, "days_left": 12, "req_daily": 443208, "urg_ratio": 0.97, "projection": 14164567, "mtd_days": 19, "total_days": 31}, "stores": [{"name": "V-premium", "platform": "โรงเสื่อ", "manager": "-", "monthly_target": 0, "actual": 2486647, "gp": 1123090, "gp_pct": 45.2}, {"name": "D-Sine 2024", "platform": "TikTok Live", "manager": "D-Sine", "monthly_target": 0, "actual": 1048010, "gp": 380728, "gp_pct": 36.3}, {"name": "ครบดี ถูกดี", "platform": "TikTok Live", "manager": "ครบดี", "monthly_target": 0, "actual": 824361, "gp": 269293, "gp_pct": 32.7}, {"name": "เตือนใจเครื่องครัว", "platform": "TikTok Live", "manager": "เตือนใจ", "monthly_target": 0, "actual": 671159, "gp": 233876, "gp_pct": 34.8}, {"name": "ร้านเอ็มบีเค", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 511916, "gp": 152504, "gp_pct": 29.8}, {"name": "ร้านเมียงดง", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 429787, "gp": 123526, "gp_pct": 28.7}, {"name": "พารากอน", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 264776, "gp": 76729, "gp_pct": 29.0}, {"name": "D-SIGN HOME", "platform": "โรงเสื่อ", "manager": "-", "monthly_target": 0, "actual": 260889, "gp": 137305, "gp_pct": 52.6}, {"name": "ร้านกิมหยง", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 255941, "gp": 76010, "gp_pct": 29.7}, {"name": "Ratchada2024", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 199318, "gp": 60939, "gp_pct": 30.6}, {"name": "มิสเตอร์ทีเจ", "platform": "TikTok", "manager": "-", "monthly_target": 0, "actual": 196347, "gp": 62940, "gp_pct": 32.1}, {"name": "ร้านไนติงเกล", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 180579, "gp": 46331, "gp_pct": 25.7}, {"name": "ชิบูย่า", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 179848, "gp": 49675, "gp_pct": 27.6}, {"name": "ร้านก้องแก้ว", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 155003, "gp": 47783, "gp_pct": 30.8}, {"name": "ร้านTJ_2021B", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 153263, "gp": 45076, "gp_pct": 29.4}, {"name": "ร้านจังซิลอน", "platform": "Shopee", "manager": "พี่มาย", "monthly_target": 0, "actual": 152574, "gp": 47254, "gp_pct": 31.0}, {"name": "BAITONG 50 SHOP (ใบตอง)", "platform": "Shopee", "manager": "จูน", "monthly_target": 0, "actual": 105176, "gp": 31971, "gp_pct": 30.4}, {"name": "NP SHOP", "platform": "Shopee", "manager": "จูน", "monthly_target": 0, "actual": 87558, "gp": 29113, "gp_pct": 33.2}, {"name": "ร้านประตูน้ำ", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 86025, "gp": 26751, "gp_pct": 31.1}, {"name": "แบรนด์ 333", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 78970, "gp": 24673, "gp_pct": 31.2}, {"name": "OK_TJ 2024", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 64247, "gp": 18755, "gp_pct": 29.2}, {"name": "wiwi online", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 60137, "gp": 19433, "gp_pct": 32.3}, {"name": "DD_Onl", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 42995, "gp": 12413, "gp_pct": 28.9}, {"name": "KK Shop2024", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 40856, "gp": 12382, "gp_pct": 30.3}, {"name": "HONEY 789", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 30498, "gp": 10017, "gp_pct": 32.8}, {"name": "เครื่องครัวบัวทอง", "platform": "TikTok", "manager": "-", "monthly_target": 0, "actual": 26292, "gp": 8706, "gp_pct": 33.1}, {"name": "ร้านแพลตินัม", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 21620, "gp": 6017, "gp_pct": 27.8}, {"name": "อุ่นใจของในบ้าน", "platform": "TikTok", "manager": "-", "monthly_target": 0, "actual": 18778, "gp": 5888, "gp_pct": 31.4}, {"name": "ร้านเมกา", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 13542, "gp": 4190, "gp_pct": 30.9}, {"name": "TJ_2021shop", "platform": "Shopee", "manager": "พี่มาย", "monthly_target": 0, "actual": 10787, "gp": 3207, "gp_pct": 29.7}, {"name": "บะหมี่ ชอป", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 10190, "gp": 3062, "gp_pct": 30.1}, {"name": "Smild_shop", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 9442, "gp": 2974, "gp_pct": 31.5}, {"name": "PP289_shop", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 3978, "gp": 1132, "gp_pct": 28.4}], "products": [{"name": "เสื่อน้ำมันม้วนใหญ่27m.", "cat": "เครื่องนอน", "sales": 1668597, "qty": 34053, "onhand": null}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 705081, "qty": 7740, "onhand": 960}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 241465, "qty": 79, "onhand": null}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 191738, "qty": 49, "onhand": null}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 163410, "qty": 61, "onhand": 119}, {"name": "หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 163106, "qty": 114, "onhand": null}, {"name": "หม้อสตูว์22*20 พระอาทิตย์", "cat": "เครื่องครัว", "sales": 148711, "qty": 746, "onhand": 154}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 140352, "qty": 2676, "onhand": null}, {"name": "ชุดหม้อหุงต้ม18,20cm.+ทัพพีแขก+ทัพพีเล็ก+ช้อนส้อม(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 115650, "qty": 133, "onhand": null}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 113892, "qty": 3090, "onhand": 828}, {"name": "ปิ่นโตสแตนเลส12*3(พระอาทิตย์)", "cat": "เครื่องครัว", "sales": 99894, "qty": 494, "onhand": null}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 94860, "qty": 2358, "onhand": null}, {"name": "ชุดหม้อ6ชิ้้นNo.ET6-035(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 89033, "qty": 76, "onhand": 113}, {"name": "หม้อก๋วยเตี๋ยว36cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 85568, "qty": 39, "onhand": 20}, {"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 84172, "qty": 54, "onhand": 25}, {"name": "หม้อนึ่ง40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 83122, "qty": 71, "onhand": null}, {"name": "ชุดหม้อTogther(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 78561, "qty": 99, "onhand": 2}, {"name": "ขูดมะม่วงNo.218(KIWI)", "cat": "เครื่องครัว", "sales": 76381, "qty": 688, "onhand": null}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 74328, "qty": 1776, "onhand": null}, {"name": "หม้อหุงต้มHomey36cm.No.2610360(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 68616, "qty": 65, "onhand": null}], "categories": [{"name": "เครื่องครัว", "sales": 4734546, "pct": 54.54}, {"name": "เครื่องนอน", "sales": 1685097, "pct": 19.41}, {"name": "พลาสติก", "sales": 1445273, "pct": 16.65}, {"name": "minimart", "sales": 481347, "pct": 5.54}, {"name": "เครื่องเรือน", "sales": 172170, "pct": 1.98}, {"name": "อุปกรณ์การเกษตร", "sales": 93670, "pct": 1.08}, {"name": "แปรง/เส้นใยทำความสะอาด", "sales": 25242, "pct": 0.29}, {"name": "ของใช้สัตว์เลี้ยง", "sales": 14178, "pct": 0.16}, {"name": "ของเล่น", "sales": 11122, "pct": 0.13}, {"name": "เครื่องนุ่งห่ม", "sales": 6988, "pct": 0.08}, {"name": "เครื่องใช้ไฟฟ้า", "sales": 5581, "pct": 0.06}, {"name": "ชุดสังฆภัณฑ์", "sales": 2510, "pct": 0.03}, {"name": "อุปกรณ์เครื่องเขียน", "sales": 1950, "pct": 0.02}, {"name": "จักรยาน", "sales": 796, "pct": 0.01}, {"name": "gift shop", "sales": 415, "pct": 0.0}, {"name": "อุปกรณ์ตกแต่งบ้าน", "sales": 264, "pct": 0.0}, {"name": "อุปกรณ์เครื่องมือช่าง", "sales": 204, "pct": 0.0}, {"name": "สินค้าเทศกาล", "sales": 156, "pct": 0.0}], "platforms": [{"name": "โรงเสื่อ", "monthly_target": 4900000, "actual": 2747536, "gp": 1260395, "count": 2}, {"name": "Lazada", "monthly_target": 2900000, "actual": 1556601, "gp": 455657, "count": 15}, {"name": "Shopee", "monthly_target": 3000000, "actual": 1592425, "gp": 476260, "count": 10}, {"name": "TikTok", "monthly_target": 3200000, "actual": 2784947, "gp": 961431, "count": 6}], "daily_targets": [{"day": 1, "total": 440000, "rso": 0, "lz": 0, "sh": 130000, "tt": 80000}, {"day": 2, "total": 440000, "rso": 0, "lz": 0, "sh": 130000, "tt": 80000}, {"day": 3, "total": 440000, "rso": 0, "lz": 0, "sh": 130000, "tt": 80000}, {"day": 4, "total": 410000, "rso": 0, "lz": 0, "sh": 160000, "tt": 80000}, {"day": 5, "total": 550000, "rso": 0, "lz": 0, "sh": 200000, "tt": 100000}, {"day": 6, "total": 440000, "rso": 0, "lz": 0, "sh": 190000, "tt": 95000}, {"day": 7, "total": 430000, "rso": 0, "lz": 0, "sh": 180000, "tt": 95000}, {"day": 8, "total": 430000, "rso": 0, "lz": 0, "sh": 180000, "tt": 90000}, {"day": 9, "total": 430000, "rso": 0, "lz": 0, "sh": 160000, "tt": 90000}, {"day": 10, "total": 430000, "rso": 0, "lz": 0, "sh": 140000, "tt": 90000}, {"day": 11, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 12, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 13, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 14, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 15, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 16, "total": 420000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 17, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 18, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 19, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 20, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 21, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 22, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 23, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 24, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 25, "total": 450000, "rso": 0, "lz": 0, "sh": 160000, "tt": 95000}, {"day": 26, "total": 460000, "rso": 0, "lz": 0, "sh": 160000, "tt": 95000}, {"day": 27, "total": 510000, "rso": 0, "lz": 0, "sh": 160000, "tt": 90000}, {"day": 28, "total": 510000, "rso": 0, "lz": 0, "sh": 180000, "tt": 110000}, {"day": 29, "total": 510000, "rso": 0, "lz": 0, "sh": 180000, "tt": 110000}, {"day": 30, "total": 510000, "rso": 0, "lz": 0, "sh": 180000, "tt": 120000}, {"day": 31, "total": 520000, "rso": 0, "lz": 0, "sh": 180000, "tt": 120000}]};
+const STATIC_DATA = {"meta": {"file": "MTD 1-19 พ.ค. 2569", "mtd_days": 19, "total_days": 31}, "summary": {"monthly_target": 14000000, "mtd_actual": 8681509, "cum_target": 8330000, "gp_amount": 3153743, "gp_pct": 36.3, "avg_daily": 456922, "remaining": 5318491, "days_left": 12, "req_daily": 443208, "urg_ratio": 0.97, "projection": 14164567, "mtd_days": 19, "total_days": 31}, "stores": [{"name": "V-premium", "platform": "โรงเสื่อ", "manager": "-", "monthly_target": 0, "actual": 2486647, "gp": 1123090, "gp_pct": 45.2}, {"name": "D-Sine 2024", "platform": "TikTok Live", "manager": "D-Sine", "monthly_target": 0, "actual": 1048010, "gp": 380728, "gp_pct": 36.3}, {"name": "ครบดี ถูกดี", "platform": "TikTok Live", "manager": "ครบดี", "monthly_target": 0, "actual": 824361, "gp": 269293, "gp_pct": 32.7}, {"name": "เตือนใจเครื่องครัว", "platform": "TikTok Live", "manager": "เตือนใจ", "monthly_target": 0, "actual": 671159, "gp": 233876, "gp_pct": 34.8}, {"name": "ร้านเอ็มบีเค", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 511916, "gp": 152504, "gp_pct": 29.8}, {"name": "ร้านเมียงดง", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 429787, "gp": 123526, "gp_pct": 28.7}, {"name": "พารากอน", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 264776, "gp": 76729, "gp_pct": 29.0}, {"name": "D-SIGN HOME", "platform": "โรงเสื่อ", "manager": "-", "monthly_target": 0, "actual": 260889, "gp": 137305, "gp_pct": 52.6}, {"name": "ร้านกิมหยง", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 255941, "gp": 76010, "gp_pct": 29.7}, {"name": "Ratchada2024", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 199318, "gp": 60939, "gp_pct": 30.6}, {"name": "มิสเตอร์ทีเจ", "platform": "TikTok", "manager": "-", "monthly_target": 0, "actual": 196347, "gp": 62940, "gp_pct": 32.1}, {"name": "ร้านไนติงเกล", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 180579, "gp": 46331, "gp_pct": 25.7}, {"name": "ชิบูย่า", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 179848, "gp": 49675, "gp_pct": 27.6}, {"name": "ร้านก้องแก้ว", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 155003, "gp": 47783, "gp_pct": 30.8}, {"name": "ร้านTJ_2021B", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 153263, "gp": 45076, "gp_pct": 29.4}, {"name": "ร้านจังซิลอน", "platform": "Shopee", "manager": "พี่มาย", "monthly_target": 0, "actual": 152574, "gp": 47254, "gp_pct": 31.0}, {"name": "BAITONG 50 SHOP (ใบตอง)", "platform": "Shopee", "manager": "จูน", "monthly_target": 0, "actual": 105176, "gp": 31971, "gp_pct": 30.4}, {"name": "NP SHOP", "platform": "Shopee", "manager": "จูน", "monthly_target": 0, "actual": 87558, "gp": 29113, "gp_pct": 33.2}, {"name": "ร้านประตูน้ำ", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 86025, "gp": 26751, "gp_pct": 31.1}, {"name": "แบรนด์ 333", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 78970, "gp": 24673, "gp_pct": 31.2}, {"name": "OK_TJ 2024", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 64247, "gp": 18755, "gp_pct": 29.2}, {"name": "wiwi online", "platform": "Lazada", "manager": "พี่แอน", "monthly_target": 0, "actual": 60137, "gp": 19433, "gp_pct": 32.3}, {"name": "DD_Onl", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 42995, "gp": 12413, "gp_pct": 28.9}, {"name": "KK Shop2024", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 40856, "gp": 12382, "gp_pct": 30.3}, {"name": "HONEY 789", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 30498, "gp": 10017, "gp_pct": 32.8}, {"name": "เครื่องครัวบัวทอง", "platform": "TikTok", "manager": "-", "monthly_target": 0, "actual": 26292, "gp": 8706, "gp_pct": 33.1}, {"name": "ร้านแพลตินัม", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 21620, "gp": 6017, "gp_pct": 27.8}, {"name": "อุ่นใจของในบ้าน", "platform": "TikTok", "manager": "-", "monthly_target": 0, "actual": 18778, "gp": 5888, "gp_pct": 31.4}, {"name": "ร้านเมกา", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 13542, "gp": 4190, "gp_pct": 30.9}, {"name": "TJ_2021shop", "platform": "Shopee", "manager": "พี่มาย", "monthly_target": 0, "actual": 10787, "gp": 3207, "gp_pct": 29.7}, {"name": "บะหมี่ ชอป", "platform": "Lazada", "manager": "พี่มาย", "monthly_target": 0, "actual": 10190, "gp": 3062, "gp_pct": 30.1}, {"name": "Smild_shop", "platform": "Shopee", "manager": "พี่แอน", "monthly_target": 0, "actual": 9442, "gp": 2974, "gp_pct": 31.5}, {"name": "PP289_shop", "platform": "Lazada", "manager": "จูน", "monthly_target": 0, "actual": 3978, "gp": 1132, "gp_pct": 28.4}], "store_prods": {"V-premium": [{"name": "เสื่อน้ำมันม้วนใหญ่27m.", "cat": "เครื่องนอน", "sales": 1446480, "qty": 29520, "gp_pct": 56.9}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 68577, "qty": 23, "gp_pct": 23.7}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 64146, "qty": 24, "gp_pct": 25.7}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 63381, "qty": 16, "gp_pct": 27.0}, {"name": "หม้อหุงต้ม28cm.(Carryม้าลาย)", "cat": "เครื่องครัว", "sales": 55897, "qty": 53, "gp_pct": 21.4}, {"name": "หม้อหุงต้ม26cm.No.160377(Carryม้าลาย)", "cat": "เครื่องครัว", "sales": 49477, "qty": 54, "gp_pct": 25.9}, {"name": "ถังไอติม100หลอด", "cat": "เครื่องครัว", "sales": 38644, "qty": 9, "gp_pct": 25.1}, {"name": "หม้อก๋วยเตี๋ยว36cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 37923, "qty": 17, "gp_pct": 26.5}, {"name": "หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 35627, "qty": 23, "gp_pct": 34.1}, {"name": "หม้อหุงต้ม24cm.(Carryม้าลาย)", "cat": "เครื่องครัว", "sales": 35614, "qty": 46, "gp_pct": 24.2}], "D-Sine 2024": [{"name": "หม้อสตูว์22*20 พระอาทิตย์", "cat": "เครื่องครัว", "sales": 94729, "qty": 480, "gp_pct": 100.0}, {"name": "หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 93272, "qty": 67, "gp_pct": 26.7}, {"name": "ปิ่นโตสแตนเลส12*3(พระอาทิตย์)", "cat": "เครื่องครัว", "sales": 89990, "qty": 447, "gp_pct": 37.8}, {"name": "ชุดหม้อหุงต้ม18,20cm.+ทัพพีแขก+ทัพพีเล็ก+ช้อนส้อม(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 78562, "qty": 90, "gp_pct": 28.0}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 64610, "qty": 21, "gp_pct": 26.1}, {"name": "ชุดหม้อหุงต้มCarry5ชิ้นNo.1857550(ม้าลาย)", "cat": "เครื่องครัว", "sales": 31680, "qty": 32, "gp_pct": 35.8}, {"name": "ปิ่นโตสเตนเลส14*3พระอาทิตย์", "cat": "เครื่องครัว", "sales": 31009, "qty": 127, "gp_pct": 36.9}, {"name": "หม้อก๋วยเตี๋ยวแวลู่แม็กซ์36cm.14in3ช่อง(นางนวล)", "cat": "เครื่องครัว", "sales": 27290, "qty": 17, "gp_pct": 25.3}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 26550, "qty": 10, "gp_pct": 25.2}, {"name": "ชุดหม้อTogther(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 26196, "qty": 33, "gp_pct": 27.7}], "ครบดี ถูกดี": [{"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 647685, "qty": 7098, "gp_pct": 32.3}, {"name": "กล่องฝาล็อค100l.สีดำD-sine", "cat": "พลาสติก", "sales": 57350, "qty": 312, "gp_pct": 36.4}, {"name": "กล่องฝาล็อค60l.สีน้ำเงินD-sine", "cat": "พลาสติก", "sales": 13348, "qty": 136, "gp_pct": 35.7}, {"name": "กล่องฝาล็อค100l.คละสี(CNN)", "cat": "พลาสติก", "sales": 11510, "qty": 48, "gp_pct": 29.1}, {"name": "กล่องฝาล็อค60l.สีเขียวD-sine", "cat": "พลาสติก", "sales": 10912, "qty": 109, "gp_pct": 37.0}, {"name": "ถังน้ำดื่ม18.9I.ฝาเกลียวใส", "cat": "อุปกรณ์การเกษตร", "sales": 7608, "qty": 80, "gp_pct": 47.4}, {"name": "กล่องฝาล็อค60l.สีแดงD-sine", "cat": "พลาสติก", "sales": 6100, "qty": 61, "gp_pct": 36.9}, {"name": "ชั้นวางของ4ชั้นสีฟ้า(D-sine)", "cat": "เครื่องเรือน", "sales": 5053, "qty": 29, "gp_pct": 28.6}, {"name": "หม้อกาแฟ40cm.มีปีก/3รู", "cat": "เครื่องครัว", "sales": 4613, "qty": 4, "gp_pct": 28.5}, {"name": "ชั้นวางของ4ชั้นสีม่วง(D-sine)", "cat": "เครื่องเรือน", "sales": 3836, "qty": 22, "gp_pct": 28.3}], "เตือนใจเครื่องครัว": [{"name": "ชุดหม้อ6ชิ้้นNo.ET6-035(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 73044, "qty": 61, "gp_pct": 30.1}, {"name": "ชุดหม้อTogther(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 52365, "qty": 66, "gp_pct": 27.6}, {"name": "หม้อสตูว์22*20 พระอาทิตย์", "cat": "เครื่องครัว", "sales": 44180, "qty": 226, "gp_pct": 100.0}, {"name": "ปิ่นโตสเตนเลส14*3พระอาทิตย์", "cat": "เครื่องครัว", "sales": 20405, "qty": 83, "gp_pct": 37.4}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 19670, "qty": 5, "gp_pct": 26.5}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 18780, "qty": 7, "gp_pct": 25.9}, {"name": "หม้อหุงต้มWisdom26cm.No.163618(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 17200, "qty": 18, "gp_pct": 28.9}, {"name": "หม้อหู45cm.No.185512(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 16985, "qty": 8, "gp_pct": 27.2}, {"name": "หม้อหุงต้มHomey36cm.No.2610360(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 16794, "qty": 17, "gp_pct": 26.9}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 15500, "qty": 5, "gp_pct": 26.7}], "ร้านเอ็มบีเค": [{"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 34980, "qty": 11, "gp_pct": 28.5}, {"name": "ขูดมะม่วงNo.218(KIWI)", "cat": "เครื่องครัว", "sales": 27582, "qty": 251, "gp_pct": 25.8}, {"name": "หม้อข้าว30cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 18550, "qty": 53, "gp_pct": 35.4}, {"name": "หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 15620, "qty": 11, "gp_pct": 28.1}, {"name": "เตา+ปลาแปะซะใหญ่(WINNER)", "cat": "เครื่องครัว", "sales": 14300, "qty": 52, "gp_pct": 26.9}, {"name": "ถาดหลุมWisdom30cm.No.132031(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 14030, "qty": 61, "gp_pct": 29.6}, {"name": "หม้อก๋วยเตี๋ยวแวลู่แม็กซ์40cm.3ช่อง16in.(นางนวล)", "cat": "เครื่องครัว", "sales": 14000, "qty": 7, "gp_pct": 25.4}, {"name": "ชุดหม้อ6ชิ้้นNo.ET6-035(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 12591, "qty": 12, "gp_pct": 20.2}, {"name": "เตา+ปลาแปะซะเล็ก(WINNER)", "cat": "เครื่องครัว", "sales": 10794, "qty": 42, "gp_pct": 29.8}, {"name": "หม้อหู50cm.No.185513(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 10360, "qty": 4, "gp_pct": 30.6}], "ร้านเมียงดง": [{"name": "ถาดหลุมWisdom35cm.No.132039(ม้าลาย)", "cat": "เครื่องครัว", "sales": 36400, "qty": 140, "gp_pct": 24.4}, {"name": "ถาดหลุมWisdom30cm.No.132031(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 27090, "qty": 126, "gp_pct": 24.7}, {"name": "ช้อนส้อม(ตราจรวด)", "cat": "เครื่องครัว", "sales": 26370, "qty": 293, "gp_pct": 22.8}, {"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 20020, "qty": 13, "gp_pct": 32.4}, {"name": "หม้อข้าว50cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 17100, "qty": 9, "gp_pct": 37.2}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 16365, "qty": 180, "gp_pct": 32.1}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 15250, "qty": 5, "gp_pct": 25.5}, {"name": "ชามซุป12cm.(ม้าลาย)", "cat": "เครื่องครัว", "sales": 14280, "qty": 68, "gp_pct": 26.4}, {"name": "กะทะย่างเกาหลี30cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 13520, "qty": 104, "gp_pct": 26.2}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 13309, "qty": 5, "gp_pct": 25.4}], "พารากอน": [{"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 67416, "qty": 1272, "gp_pct": 28.9}, {"name": "ถังไอติม40หลอด", "cat": "เครื่องครัว", "sales": 33975, "qty": 9, "gp_pct": 31.2}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 21360, "qty": 534, "gp_pct": 25.0}, {"name": "ขูดมะม่วงNo.218(KIWI)", "cat": "เครื่องครัว", "sales": 11130, "qty": 101, "gp_pct": 26.0}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 9324, "qty": 222, "gp_pct": 28.6}, {"name": "ถังไอติม100หลอด", "cat": "เครื่องครัว", "sales": 4630, "qty": 1, "gp_pct": 30.6}, {"name": "ถังไอติม80หลอด", "cat": "เครื่องครัว", "sales": 4350, "qty": 1, "gp_pct": 30.9}, {"name": "สบู่อิงอรมะขามแท้160g.", "cat": "minimart", "sales": 4128, "qty": 108, "gp_pct": 28.1}, {"name": "ถังไอติม60หลอด", "cat": "เครื่องครัว", "sales": 3990, "qty": 1, "gp_pct": 29.8}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 3975, "qty": 45, "gp_pct": 30.1}], "D-SIGN HOME": [{"name": "เสื่อน้ำมันม้วนใหญ่27m.", "cat": "เครื่องนอน", "sales": 222117, "qty": 4533, "gp_pct": 57.1}, {"name": "กระปุกกะปิฝาแดง500g.(D-sine)", "cat": "พลาสติก", "sales": 20244, "qty": 3960, "gp_pct": 20.9}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 5160, "qty": 138, "gp_pct": 32.5}, {"name": "หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 4647, "qty": 3, "gp_pct": 34.1}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "cat": "พลาสติก", "sales": 4308, "qty": 792, "gp_pct": 23.3}, {"name": "ถังปูนNo.18คละสี(ตราปลามังกร)", "cat": "พลาสติก", "sales": 1440, "qty": 30, "gp_pct": 47.4}, {"name": "เข่งNo.6สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 720, "qty": 24, "gp_pct": 48.6}, {"name": "ชุดปิ่นโตLuckyDay.No.1843361สีชมพู(ม้าลาย)", "cat": "เครื่องครัว", "sales": 559, "qty": 1, "gp_pct": 32.6}, {"name": "กระบวยRooster4in.ด้ามดำ(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 447, "qty": 3, "gp_pct": 28.9}, {"name": "ชั้นวางของ4ชั้นสีฟ้า(D-sine)", "cat": "เครื่องเรือน", "sales": 354, "qty": 2, "gp_pct": 26.6}], "ร้านกิมหยง": [{"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 45102, "qty": 882, "gp_pct": 26.0}, {"name": "กล่องฝาล็อค60l.สีน้ำเงินD-sine", "cat": "พลาสติก", "sales": 15491, "qty": 154, "gp_pct": 37.2}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 14856, "qty": 360, "gp_pct": 27.3}, {"name": "กล่องฝาล็อค60l.สีเขียวD-sine", "cat": "พลาสติก", "sales": 8648, "qty": 88, "gp_pct": 35.8}, {"name": "ชั้นวางของเนโกะ4ชั้นคละสีพาสเทล(CNN)", "cat": "เครื่องเรือน", "sales": 7098, "qty": 42, "gp_pct": 28.4}, {"name": "ช้อนพระอาทิตย์", "cat": "เครื่องครัว", "sales": 6876, "qty": 336, "gp_pct": 30.0}, {"name": "หม้อนึ่ง40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 6774, "qty": 6, "gp_pct": 29.3}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีเข้ม(BIGONE)", "cat": "เครื่องเรือน", "sales": 6560, "qty": 16, "gp_pct": 32.1}, {"name": "หม้อนึ่ง32cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 5992, "qty": 8, "gp_pct": 32.6}, {"name": "กล่องฝาล็อค60l.สีแดงD-sine", "cat": "พลาสติก", "sales": 5780, "qty": 58, "gp_pct": 36.6}], "Ratchada2024": [{"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 27125, "qty": 7, "gp_pct": 25.4}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 18300, "qty": 6, "gp_pct": 25.5}, {"name": "ถังน้ำดื่ม18.9I.ฝาเกลียวใส", "cat": "อุปกรณ์การเกษตร", "sales": 14096, "qty": 151, "gp_pct": 46.2}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีหวาน/สีพาลเทล(BIGONE)", "cat": "เครื่องเรือน", "sales": 11674, "qty": 26, "gp_pct": 28.8}, {"name": "หม้อหุงต้มHomey36cm.No.2610360(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 9240, "qty": 10, "gp_pct": 21.9}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 8700, "qty": 3, "gp_pct": 31.5}, {"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 7700, "qty": 5, "gp_pct": 32.4}, {"name": "หม้อก๋วยเตี๋ยว36cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 6600, "qty": 3, "gp_pct": 25.4}, {"name": "หม้อข้าว34cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 6435, "qty": 11, "gp_pct": 32.4}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "cat": "พลาสติก", "sales": 5460, "qty": 780, "gp_pct": 40.4}], "มิสเตอร์ทีเจ": [{"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 37644, "qty": 996, "gp_pct": 33.2}, {"name": "ช้อนพระอาทิตย์", "cat": "เครื่องครัว", "sales": 20640, "qty": 1032, "gp_pct": 28.3}, {"name": "ขวดโหลชูโม่ใหญ่No.879(กระเช้า)", "cat": "พลาสติก", "sales": 8610, "qty": 41, "gp_pct": 33.3}, {"name": "ครกอนามัย+สากNo.9300(ตรามือ)", "cat": "เครื่องครัว", "sales": 8268, "qty": 52, "gp_pct": 31.9}, {"name": "กล่องฝาล็อค100l.คละสี(CNN)", "cat": "พลาสติก", "sales": 3764, "qty": 17, "gp_pct": 23.2}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีหวาน/สีพาลเทล(BIGONE)", "cat": "เครื่องเรือน", "sales": 3360, "qty": 7, "gp_pct": 33.4}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 3315, "qty": 36, "gp_pct": 35.5}, {"name": "ช้อนส้อมNo.EPL-00746(KITTY)", "cat": "เครื่องครัว", "sales": 3246, "qty": 162, "gp_pct": 34.5}, {"name": "ขวดโหลNo.028(ST/ใบไม้)", "cat": "พลาสติก", "sales": 3120, "qty": 240, "gp_pct": 34.6}, {"name": "กะละมังอลูมิเนียม45cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 3068, "qty": 26, "gp_pct": 27.5}], "ร้านไนติงเกล": [{"name": "หม้อก๋วยเตี๋ยวแวลู่แม็กซ์40cm.3ช่อง16in.(นางนวล)", "cat": "เครื่องครัว", "sales": 19280, "qty": 10, "gp_pct": 22.7}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 14911, "qty": 4, "gp_pct": 22.4}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 12522, "qty": 144, "gp_pct": 31.2}, {"name": "หม้อข้าวชุด18-32cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 12480, "qty": 8, "gp_pct": 20.4}, {"name": "หม้อก๋วยเตี๋ยวแวลู่แม็กซ์36cm.14in3ช่อง(นางนวล)", "cat": "เครื่องครัว", "sales": 12225, "qty": 8, "gp_pct": 21.6}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 11981, "qty": 4, "gp_pct": 24.1}, {"name": "ถังไอติม40หลอด", "cat": "เครื่องครัว", "sales": 11370, "qty": 3, "gp_pct": 31.5}, {"name": "ปิ่นโต14*5(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 10808, "qty": 16, "gp_pct": 22.6}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 10258, "qty": 4, "gp_pct": 22.5}, {"name": "เตา+ปลาแปะซะเล็ก(WINNER)", "cat": "เครื่องครัว", "sales": 6939, "qty": 27, "gp_pct": 29.8}], "ชิบูย่า": [{"name": "กะทะย่างเกาหลี30cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 10380, "qty": 84, "gp_pct": 22.3}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 7980, "qty": 3, "gp_pct": 25.3}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 5942, "qty": 2, "gp_pct": 23.5}, {"name": "หม้อก๋วยเตี๋ยว36cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 4400, "qty": 2, "gp_pct": 25.4}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 4356, "qty": 114, "gp_pct": 20.9}, {"name": "หม้อข้าวชุด18-26cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 4295, "qty": 5, "gp_pct": 30.1}, {"name": "กะทะย่างเกาหลี35cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 4152, "qty": 22, "gp_pct": 24.5}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 4092, "qty": 102, "gp_pct": 25.2}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 3596, "qty": 1, "gp_pct": 19.6}, {"name": "เสื่อกระเป๋า3พับยางพารา", "cat": "เครื่องนอน", "sales": 3537, "qty": 21, "gp_pct": 28.8}], "ร้านก้องแก้ว": [{"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 18024, "qty": 450, "gp_pct": 31.5}, {"name": "น้ำยาล้างจาน500ml.solly", "cat": "minimart", "sales": 12480, "qty": 1248, "gp_pct": 31.4}, {"name": "หม้อด้ามญี่ปุ่น20ซม.", "cat": "เครื่องครัว", "sales": 7648, "qty": 32, "gp_pct": 28.8}, {"name": "สบู่เบนเนทเอ็กซ์ตร้าไวท์​130g.", "cat": "minimart", "sales": 7008, "qty": 126, "gp_pct": 24.5}, {"name": "ชั้นวางของเนโกะ4ชั้นคละสีพาสเทล(CNN)", "cat": "เครื่องเรือน", "sales": 4225, "qty": 25, "gp_pct": 28.4}, {"name": "หม้อลาว20cm.(รถยนต์)", "cat": "เครื่องครัว", "sales": 4125, "qty": 33, "gp_pct": 29.6}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 3888, "qty": 72, "gp_pct": 29.9}, {"name": "หม้อข้าว50cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 3800, "qty": 2, "gp_pct": 37.2}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีเข้ม(BIGONE)", "cat": "เครื่องเรือน", "sales": 3690, "qty": 9, "gp_pct": 32.1}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 3504, "qty": 84, "gp_pct": 28.1}], "ร้านTJ_2021B": [{"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 20640, "qty": 516, "gp_pct": 25.0}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 19860, "qty": 462, "gp_pct": 30.1}, {"name": "กล่องล็อคSnapBoxNo.301(SN)", "cat": "พลาสติก", "sales": 19656, "qty": 852, "gp_pct": 30.6}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 8586, "qty": 162, "gp_pct": 28.6}, {"name": "ช้อนส้อม6คู่ลีลาวดีNo.100030(ม้าลาย)", "cat": "เครื่องครัว", "sales": 7736, "qty": 92, "gp_pct": 25.7}, {"name": "กล่องฝาล็อค60l.สีน้ำเงินD-sine", "cat": "พลาสติก", "sales": 7457, "qty": 75, "gp_pct": 36.5}, {"name": "ช้อนส้อม(ตราจรวด)", "cat": "เครื่องครัว", "sales": 4560, "qty": 48, "gp_pct": 26.8}, {"name": "สบู่อาเซฟโซ80/90g.", "cat": "minimart", "sales": 4248, "qty": 168, "gp_pct": 28.8}, {"name": "กล่องฝาล็อค60l.สีเขียวD-sine", "cat": "พลาสติก", "sales": 3881, "qty": 39, "gp_pct": 36.5}, {"name": "กล่องฝาล็อค60l.สีแดงD-sine", "cat": "พลาสติก", "sales": 3362, "qty": 33, "gp_pct": 38.1}], "ร้านจังซิลอน": [{"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 12320, "qty": 8, "gp_pct": 32.4}, {"name": "ขูดมะม่วงNo.218(KIWI)", "cat": "เครื่องครัว", "sales": 11960, "qty": 104, "gp_pct": 29.1}, {"name": "หม้อข้าว16-20cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 8000, "qty": 20, "gp_pct": 28.5}, {"name": "ช้อนส้อม6คู่ลีลาวดีNo.100030(ม้าลาย)", "cat": "เครื่องครัว", "sales": 6853, "qty": 77, "gp_pct": 29.8}, {"name": "หม้อนึ่ง40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 6774, "qty": 6, "gp_pct": 29.3}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 6480, "qty": 162, "gp_pct": 25.0}, {"name": "ปิ่นโตบัดดี้12*2.5(ม้าลาย)", "cat": "เครื่องครัว", "sales": 6390, "qty": 18, "gp_pct": 29.4}, {"name": "คั้นส้มกลมเล็ก(WINNER)", "cat": "เครื่องครัว", "sales": 6077, "qty": 25, "gp_pct": 30.1}, {"name": "หม้อข้าว50cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 5700, "qty": 3, "gp_pct": 37.2}, {"name": "สบู่อิงอรมะขามแท้160g.", "cat": "minimart", "sales": 4800, "qty": 120, "gp_pct": 31.2}], "BAITONG 50 SHOP (ใบตอง)": [{"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 17010, "qty": 474, "gp_pct": 29.7}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 15500, "qty": 4, "gp_pct": 25.4}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 9741, "qty": 108, "gp_pct": 31.6}, {"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 6160, "qty": 4, "gp_pct": 32.4}, {"name": "ชุดปิ่นโตLuckyDay.No.1843361สีชมพู(ม้าลาย)", "cat": "เครื่องครัว", "sales": 5489, "qty": 11, "gp_pct": 24.5}, {"name": "ชุดปิ่นโตLuckyDay.No.1843371สีฟ้า(ม้าลาย)", "cat": "เครื่องครัว", "sales": 5489, "qty": 11, "gp_pct": 24.5}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 4644, "qty": 108, "gp_pct": 30.2}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 3275, "qty": 1, "gp_pct": 30.6}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 2660, "qty": 1, "gp_pct": 25.3}, {"name": "กล่องหูหิ้วฝาล๊อคNo.3030สีฟ้า/สีชมพู(Picnic)", "cat": "พลาสติก", "sales": 2520, "qty": 18, "gp_pct": 42.9}], "NP SHOP": [{"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 14304, "qty": 348, "gp_pct": 27.0}, {"name": "หม้อนึ่ง32cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 13482, "qty": 18, "gp_pct": 32.6}, {"name": "กระปุกกะปิฝาแดง500g.(D-sine)", "cat": "พลาสติก", "sales": 12012, "qty": 1716, "gp_pct": 40.3}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีเข้ม(BIGONE)", "cat": "เครื่องเรือน", "sales": 10250, "qty": 25, "gp_pct": 32.1}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีหวาน/สีพาลเทล(BIGONE)", "cat": "เครื่องเรือน", "sales": 4041, "qty": 9, "gp_pct": 28.8}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 3576, "qty": 102, "gp_pct": 28.0}, {"name": "ครกอนามัย+สากNo.9300(ตรามือ)", "cat": "เครื่องครัว", "sales": 2873, "qty": 17, "gp_pct": 35.2}, {"name": "เตา+ปลาแปะซะเล็ก(WINNER)", "cat": "เครื่องครัว", "sales": 2860, "qty": 11, "gp_pct": 30.6}, {"name": "กล่องฝาล็อค60l.สีแดงD-sine", "cat": "พลาสติก", "sales": 2356, "qty": 23, "gp_pct": 38.2}, {"name": "หม้อก๋วยเตี๋ยวแวลู่แม็กซ์40cm.3ช่อง16in.(นางนวล)", "cat": "เครื่องครัว", "sales": 2100, "qty": 1, "gp_pct": 29.0}], "ร้านประตูน้ำ": [{"name": "ช้อนส้อม6คู่ลีลาวดีNo.100030(ม้าลาย)", "cat": "เครื่องครัว", "sales": 7515, "qty": 79, "gp_pct": 34.3}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 6672, "qty": 168, "gp_pct": 36.4}, {"name": "กล่องฝาล็อค60l.สีเขียวD-sine", "cat": "พลาสติก", "sales": 5043, "qty": 55, "gp_pct": 31.0}, {"name": "กล่องฝาล็อค60l.สีน้ำเงินD-sine", "cat": "พลาสติก", "sales": 3147, "qty": 31, "gp_pct": 37.9}, {"name": "หม้อข้าว40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 2503, "qty": 3, "gp_pct": 28.9}, {"name": "หม้อข้าว38cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 2400, "qty": 3, "gp_pct": 31.6}, {"name": "ปิ่นโต16*4(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 2179, "qty": 3, "gp_pct": 23.2}, {"name": "หม้อข้าว16-20cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 2098, "qty": 6, "gp_pct": 18.2}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 1917, "qty": 21, "gp_pct": 32.4}, {"name": "สบู่ซักผ้าขาวแท่งยาว", "cat": "minimart", "sales": 1698, "qty": 99, "gp_pct": 29.0}], "แบรนด์ 333": [{"name": "ช้อนใหญ่(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 9225, "qty": 205, "gp_pct": 32.2}, {"name": "ช้อนพระอาทิตย์", "cat": "เครื่องครัว", "sales": 7028, "qty": 320, "gp_pct": 34.8}, {"name": "ทรายแมว5l.กลิ่นแอปเปิ้ลEASY-SCOOP", "cat": "ของใช้สัตว์เลี้ยง", "sales": 3074, "qty": 53, "gp_pct": 32.5}, {"name": "ทรายแมว5l.กลิ่นลาเวนเดอร์EASY-SCOOP", "cat": "ของใช้สัตว์เลี้ยง", "sales": 2931, "qty": 52, "gp_pct": 30.6}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 2544, "qty": 48, "gp_pct": 28.6}, {"name": "ทรายแมว5l.กลิ่นเลม่อนEASY-SCOOP", "cat": "ของใช้สัตว์เลี้ยง", "sales": 2399, "qty": 41, "gp_pct": 33.2}, {"name": "สบู่ซักผ้าขาวแท่งยาว", "cat": "minimart", "sales": 2298, "qty": 126, "gp_pct": 33.2}, {"name": "น้ำยาล้างจาน500ml.solly", "cat": "minimart", "sales": 2100, "qty": 210, "gp_pct": 32.8}, {"name": "เหยือกน้ำ11cm.(ม้าลาย)", "cat": "เครื่องครัว", "sales": 1945, "qty": 5, "gp_pct": 13.9}, {"name": "ถ้วยตะไล1*12", "cat": "เครื่องครัว", "sales": 1886, "qty": 26, "gp_pct": 29.5}], "OK_TJ 2024": [{"name": "หม้อนึ่ง40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 23709, "qty": 21, "gp_pct": 30.7}, {"name": "ขวดซอส32oz.No.9096/9096TR(ตรามือ)", "cat": "พลาสติก", "sales": 11100, "qty": 444, "gp_pct": 28.0}, {"name": "หม้อนึ่ง36cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 10250, "qty": 10, "gp_pct": 33.5}, {"name": "สบู่สมุนไพรดอสอโรม่า(ดอกราชพฤกษ์)", "cat": "minimart", "sales": 4320, "qty": 108, "gp_pct": 25.0}, {"name": "สบู่ส้มผสมคอลลาเจน วิภาดา", "cat": "minimart", "sales": 3060, "qty": 306, "gp_pct": 20.8}, {"name": "ช้อนส้อม(ตราจรวด)", "cat": "เครื่องครัว", "sales": 2880, "qty": 32, "gp_pct": 22.8}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 2349, "qty": 27, "gp_pct": 29.1}, {"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1129, "qty": 1, "gp_pct": 7.8}, {"name": "สบู่ซักผ้าขาวแท่งยาว", "cat": "minimart", "sales": 918, "qty": 51, "gp_pct": 33.2}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "cat": "พลาสติก", "sales": 840, "qty": 120, "gp_pct": 40.4}], "wiwi online": [{"name": "กล่องฝาล็อค60l.สีน้ำเงินD-sine", "cat": "พลาสติก", "sales": 4752, "qty": 46, "gp_pct": 38.7}, {"name": "กล่องฝาล็อค60l.สีเขียวD-sine", "cat": "พลาสติก", "sales": 3816, "qty": 37, "gp_pct": 38.5}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 3732, "qty": 90, "gp_pct": 27.7}, {"name": "ลิ้นชัก4ชั้นโครงดำNo.251/4สีเข้ม(BIGONE)", "cat": "เครื่องเรือน", "sales": 2870, "qty": 7, "gp_pct": 32.1}, {"name": "ผ้าฟาง4*4", "cat": "เครื่องเรือน", "sales": 2665, "qty": 13, "gp_pct": 27.6}, {"name": "กล่องฝาล็อค60l.สีแดงD-sine", "cat": "พลาสติก", "sales": 1923, "qty": 19, "gp_pct": 37.5}, {"name": "ผ้าฟาง3*4", "cat": "เครื่องเรือน", "sales": 1710, "qty": 9, "gp_pct": 41.3}, {"name": "หม้อก๋วยเตี๋ยวแวลู่แม็กซ์36cm.14in3ช่อง(นางนวล)", "cat": "เครื่องครัว", "sales": 1600, "qty": 1, "gp_pct": 25.1}, {"name": "เหยือกน้ำNo.412ใส(PN)", "cat": "พลาสติก", "sales": 1469, "qty": 13, "gp_pct": 31.4}, {"name": "เหยือกน้ำNo.411Sใส(PN)", "cat": "พลาสติก", "sales": 1280, "qty": 20, "gp_pct": 31.2}], "DD_Onl": [{"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 6432, "qty": 156, "gp_pct": 27.2}, {"name": "หม้อหู50cm.No.185513(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 4850, "qty": 2, "gp_pct": 25.9}, {"name": "หม้อหู45cm.No.185512(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 3990, "qty": 2, "gp_pct": 22.5}, {"name": "น้ำยาล้างจาน500ml.solly", "cat": "minimart", "sales": 2790, "qty": 279, "gp_pct": 31.4}, {"name": "หม้อข้าว16-20cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 2436, "qty": 6, "gp_pct": 29.6}, {"name": "หินลับมีด8*2*1สองหน้าห้าเสือกล่องฟ้าขาว", "cat": "อุปกรณ์การเกษตร", "sales": 1650, "qty": 15, "gp_pct": 29.2}, {"name": "หม้อก๋วยเตี๋ยว40cm.(3ช่องปีก)ใช้สารดีบุก/ปลอดสาร", "cat": "เครื่องครัว", "sales": 1250, "qty": 1, "gp_pct": 26.6}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 1248, "qty": 24, "gp_pct": 27.2}, {"name": "ชั้นวางของเนโกะ4ชั้นคละสีพาสเทล(CNN)", "cat": "เครื่องเรือน", "sales": 1014, "qty": 6, "gp_pct": 28.4}, {"name": "ครกอนามัย+สากNo.9300(ตรามือ)", "cat": "เครื่องครัว", "sales": 795, "qty": 5, "gp_pct": 31.1}], "KK Shop2024": [{"name": "กะทะย่างเกาหลี35cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 3990, "qty": 21, "gp_pct": 25.0}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 3875, "qty": 1, "gp_pct": 25.4}, {"name": "หม้อลาว20cm.(รถยนต์)", "cat": "เครื่องครัว", "sales": 2875, "qty": 23, "gp_pct": 29.6}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 2454, "qty": 66, "gp_pct": 32.1}, {"name": "โถข้าวพร้อมฝา10in.No.BL6067-10คละสี(SIAM BESTWARE)", "cat": "เครื่องครัว", "sales": 1980, "qty": 11, "gp_pct": 31.4}, {"name": "สบู่ซักผ้าขาวแท่งยาว", "cat": "minimart", "sales": 1620, "qty": 90, "gp_pct": 33.3}, {"name": "ครกไม้No.8+สาก", "cat": "เครื่องครัว", "sales": 1275, "qty": 5, "gp_pct": 25.5}, {"name": "ขวดโหลฝาแดง2p./02P(S.T)", "cat": "พลาสติก", "sales": 1056, "qty": 96, "gp_pct": 30.9}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 984, "qty": 24, "gp_pct": 26.8}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 972, "qty": 18, "gp_pct": 29.9}], "HONEY 789": [{"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1490, "qty": 1, "gp_pct": 30.1}, {"name": "หม้อนึ่ง32cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1440, "qty": 2, "gp_pct": 29.9}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 1404, "qty": 36, "gp_pct": 35.3}, {"name": "หม้อหุงต้มHomey40cm.No.2610400(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 1360, "qty": 1, "gp_pct": 32.8}, {"name": "จานเมลามีน9in.No.PN87090คละลาย(PN)", "cat": "เครื่องครัว", "sales": 1320, "qty": 60, "gp_pct": 31.8}, {"name": "หม้อนึ่ง40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1129, "qty": 1, "gp_pct": 29.3}, {"name": "สบู่ซักผ้าขาวแท่งยาว", "cat": "minimart", "sales": 1080, "qty": 60, "gp_pct": 33.3}, {"name": "กล่องตะเกียบNo.151(มั่งมี)", "cat": "พลาสติก", "sales": 1056, "qty": 45, "gp_pct": 31.8}, {"name": "ถังน้ำดื่ม18.9I.ฝาเกลียวใส", "cat": "อุปกรณ์การเกษตร", "sales": 934, "qty": 10, "gp_pct": 46.3}, {"name": "เข่งNo.1สีดำ(หัวสิงห์)", "cat": "พลาสติก", "sales": 895, "qty": 5, "gp_pct": 30.7}], "เครื่องครัวบัวทอง": [{"name": "ขวดโหลชูโม่ใหญ่No.879(กระเช้า)", "cat": "พลาสติก", "sales": 2940, "qty": 14, "gp_pct": 33.3}, {"name": "ถาดหลุมWisdom30cm.No.132031(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 2350, "qty": 10, "gp_pct": 31.1}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 2124, "qty": 54, "gp_pct": 35.9}, {"name": "กะละมังอลูมิเนียม55cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 1900, "qty": 10, "gp_pct": 28.9}, {"name": "กะละมังอลูมิเนียม60cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 1470, "qty": 6, "gp_pct": 31.8}, {"name": "ครกอนามัย+สากNo.9300(ตรามือ)", "cat": "เครื่องครัว", "sales": 1431, "qty": 9, "gp_pct": 31.1}, {"name": "ชามซุป16cm.(ม้าลาย)", "cat": "เครื่องครัว", "sales": 1340, "qty": 4, "gp_pct": 30.9}, {"name": "เหยือกน้ำNo.412ใส(PN)", "cat": "พลาสติก", "sales": 1250, "qty": 10, "gp_pct": 38.0}, {"name": "ขวดโหลNo.028(ST/ใบไม้)", "cat": "พลาสติก", "sales": 1092, "qty": 84, "gp_pct": 30.2}, {"name": "เหยือกน้ำNo.448(PN)", "cat": "พลาสติก", "sales": 1000, "qty": 10, "gp_pct": 49.0}], "ร้านแพลตินัม": [{"name": "ยาสีฟันสมุนไพรเทพไทยรสดั้งเดิม30g.", "cat": "minimart", "sales": 2469, "qty": 45, "gp_pct": 23.8}, {"name": "สบู่สมุนไพรดอสอโรม่า(ดอกราชพฤกษ์)", "cat": "minimart", "sales": 2160, "qty": 54, "gp_pct": 24.9}, {"name": "ถาดหลุมWisdom30cm.No.132031(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 2150, "qty": 10, "gp_pct": 24.7}, {"name": "ยาสีฟันสมุนไพรเทพไทยรสสปียร์มิ้นท์30g.", "cat": "minimart", "sales": 1782, "qty": 33, "gp_pct": 22.6}, {"name": "ครกอนามัย+สากNo.9300(ตรามือ)", "cat": "เครื่องครัว", "sales": 1521, "qty": 9, "gp_pct": 35.2}, {"name": "ขวดโหลฝาแดง2p./02P(S.T)", "cat": "พลาสติก", "sales": 1452, "qty": 132, "gp_pct": 31.8}, {"name": "โครงปิคนิค+ฟักบัว+นมหนู", "cat": "เครื่องครัว", "sales": 965, "qty": 9, "gp_pct": 30.3}, {"name": "ขวดซอส32oz.No.9096/9096TR(ตรามือ)", "cat": "พลาสติก", "sales": 936, "qty": 36, "gp_pct": 30.4}, {"name": "ยาสีฟันสมุนไพรเทพไทยรสมิกซ์ฟรุ๊ต30g.", "cat": "minimart", "sales": 915, "qty": 18, "gp_pct": 17.8}, {"name": "ขวดโหล4p.ฝาแดงNo.09-4p(ใบไม้)", "cat": "พลาสติก", "sales": 684, "qty": 36, "gp_pct": 39.5}], "อุ่นใจของในบ้าน": [{"name": "ปิ่นโตสแตนเลส12*3(พระอาทิตย์)", "cat": "เครื่องครัว", "sales": 3130, "qty": 16, "gp_pct": 36.0}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 3050, "qty": 1, "gp_pct": 25.5}, {"name": "ถาดหลุมWisdom30cm.No.132031(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 2350, "qty": 10, "gp_pct": 31.1}, {"name": "กะละมังอลูมิเนียม60cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 1972, "qty": 8, "gp_pct": 32.3}, {"name": "กะละมังอลูมิเนียม55cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 1900, "qty": 10, "gp_pct": 28.9}, {"name": "กะละมังอลูมิเนียม45cm.(ตราร่ม)", "cat": "เครื่องครัว", "sales": 1098, "qty": 9, "gp_pct": 29.9}, {"name": "กล่องอาหารแฝดNo.A-105สีหวาน/สีพาสเทล(SSS)", "cat": "พลาสติก", "sales": 828, "qty": 36, "gp_pct": 32.6}, {"name": "กดสลิ่ม", "cat": "เครื่องครัว", "sales": 705, "qty": 3, "gp_pct": 29.8}, {"name": "สบู่สมุนไพรดอสอโรม่า(ดอกราชพฤกษ์)", "cat": "minimart", "sales": 552, "qty": 12, "gp_pct": 34.8}, {"name": "ครกหินตื้น+สาก8in.ST443", "cat": "เครื่องครัว", "sales": 461, "qty": 1, "gp_pct": 31.7}], "ร้านเมกา": [{"name": "หม้อลาว20cm.(รถยนต์)", "cat": "เครื่องครัว", "sales": 1875, "qty": 15, "gp_pct": 29.6}, {"name": "สบู่ซักผ้าขาวแท่งยาว", "cat": "minimart", "sales": 1674, "qty": 93, "gp_pct": 33.2}, {"name": "ขวดโหล1p.ฝาแดงNo.09-1P(5ห่วง)", "cat": "พลาสติก", "sales": 588, "qty": 84, "gp_pct": 34.4}, {"name": "หม้อข้าว34cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 585, "qty": 1, "gp_pct": 32.4}, {"name": "ขวดโหลNo.028(ST/ใบไม้)", "cat": "พลาสติก", "sales": 576, "qty": 48, "gp_pct": 29.2}, {"name": "ช้อนกาแฟม้าลายNo.100110", "cat": "เครื่องครัว", "sales": 540, "qty": 108, "gp_pct": 30.0}, {"name": "กะละมังเคลือบขาว30cm.(ตรากระต่าย)", "cat": "เครื่องครัว", "sales": 518, "qty": 7, "gp_pct": 29.7}, {"name": "กระป๋องกาแฟ17ปากปั๊ม", "cat": "เครื่องครัว", "sales": 435, "qty": 4, "gp_pct": 29.7}, {"name": "ชุดคว่ำแก้วฝาครอบNo.501(COOKWARE)", "cat": "พลาสติก", "sales": 400, "qty": 4, "gp_pct": 28.5}, {"name": "ถุงชาผ้ามาเลย์", "cat": "เครื่องครัว", "sales": 366, "qty": 16, "gp_pct": 32.6}], "TJ_2021shop": [{"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 4170, "qty": 1, "gp_pct": 30.6}, {"name": "กระปุกกะปิฝาขาว1kg.No.558(SILVERBELL)", "cat": "พลาสติก", "sales": 2604, "qty": 372, "gp_pct": 28.6}, {"name": "เตา+ปลาแปะซะใหญ่(WINNER)", "cat": "เครื่องครัว", "sales": 1414, "qty": 5, "gp_pct": 28.9}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "cat": "พลาสติก", "sales": 504, "qty": 72, "gp_pct": 37.3}, {"name": "กระปุกกะปิฝาแดง500g.(D-sine)", "cat": "พลาสติก", "sales": 420, "qty": 60, "gp_pct": 29.7}, {"name": "ขันน้ำ18cm.No.111018(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 332, "qty": 2, "gp_pct": 25.6}, {"name": "ขวดโหล1p.ฝาแดงNo.09-1P(5ห่วง)", "cat": "พลาสติก", "sales": 288, "qty": 48, "gp_pct": 25.0}, {"name": "หม้อเคลือบ22cm.(นกแพนกวิน)", "cat": "เครื่องครัว", "sales": 280, "qty": 1, "gp_pct": 30.5}, {"name": "ขวดโหล8p.ฝาแดงกลม/เหลี่ยมNo.02-8P/034(ใบไม้)", "cat": "พลาสติก", "sales": 276, "qty": 12, "gp_pct": 26.1}, {"name": "ปิ่นโตสแตนเลส12cm.2ชั้นครึ่ง(พระอาทิตย์)", "cat": "เครื่องครัว", "sales": 169, "qty": 1, "gp_pct": 20.1}], "บะหมี่ ชอป": [{"name": "ผ้าฟาง4*4", "cat": "เครื่องเรือน", "sales": 1928, "qty": 8, "gp_pct": 38.4}, {"name": "ผ้าฟาง3*4", "cat": "เครื่องเรือน", "sales": 1127, "qty": 7, "gp_pct": 30.7}, {"name": "ผ้าฟาง3*3", "cat": "เครื่องเรือน", "sales": 968, "qty": 8, "gp_pct": 31.0}, {"name": "ช้อนพระอาทิตย์", "cat": "เครื่องครัว", "sales": 960, "qty": 48, "gp_pct": 28.3}, {"name": "ผ้าฟาง2*3", "cat": "เครื่องเรือน", "sales": 810, "qty": 10, "gp_pct": 30.9}, {"name": "ขวดโหล4p.ฝาแดงNo.09-4p(ใบไม้)", "cat": "พลาสติก", "sales": 720, "qty": 48, "gp_pct": 23.3}, {"name": "ชุดปิ่นโตLuckyDay.No.1843371สีฟ้า(ม้าลาย)", "cat": "เครื่องครัว", "sales": 499, "qty": 1, "gp_pct": 24.5}, {"name": "ชั้นวางของ4ชั้นสีฟ้า(D-sine)", "cat": "เครื่องเรือน", "sales": 477, "qty": 3, "gp_pct": 23.6}, {"name": "ช้อนส้อม(ตราจรวด)", "cat": "เครื่องครัว", "sales": 450, "qty": 6, "gp_pct": 11.2}, {"name": "ขวดโหลเนสกาแฟฝาแดง", "cat": "พลาสติก", "sales": 432, "qty": 36, "gp_pct": 29.2}], "Smild_shop": [{"name": "หม้อข้าว50cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1850, "qty": 1, "gp_pct": 35.5}, {"name": "ขวดโหลNo.028(ST/ใบไม้)", "cat": "พลาสติก", "sales": 1848, "qty": 132, "gp_pct": 39.3}, {"name": "ขวดซอสNo.9349(ตรามือ)", "cat": "พลาสติก", "sales": 1800, "qty": 72, "gp_pct": 28.0}, {"name": "หม้อข้าว28cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1530, "qty": 6, "gp_pct": 25.1}, {"name": "ขวดซอส32oz.No.9096/9096TR(ตรามือ)", "cat": "พลาสติก", "sales": 1050, "qty": 42, "gp_pct": 28.0}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 672, "qty": 18, "gp_pct": 32.4}, {"name": "พิมพ์วุ้นดอกจอกมิเนียมเล็กNo.3", "cat": "เครื่องครัว", "sales": 390, "qty": 13, "gp_pct": 31.7}, {"name": "มีดเหล็ก3.5in.ขวานคู่/อรัญญิกแท้", "cat": "เครื่องครัว", "sales": 158, "qty": 2, "gp_pct": 15.2}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "cat": "พลาสติก", "sales": 144, "qty": 24, "gp_pct": 30.5}], "PP289_shop": [{"name": "หม้อนึ่ง26cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 1018, "qty": 2, "gp_pct": 30.0}, {"name": "ชามเมลามีน7in.No.PN81070คละลาย(PN)", "cat": "เครื่องครัว", "sales": 660, "qty": 30, "gp_pct": 31.5}, {"name": "หม้อหูหิ้วเคลือบสี12cm.สีเดียว(ตรากระต่าย)", "cat": "เครื่องครัว", "sales": 372, "qty": 2, "gp_pct": 17.2}, {"name": "พิมพ์ขนมรังผึ้งสี่เหลี่ยมNo.8", "cat": "เครื่องครัว", "sales": 360, "qty": 1, "gp_pct": 14.2}, {"name": "สบู่เบนเนทเอ็กซ์ตร้าไวท์​130g.", "cat": "minimart", "sales": 360, "qty": 6, "gp_pct": 30.0}, {"name": "กะทะหู8in.เข้มงกุฎ", "cat": "เครื่องครัว", "sales": 218, "qty": 2, "gp_pct": 36.2}, {"name": "ขันนึ่งข้าวNo.12", "cat": "เครื่องครัว", "sales": 200, "qty": 20, "gp_pct": 30.0}, {"name": "มีดกรีดยางเบตงNo.1", "cat": "อุปกรณ์การเกษตร", "sales": 179, "qty": 1, "gp_pct": 30.2}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "cat": "พลาสติก", "sales": 168, "qty": 24, "gp_pct": 40.4}, {"name": "จอบผู้ดีจิ๋ว/จอบจิ๋ว", "cat": "อุปกรณ์การเกษตร", "sales": 156, "qty": 2, "gp_pct": 26.9}]}, "products": [{"name": "เสื่อน้ำมันม้วนใหญ่27m.", "cat": "เครื่องนอน", "sales": 1668597, "qty": 34053, "gp_pct": 57.0, "onhand": null, "sly": 820462}, {"name": "กล่องฝาล็อค60l.สีดำD-sine", "cat": "พลาสติก", "sales": 705081, "qty": 7740, "gp_pct": 32.3, "onhand": 960, "sly": 129753}, {"name": "หม้อก๋วยเตี๋ยว45cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 241465, "qty": 79, "gp_pct": 25.6, "onhand": null, "sly": 209568}, {"name": "หม้อก๋วยเตี๋ยว50cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 191738, "qty": 49, "gp_pct": 26.1, "onhand": null, "sly": 149652}, {"name": "หม้อก๋วยเตี๋ยว40cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 163410, "qty": 61, "gp_pct": 25.8, "onhand": 119, "sly": 137805}, {"name": "หม้อก๋วยเตี๋ยว30cm.2ช่องโค้งรุ่นChef(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 163106, "qty": 114, "gp_pct": 28.7, "onhand": null, "sly": 0}, {"name": "หม้อสตูว์22*20 พระอาทิตย์", "cat": "เครื่องครัว", "sales": 148711, "qty": 746, "gp_pct": 100.0, "onhand": 154, "sly": 0}, {"name": "สบู่เบนเนทVitamin​C​&E​130g.", "cat": "minimart", "sales": 140352, "qty": 2676, "gp_pct": 28.0, "onhand": null, "sly": 46722}, {"name": "ชุดหม้อหุงต้ม18,20cm.+ทัพพีแขก+ทัพพีเล็ก+ช้อนส้อม(หัวม้าลาย)", "cat": "เครื่องครัว", "sales": 115650, "qty": 133, "gp_pct": 27.7, "onhand": null, "sly": 6072}, {"name": "เข่งNo.5สีดำ(ตราปลามังกร)", "cat": "พลาสติก", "sales": 113892, "qty": 3090, "gp_pct": 31.5, "onhand": 828, "sly": 119502}, {"name": "ปิ่นโตสแตนเลส12*3(พระอาทิตย์)", "cat": "เครื่องครัว", "sales": 99894, "qty": 494, "gp_pct": 38.1, "onhand": null, "sly": 3065}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่า170g.คนใส่แว่น", "cat": "minimart", "sales": 94860, "qty": 2358, "gp_pct": 26.6, "onhand": null, "sly": 71234}, {"name": "ชุดหม้อ6ชิ้้นNo.ET6-035(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 89033, "qty": 76, "gp_pct": 28.6, "onhand": 113, "sly": 0}, {"name": "หม้อก๋วยเตี๋ยว36cm.3ช่องโค้งMegaSave(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 85568, "qty": 39, "gp_pct": 25.2, "onhand": 20, "sly": 125616}, {"name": "หม้อนึ่ง44cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 84172, "qty": 54, "gp_pct": 33.2, "onhand": 25, "sly": 17836}, {"name": "หม้อนึ่ง40cm.(จระเข้)", "cat": "เครื่องครัว", "sales": 83122, "qty": 71, "gp_pct": 32.2, "onhand": null, "sly": 7455}, {"name": "ชุดหม้อTogther(ตราม้าลาย)", "cat": "เครื่องครัว", "sales": 78561, "qty": 99, "gp_pct": 27.6, "onhand": 2, "sly": 0}, {"name": "ขูดมะม่วงNo.218(KIWI)", "cat": "เครื่องครัว", "sales": 76381, "qty": 688, "gp_pct": 26.6, "onhand": null, "sly": 18730}, {"name": "สบู่สมุนไพรกลั่นรอว์ร่าเซรั่มกุหลาบ170g.คนใส่แว่น", "cat": "minimart", "sales": 74328, "qty": 1776, "gp_pct": 28.3, "onhand": null, "sly": 51180}, {"name": "หม้อหุงต้มHomey36cm.No.2610360(ตราหัวม้าลาย)", "cat": "เครื่องครัว", "sales": 68616, "qty": 65, "gp_pct": 31.6, "onhand": null, "sly": 0}], "categories": [{"name": "เครื่องครัว", "sales": 4734546, "pct": 54.54}, {"name": "เครื่องนอน", "sales": 1685097, "pct": 19.41}, {"name": "พลาสติก", "sales": 1445273, "pct": 16.65}, {"name": "minimart", "sales": 481347, "pct": 5.54}, {"name": "เครื่องเรือน", "sales": 172170, "pct": 1.98}, {"name": "อุปกรณ์การเกษตร", "sales": 93670, "pct": 1.08}, {"name": "แปรง/เส้นใยทำความสะอาด", "sales": 25242, "pct": 0.29}, {"name": "ของใช้สัตว์เลี้ยง", "sales": 14178, "pct": 0.16}, {"name": "ของเล่น", "sales": 11122, "pct": 0.13}, {"name": "เครื่องนุ่งห่ม", "sales": 6988, "pct": 0.08}, {"name": "เครื่องใช้ไฟฟ้า", "sales": 5581, "pct": 0.06}, {"name": "ชุดสังฆภัณฑ์", "sales": 2510, "pct": 0.03}, {"name": "อุปกรณ์เครื่องเขียน", "sales": 1950, "pct": 0.02}, {"name": "จักรยาน", "sales": 796, "pct": 0.01}, {"name": "gift shop", "sales": 415, "pct": 0.0}, {"name": "อุปกรณ์ตกแต่งบ้าน", "sales": 264, "pct": 0.0}, {"name": "อุปกรณ์เครื่องมือช่าง", "sales": 204, "pct": 0.0}, {"name": "สินค้าเทศกาล", "sales": 156, "pct": 0.0}], "platforms": [{"name": "โรงเสื่อ", "monthly_target": 4900000, "actual": 2747536, "gp": 1260395, "count": 2}, {"name": "Lazada", "monthly_target": 2900000, "actual": 1556601, "gp": 455657, "count": 15}, {"name": "Shopee", "monthly_target": 3000000, "actual": 1592425, "gp": 476260, "count": 10}, {"name": "TikTok", "monthly_target": 3200000, "actual": 2784947, "gp": 961431, "count": 6}], "daily_targets": [{"day": 1, "total": 440000, "rso": 0, "lz": 0, "sh": 130000, "tt": 80000}, {"day": 2, "total": 440000, "rso": 0, "lz": 0, "sh": 130000, "tt": 80000}, {"day": 3, "total": 440000, "rso": 0, "lz": 0, "sh": 130000, "tt": 80000}, {"day": 4, "total": 410000, "rso": 0, "lz": 0, "sh": 160000, "tt": 80000}, {"day": 5, "total": 550000, "rso": 0, "lz": 0, "sh": 200000, "tt": 100000}, {"day": 6, "total": 440000, "rso": 0, "lz": 0, "sh": 190000, "tt": 95000}, {"day": 7, "total": 430000, "rso": 0, "lz": 0, "sh": 180000, "tt": 95000}, {"day": 8, "total": 430000, "rso": 0, "lz": 0, "sh": 180000, "tt": 90000}, {"day": 9, "total": 430000, "rso": 0, "lz": 0, "sh": 160000, "tt": 90000}, {"day": 10, "total": 430000, "rso": 0, "lz": 0, "sh": 140000, "tt": 90000}, {"day": 11, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 12, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 13, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 14, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 15, "total": 430000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 16, "total": 420000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 17, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 18, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 95000}, {"day": 19, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 20, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 21, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 22, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 23, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 24, "total": 440000, "rso": 0, "lz": 0, "sh": 150000, "tt": 90000}, {"day": 25, "total": 450000, "rso": 0, "lz": 0, "sh": 160000, "tt": 95000}, {"day": 26, "total": 460000, "rso": 0, "lz": 0, "sh": 160000, "tt": 95000}, {"day": 27, "total": 510000, "rso": 0, "lz": 0, "sh": 160000, "tt": 90000}, {"day": 28, "total": 510000, "rso": 0, "lz": 0, "sh": 180000, "tt": 110000}, {"day": 29, "total": 510000, "rso": 0, "lz": 0, "sh": 180000, "tt": 110000}, {"day": 30, "total": 510000, "rso": 0, "lz": 0, "sh": 180000, "tt": 120000}, {"day": 31, "total": 520000, "rso": 0, "lz": 0, "sh": 180000, "tt": 120000}], "non_movement": [{"name": "พิมพ์วุ้นดอกจอกมิเนียมเล็กNo.3", "ity": "เครื่องครัว", "sales": 664, "qty": 21, "onhand": 24714, "dos": 707.2}, {"name": "ตะกร้าขนมจีนจิ๋ว(Rw)08(SILVERBELL)", "ity": "พลาสติก", "sales": 360, "qty": 120, "onhand": 8109, "dos": 428.0}, {"name": "พิมพ์วุ้นดอกจอกมิเนียมกลางNo.2", "ity": "เครื่องครัว", "sales": 105, "qty": 3, "onhand": 1376, "dos": 249.0}, {"name": "ขันนึ่งข้าวNo.12", "ity": "เครื่องครัว", "sales": 440, "qty": 40, "onhand": 4388, "dos": 189.5}, {"name": "ขันน้ำ18cm.สีหวานไม่พิมพ์ลาย(ปลามังกร)", "ity": "พลาสติก", "sales": 3936, "qty": 492, "onhand": 28620, "dos": 138.2}, {"name": "ขวดโหลNo.3301L/3+/9ช้อน(PN)", "ity": "พลาสติก", "sales": 105, "qty": 3, "onhand": 627, "dos": 113.5}, {"name": "กระปุกกะปิฝาขาว500g.(D-sine)", "ity": "พลาสติก", "sales": 29412, "qty": 4644, "onhand": 164918, "dos": 106.5}, {"name": "พิมพ์ครองแครงพลาสติกNo.K26", "ity": "เครื่องครัว", "sales": 801, "qty": 57, "onhand": 4277, "dos": 101.5}, {"name": "ขวดโหล2p.ฝาร่มNo.971/971-2(เซอร์เวย์สตรอง)", "ity": "พลาสติก", "sales": 288, "qty": 24, "onhand": 1427, "dos": 94.1}, {"name": "ตะกร้าNo.D21(COOKWARE)", "ity": "พลาสติก", "sales": 432, "qty": 72, "onhand": 2124, "dos": 93.4}]};
 
-// ─── LOAD ─────────────────────────────────────────────────────────────
 function load(){
-  const d=STATIC_DATA;
-  GD=d;
-  document.getElementById('hdr-meta').textContent=`ไฟล์: ${d.meta.file} | ข้อมูล ${d.meta.mtd_days} วัน (1–${d.meta.mtd_days} พ.ค. 2569) | อัปเดตโดย Claude`;
-  document.getElementById('hdr-badge').textContent=`พ.ค. ${d.meta.mtd_days}/${d.meta.total_days} วัน`;
+  const d=STATIC_DATA; GD=d;
+  document.getElementById("hdr-meta").textContent=`ไฟล์: ${d.meta.file} | ข้อมูล ${d.meta.mtd_days} วัน (1–${d.meta.mtd_days} พ.ค. 2569) | อัปเดตโดย Claude`;
+  document.getElementById("hdr-badge").textContent=`พ.ค. ${d.meta.mtd_days}/${d.meta.total_days} วัน`;
   r0(d);
   setTimeout(()=>{r1(d);RD[1]=true;r2(d);RD[2]=true;r3(d);RD[3]=true;},300);
 }
