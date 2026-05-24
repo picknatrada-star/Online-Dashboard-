@@ -101,6 +101,14 @@ tr:last-child td{border-bottom:none;}tr:hover td{background:#fafbff;}
 .dos-red{background:#ffebee;color:#c62828;}
 .dos-orange{background:#fff3e0;color:#e65100;}
 .dos-yellow{background:#fffde7;color:#f9a825;}
+
+.filter-bar{background:#fff;border-radius:10px;padding:10px 14px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-left:4px solid #1a237e;}
+.filter-bar-label{font-size:11px;font-weight:700;color:#555;white-space:nowrap;}
+.flt-sel{padding:5px 12px;border-radius:20px;border:1.5px solid #c5cae9;background:#fff;font-size:11px;cursor:pointer;color:#444;font-family:inherit;min-width:140px;outline:none;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:26px;}
+.flt-sel:focus{border-color:#1a237e;box-shadow:0 0 0 2px rgba(26,35,126,.12);}
+.flt-reset{padding:5px 14px;border-radius:20px;border:1px solid #e0e0e0;background:#f5f5f5;font-size:11px;cursor:pointer;color:#555;font-family:inherit;transition:.15s;}
+.flt-reset:hover{background:#e8eaf6;color:#1a237e;border-color:#1a237e;}
+.filter-active-badge{background:#e8eaf6;color:#1a237e;border-radius:12px;padding:3px 10px;font-size:10px;font-weight:700;border:1px solid #c5cae9;}
 </style>
 </head>
 <body>
@@ -124,6 +132,20 @@ tr:last-child td{border-bottom:none;}tr:hover td{background:#fafbff;}
 
 <!-- TAB 0 -->
 <div class="panel on" id="p0">
+  <div class="filter-bar" id="filter-bar">
+    <span class="filter-bar-label">🔍 กรองข้อมูล:</span>
+    <select id="flt-month" class="flt-sel" onchange="applyFilters()" title="เลือกเดือน">
+      <option value="">📅 พ.ค. 2569 (ปัจจุบัน)</option>
+    </select>
+    <select id="flt-platform" class="flt-sel" onchange="applyFilters()" title="กรองตาม Platform">
+      <option value="">🏪 ทุก Platform</option>
+    </select>
+    <select id="flt-store" class="flt-sel" onchange="applyFilters()" title="กรองตามชื่อร้าน">
+      <option value="">🏬 ทุกร้าน</option>
+    </select>
+    <button class="flt-reset" onclick="resetFilters()">↺ รีเซ็ต</button>
+    <span class="filter-active-badge" id="filter-badge" style="display:none"></span>
+  </div>
   <div class="kpi4" id="kpi-row"></div>
   <div class="urg" id="urg-panel"></div>
   <div class="card" id="days-panel" style="margin-bottom:10px"></div>
@@ -257,6 +279,69 @@ function togCat(i){
 }
 function rankNum(i){const cls=i===0?"gold":i===1?"silver":i===2?"bronze":"";return`<span class="rank-num ${cls}">${i+1}</span>`;}
 
+
+// ─── FILTER FUNCTIONS ────────────────────────────────────────────────────────
+let _fltPlatform='', _fltStore='';
+
+function initFilters(){
+  const d = GD;
+  // Platforms
+  const platforms=[...new Set(d.stores.map(s=>s.platform))].sort((a,b)=>a.localeCompare(b,'th'));
+  const plfSel=document.getElementById('flt-platform');
+  platforms.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;plfSel.appendChild(o);});
+  // Store names (sorted Thai)
+  const storeNames=[...d.stores].sort((a,b)=>a.name.localeCompare(b.name,'th')).map(s=>s.name);
+  const stSel=document.getElementById('flt-store');
+  storeNames.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;stSel.appendChild(o);});
+}
+
+function applyFilters(){
+  _fltPlatform=document.getElementById('flt-platform').value;
+  _fltStore=document.getElementById('flt-store').value;
+  const d=GD;
+  const mt=d.summary.mtd_days, td=d.summary.total_days;
+  // Filter stores
+  let fStores=d.stores.slice();
+  if(_fltPlatform) fStores=fStores.filter(s=>s.platform===_fltPlatform);
+  if(_fltStore)    fStores=fStores.filter(s=>s.name===_fltStore);
+  // Recalculate summary from filtered stores
+  const fActual=fStores.reduce((s,st)=>s+(st.actual||0),0);
+  const fGP=fStores.reduce((s,st)=>s+(st.gp||0),0);
+  const fGPpct=fActual>0?fGP/fActual*100:0;
+  const fMonTgt=fStores.reduce((s,st)=>s+(st.monthly_target||0),0);
+  const fCumTgt=fMonTgt*(mt/td);
+  const fAvgDaily=mt>0?fActual/mt:0;
+  const fRemaining=Math.max(0,fMonTgt-fActual);
+  const dLeft=td-mt;
+  const fReqDaily=dLeft>0?fRemaining/dLeft:0;
+  const fUrgRatio=fAvgDaily>0&&fReqDaily>0?fReqDaily/fAvgDaily:fAvgDaily>0?0:1;
+  const fProj=fAvgDaily*td;
+  const fSummary={
+    ...d.summary,
+    mtd_actual:fActual,gp_amount:fGP,gp_pct:fGPpct,
+    monthly_target:fMonTgt,cum_target:fCumTgt,
+    avg_daily:fAvgDaily,remaining:fRemaining,days_left:dLeft,
+    req_daily:fReqDaily,urg_ratio:fUrgRatio,projection:fProj
+  };
+  // Filter badge
+  let badge='';
+  if(_fltPlatform) badge+=` 🏪 ${_fltPlatform}`;
+  if(_fltStore)    badge+=` 🏬 ${_fltStore}`;
+  const bdg=document.getElementById('filter-badge');
+  if(badge){bdg.textContent=`กรอง:${badge}`;bdg.style.display='';}
+  else{bdg.style.display='none';}
+  // Re-render Tab 0 with filtered data
+  const fd={...d,stores:fStores,summary:fSummary};
+  r0(fd);
+}
+
+function resetFilters(){
+  document.getElementById('flt-platform').value='';
+  document.getElementById('flt-store').value='';
+  _fltPlatform=''; _fltStore='';
+  document.getElementById('filter-badge').style.display='none';
+  r0(GD);
+}
 // ─── TAB 0 ───────────────────────────────────────────────────────────
 function r0(d){
   const s=d.summary,mt=s.mtd_days,td=s.total_days||31;
@@ -617,6 +702,7 @@ const STATIC_DATA = {"meta": {"file": "MTD 1-22 พ.ค. 2569", "mtd_days": 22, 
 
 function load(){
   const d=STATIC_DATA; GD=d;
+  initFilters();
   document.getElementById("hdr-meta").textContent=`ไฟล์: ${d.meta.file} | ข้อมูล ${d.meta.mtd_days} วัน (1–${d.meta.mtd_days} พ.ค. 2569) | อัปเดตโดย Claude`;
   document.getElementById("hdr-badge").textContent=`พ.ค. ${d.meta.mtd_days}/${d.meta.total_days} วัน`;
   r0(d);
